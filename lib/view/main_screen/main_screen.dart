@@ -1,5 +1,9 @@
 import 'package:chinese_study_applicaion/Utilities/app_colors.dart';
+import 'package:chinese_study_applicaion/view/main_screen/book_mark_page/book_mark_page.dart';
+import 'package:chinese_study_applicaion/view/main_screen/home_page/home_page.dart';
 import 'package:flutter/material.dart';
+
+import 'my_page/my_page.dart';
 
 class MainScreen extends StatefulWidget {
   const MainScreen({Key? key}) : super(key: key);
@@ -16,30 +20,29 @@ class _MainScreenState extends State<MainScreen> {
     });
   }
   static const List<Widget> _widgetOptions = <Widget>[
-    Text(
-      'Index 0: Home',
-    ),
-    Text(
-      'Index 1: Business',
-    ),
-    Text(
-      'Index 2: School',
-    ),
+    HomePage(),
+    BookMarkPage(),
+    MyPage()
   ];
 
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('MainScreeen'),),
-      body: Column(
+      body: Column(//Columnのなかのchildren要素は高さがないとエラー出るので高さ指定するOrExpandedで囲むかどちらかの処理をする
         children: [
-          Center(
-            child: Text('MainScreen'),
+          Expanded(
+            child: Container(
+              child: _widgetOptions.elementAt(_selectedIndex),
+            )
           ),
-          Container(
-            child: _widgetOptions.elementAt(_selectedIndex),
-          )
+          /*Container(
+            height: 40,
+            color: Colors.yellow,
+            child: Center(
+              child: Text('MainScreen'),
+            )
+          )*/
         ],
       ),
       bottomNavigationBar: _BottomNavigationBar(_selectedIndex)
@@ -54,12 +57,12 @@ class _MainScreenState extends State<MainScreen> {
           label: 'Home',
         ),
         BottomNavigationBarItem(
-          icon: Icon(Icons.business),
-          label: 'Business',
+          icon: Icon(Icons.bookmark_border),
+          label: 'Bookmark',
         ),
         BottomNavigationBarItem(
-          icon: Icon(Icons.school),
-          label: 'School',
+          icon: Icon(Icons.person),
+          label: 'MyPage',
         ),
       ],
       currentIndex: selectedIndex,
