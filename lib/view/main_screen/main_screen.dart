@@ -1,6 +1,7 @@
-import 'package:chinese_study_applicaion/Utilities/app_colors.dart';
+import 'package:chinese_study_applicaion/utilities/app_colors.dart';
 import 'package:chinese_study_applicaion/view/main_screen/book_mark_page/book_mark_page.dart';
 import 'package:chinese_study_applicaion/view/main_screen/home_page/home_page.dart';
+import 'package:chinese_study_applicaion/view/main_screen/school_page/school_page.dart';
 import 'package:flutter/material.dart';
 
 import 'my_page/my_page.dart';
@@ -21,8 +22,9 @@ class _MainScreenState extends State<MainScreen> {
   }
   static const List<Widget> _widgetOptions = <Widget>[
     HomePage(),
+    SchoolPage(),
     BookMarkPage(),
-    MyPage()
+    MyPage(),
   ];
 
 
@@ -53,20 +55,26 @@ class _MainScreenState extends State<MainScreen> {
     return BottomNavigationBar(
       items: const <BottomNavigationBarItem>[
         BottomNavigationBarItem(
-          icon: Icon(Icons.home),
-          label: 'Home',
+          icon: Icon(Icons.home_outlined),
+          label: 'ホーム',
+        ),
+        BottomNavigationBarItem(
+          icon: Icon(Icons.school_outlined),
+          label: '勉強する',
         ),
         BottomNavigationBarItem(
           icon: Icon(Icons.bookmark_border),
-          label: 'Bookmark',
+          label: 'やり直し',
         ),
         BottomNavigationBarItem(
-          icon: Icon(Icons.person),
-          label: 'MyPage',
+          icon: Icon(Icons.person_outline_outlined),
+          label: 'マイページ',
         ),
       ],
       currentIndex: selectedIndex,
-      selectedItemColor: AppColors.mainGreen,
+      type: BottomNavigationBarType.fixed,
+      //Flutterの中のコードで３以上なら「type: BottomNavigationBarType.shifting」になるからこれ指定しないと見えなくなる
+      selectedItemColor: AppColors.mainBlue,
       onTap: _onItemTapped,
     );
   }

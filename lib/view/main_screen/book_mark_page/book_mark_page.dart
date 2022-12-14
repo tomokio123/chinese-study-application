@@ -1,3 +1,4 @@
+import 'package:chinese_study_applicaion/utilities/app_text_styles.dart';
 import 'package:flutter/material.dart';
 
 import '../../../utilities/app_colors.dart';
@@ -10,18 +11,22 @@ class BookMarkPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('HomePage')),
+      appBar: AppBar(title: const Text('ブックマーク')),
       body: Container(
-        margin: EdgeInsets.all(12),
+        padding: EdgeInsets.fromLTRB(12,12,12,0),
         child: GridView.count(
             crossAxisCount: 2,
+            mainAxisSpacing: 12,
+            crossAxisSpacing: 12,
             children: List.generate(10, (index) => GestureDetector(
               onTap: (){
                 Navigator.push(context, MaterialPageRoute(builder: (context)=> FirstScreen()));
               },
               child: Card(
                   color: AppColors.mainWhite,
-                  child: Center(child: Text('${index + 1}'))),
+                  elevation: 5,
+                  child: Center(child: Text('${index + 1}', style: AppTextStyles.textBold))
+              ),
             ))
         ),
       )
