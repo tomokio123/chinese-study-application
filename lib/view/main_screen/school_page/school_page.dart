@@ -1,3 +1,6 @@
+import 'package:chinese_study_applicaion/view/main_screen/my_page/my_page.dart';
+import 'package:chinese_study_applicaion/view/main_screen/school_page/to_chinese_page/to_chinese_page.dart';
+import 'package:chinese_study_applicaion/view/main_screen/school_page/to_japanese_page/to_japanese_page.dart';
 import 'package:flutter/material.dart';
 import 'package:material_segmented_control/material_segmented_control.dart';
 
@@ -22,8 +25,8 @@ class _SchoolPageState extends State<SchoolPage> {
     });
   }
   static const List<Widget> _widgetOptions = <Widget>[
-    HomePage(),
-    BookMarkPage()
+    ToJapanesePage(),
+    ToChinesePage()
   ];
 
   @override
@@ -37,8 +40,8 @@ class _SchoolPageState extends State<SchoolPage> {
               child: TabBar(
                 onTap: _onItemTapped,
                 tabs: [
-                  Tab(text: '1',),
-                  Tab(text: '2'),
+                  Tab(text: '中国語→日本語',),
+                  Tab(text: '日本語→中国語'),
               ],
                 indicatorColor: AppColors.mainWhite,
         ),

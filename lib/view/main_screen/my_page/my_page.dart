@@ -10,12 +10,14 @@ class MyPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('マイページ')),
-      body: SingleChildScrollView(
-        child: Column(
-          children: [
-            Text('MyPage')
-          ],
+      //appBar: AppBar(title: const Text('マイページ')),
+      body: SafeArea(
+        child: SingleChildScrollView(
+          child: Column(
+            children: [
+              Text('MyPage')
+            ],
+          ),
         ),
       ),
     );

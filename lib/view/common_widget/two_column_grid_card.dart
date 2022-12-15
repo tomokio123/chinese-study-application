@@ -1,19 +1,15 @@
-import 'package:chinese_study_applicaion/utilities/app_text_styles.dart';
-import 'package:chinese_study_applicaion/view/common_widget/two_column_grid_card.dart';
 import 'package:flutter/material.dart';
 
-import '../../../utilities/app_colors.dart';
-import '../../../utilities/app_sized_boxes.dart';
-import '../../first_screen/first_screen.dart';
+import '../../utilities/app_colors.dart';
+import '../../utilities/app_text_styles.dart';
+import '../first_screen/first_screen.dart';
 
-class BookMarkPage extends StatelessWidget {
-  const BookMarkPage({Key? key}) : super(key: key);
+class TwoColumnGridCard extends StatelessWidget {
+  const TwoColumnGridCard({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-        appBar: AppBar(title: const Text('ブックマーク')),
-        body: Container(
+    return Container(
           padding: EdgeInsets.fromLTRB(12,12,12,0),
           child: GridView.count(
               crossAxisCount: 2,
@@ -30,7 +26,6 @@ class BookMarkPage extends StatelessWidget {
                 ),
               ))
           ),
-        )
-    );
+        );
   }
 }
