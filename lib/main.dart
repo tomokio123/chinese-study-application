@@ -18,7 +18,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primaryColor: AppColors.mainBlue,
         backgroundColor: AppColors.subBlue,
-        textTheme: TextTheme(),//Textの字体や大きさ
+        fontFamily: "KleeOne",//Textの字体や大きさ
         appBarTheme: const AppBarTheme(
             titleTextStyle: AppTextStyles.appBarTitle,
             backgroundColor: AppColors.mainWhite),
