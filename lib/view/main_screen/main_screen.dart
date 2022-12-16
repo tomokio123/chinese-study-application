@@ -20,12 +20,12 @@ class _MainScreenState extends State<MainScreen> {
       _selectedIndex = index;
     });
   }
-  static const List<Widget> _widgetOptions = <Widget>[
+  static final List<Widget> _widgetOptions = <Widget>[
     HomePage(),
-    MyPage(),
-    SchoolPage(),
-    BookMarkPage(),
-    MyPage(),
+    const MyPage(),
+    const SchoolPage(),
+    const BookMarkPage(),
+    const MyPage(),
   ];
 
 

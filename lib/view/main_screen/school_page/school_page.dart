@@ -36,16 +36,14 @@ class _SchoolPageState extends State<SchoolPage> {
       child: Scaffold(
         appBar: AppBar(automaticallyImplyLeading: false,
             // //以上の記述一行だけでNavigationのBack矢印が消せる。
-            title: GestureDetector(
-              child: TabBar(
-                onTap: _onItemTapped,
-                tabs: [
-                  Tab(text: '中国語→日本語',),
-                  Tab(text: '日本語→中国語'),
-              ],
-                indicatorColor: AppColors.mainWhite,
+            title: TabBar(
+              onTap: _onItemTapped,
+              tabs: [
+                Tab(text: '中国語→日本語',),
+                Tab(text: '日本語→中国語'),
+            ],
+              indicatorColor: AppColors.mainWhite,
         ),
-            ),
         backgroundColor: AppColors.mainBlue),
         body: Column(
           children: [
