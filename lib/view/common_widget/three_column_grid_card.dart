@@ -20,6 +20,9 @@ class ThreeColumnGridCard extends StatelessWidget {
               Navigator.push(context, MaterialPageRoute(builder: (context)=> FirstScreen()));
             },
             child: Card(
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(10),
+                ),
                 color: AppColors.mainWhite,
                 elevation: 5,
                 child: Center(child: Text('${index + 1}', style: AppTextStyles.textBold))

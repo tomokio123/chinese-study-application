@@ -18,11 +18,18 @@ class HomePage extends StatelessWidget {
           padding: const EdgeInsets.all(8),
           itemCount: entries.length,
           itemBuilder: (BuildContext context, int index) {
-            return Card(
-              color: AppColors.mainWhite,
-              child: Container(
-                height: 120,
-                child: Center(child: Text('Entry ${entries[index]}',style: AppTextStyles.textNormal)),
+            return Container(
+              padding: EdgeInsets.all(7),
+              child: Card(
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(20),
+                ),
+                color: AppColors.mainWhite,
+                elevation: 3,
+                child: Container(
+                  height: 120,
+                  child: Center(child: Text('Entry ${entries[index]}',style: AppTextStyles.textNormal)),
+                ),
               ),
             );
           }

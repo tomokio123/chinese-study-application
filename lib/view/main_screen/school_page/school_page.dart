@@ -39,12 +39,12 @@ class _SchoolPageState extends State<SchoolPage> {
             title: TabBar(
               onTap: _onItemTapped,
               tabs: [
-                Tab(text: '中国語→日本語',),
-                Tab(text: '日本語→中国語'),
+                Tab(child: Text( '中国語→日本語',style: TextStyle(color: AppColors.mainBlue))),
+                Tab(child: Text( '日本語→中国語',style: TextStyle(color: AppColors.mainBlue))),
             ],
-              indicatorColor: AppColors.mainWhite,
-        ),
-        backgroundColor: AppColors.mainBlue),
+              indicatorColor: AppColors.subBlue,
+              indicatorSize: TabBarIndicatorSize.label,
+        )),
         body: Column(
           children: [
             Expanded(

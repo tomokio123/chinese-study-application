@@ -12,7 +12,7 @@ class BookMarkPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(title: const Text('ブックマーク')),
+        appBar: AppBar(title: const Text('ブックマーク'),automaticallyImplyLeading: false),
         body: Container(
           padding: EdgeInsets.fromLTRB(12,12,12,0),
           child: GridView.count(

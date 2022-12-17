@@ -2,6 +2,7 @@ import 'package:chinese_study_applicaion/utilities/app_colors.dart';
 import 'package:chinese_study_applicaion/view/main_screen/book_mark_page/book_mark_page.dart';
 import 'package:chinese_study_applicaion/view/main_screen/home_page/home_page.dart';
 import 'package:chinese_study_applicaion/view/main_screen/school_page/school_page.dart';
+import 'package:chinese_study_applicaion/view/main_screen/test_page/test_page.dart';
 import 'package:flutter/material.dart';
 
 import 'my_page/my_page.dart';
@@ -22,10 +23,10 @@ class _MainScreenState extends State<MainScreen> {
   }
   static final List<Widget> _widgetOptions = <Widget>[
     HomePage(),
-    const MyPage(),
     const SchoolPage(),
+    TestPage(),
     const BookMarkPage(),
-    const MyPage(),
+    MyPage(),
   ];
 
 
@@ -60,12 +61,12 @@ class _MainScreenState extends State<MainScreen> {
           label: '単語帳',
         ),
         BottomNavigationBarItem(
-          icon: Icon(Icons.quiz_outlined),
-          label: 'テスト',
-        ),
-        BottomNavigationBarItem(
           icon: Icon(Icons.checklist),
           label: '一問一答',
+        ),
+        BottomNavigationBarItem(
+          icon: Icon(Icons.quiz_outlined),
+          label: 'テスト',
         ),
         BottomNavigationBarItem(
           icon: Icon(Icons.bookmark_border),
