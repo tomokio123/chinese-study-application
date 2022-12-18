@@ -26,7 +26,7 @@ class _MainScreenState extends State<MainScreen> {
     const SchoolPage(),
     TestPage(),
     const BookMarkPage(),
-    MyPage(),
+    const MyPage(),
   ];
 
 

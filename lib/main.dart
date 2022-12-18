@@ -3,10 +3,11 @@ import 'package:chinese_study_applicaion/utilities/app_font_sizes.dart';
 import 'package:chinese_study_applicaion/utilities/app_text_styles.dart';
 import 'package:chinese_study_applicaion/view/first_screen/first_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();//これがないとエラー、要調査
-  runApp(const MyApp());
+  runApp(ProviderScope(child: const MyApp()));
 }
 
 class MyApp extends StatelessWidget {

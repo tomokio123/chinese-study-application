@@ -1,23 +1,28 @@
 import 'package:chinese_study_applicaion/utilities/app_colors.dart';
 import 'package:chinese_study_applicaion/view/main_screen/main_screen.dart';
+import 'package:chinese_study_applicaion/view/main_screen/my_page/account_page/edit_account_page/edit_account_page.dart';
 import 'package:chinese_study_applicaion/view/main_screen/my_page/other_setting_page/announcement_page.dart';
 import 'package:chinese_study_applicaion/view/main_screen/my_page/other_setting_page/tutorial_page.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:settings_ui/settings_ui.dart';
 
 import '../../first_screen/first_screen.dart';
+import 'my_page_view_model.dart';
 
-class MyPage extends StatelessWidget {
-  MyPage({Key? key}) : super(key: key);
+class MyPage extends ConsumerWidget {
+
+  const MyPage({Key? key}) : super(key: key);
   // [SliverAppBar]s are typically used in [CustomScrollView.slivers], which in
-
-  bool _switchTileInitialValue = false;//緑のON・OFFボタン
-  bool _isSignin = true;//ログイン状態
+  final bool _isSignin = true;//ログイン状態
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+
+    final checkedCurrentValue = ref.watch(myPageViewModelProvider);
+
     return Scaffold(
         appBar: AppBar(title: Text('マイページ')),
         body: SettingsList(
@@ -26,9 +31,9 @@ class MyPage extends StatelessWidget {
               title: Text('アカウント情報'),
               tiles: <SettingsTile>[
                 SettingsTile.navigation(
-                  onPressed: null,
-                  leading: Icon(Icons.language),
-                  title: Text('メールアドレス'),
+                  onPressed: (value) => Navigator.push(context, MaterialPageRoute(builder: (context) => EditAccountPage())),
+                  leading: Icon(Icons.person_outline_outlined),
+                  title: Text('プロフィール'),
                   value: Text('編集'),
                 ),
               ],
@@ -40,17 +45,20 @@ class MyPage extends StatelessWidget {
                   onPressed: null,
                   leading: Icon(Icons.language),
                   title: Text('ログイン状況'),
+                  trailing: Expanded(child: Container()),
                   value: Text(_isSignin == true ? '有効' : '無効'),
                 ),
                 SettingsTile.switchTile(
-                  activeSwitchColor: AppColors.subBlue,
+                  enabled: true,
+                  activeSwitchColor: AppColors.mainBlue,
+                  initialValue: true,
+                  //initialValue: checkedCurrentValue,
+                  //onPressed: (value){ref.read(myPageViewModelProvider.notifier).checking(value);},
                   onToggle: (value) {
-                    //仮置き
-                    //Navigator.push(context, MaterialPageRoute(builder: (context) => MainScreen()));
-                    },
-                  initialValue: _switchTileInitialValue,
+                    ref.read(myPageViewModelProvider);
+                  },
                   leading: Icon(Icons.format_paint),
-                  title: Text('Enable custom theme'),
+                  title: Text('音声読み上げ'),
                 ),
               ],
             ),

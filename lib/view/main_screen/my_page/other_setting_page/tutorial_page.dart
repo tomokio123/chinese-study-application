@@ -7,8 +7,10 @@ class TutorialPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text('TutorialPage',style: TextStyle(color: AppColors.mainWhite)),
-      backgroundColor: AppColors.mainBlue),
+      appBar: AppBar(
+          iconTheme: IconThemeData(color: AppColors.mainBlue),
+          title: Text('EditAccountPage',style: TextStyle(color: AppColors.mainBlue)),
+          backgroundColor: AppColors.mainWhite),
       body: SafeArea(
         child: Container(
           child: Text('TutorialPage'),
