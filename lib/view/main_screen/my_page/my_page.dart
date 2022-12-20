@@ -45,9 +45,13 @@ class MyPage extends ConsumerWidget {
                   onPressed: null,
                   leading: Icon(Icons.language),
                   title: Text('ログイン状況'),
-                  trailing: Expanded(child: Container()),
                   value: Text(_isSignin == true ? '有効' : '無効'),
                 ),
+              ],
+            ),
+            SettingsSection(
+              title: Text('その他の設定'),
+              tiles: <SettingsTile>[
                 SettingsTile.switchTile(
                   enabled: true,
                   activeSwitchColor: AppColors.mainBlue,
@@ -60,11 +64,6 @@ class MyPage extends ConsumerWidget {
                   leading: Icon(Icons.format_paint),
                   title: Text('音声読み上げ'),
                 ),
-              ],
-            ),
-            SettingsSection(
-              title: Text('その他の設定'),
-              tiles: <SettingsTile>[
                 SettingsTile.navigation(
                   onPressed: (value){
                     Navigator.push(context, MaterialPageRoute(builder: (context)=> AnnouncementPage()));
