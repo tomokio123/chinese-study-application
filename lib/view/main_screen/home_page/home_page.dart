@@ -8,7 +8,7 @@ import '../../../utilities/app_text_styles.dart';
 class HomePage extends StatelessWidget {
    HomePage({Key? key}) : super(key: key);
 
-  final List<String> entries = <String>['1', '2', '3', '4', '5', '6', '7', '8'];
+  final List<String> entries = <String>['1章　果物', '2　野菜', 'さいだいじゅうはちもじ。さいだいじゅ', '4', '5', '6', '7', '8'];
 
   @override
   Widget build(BuildContext context) {
@@ -20,15 +20,25 @@ class HomePage extends StatelessWidget {
           itemBuilder: (BuildContext context, int index) {
             return Container(
               padding: EdgeInsets.all(7),
-              child: Card(
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(20),
-                ),
-                color: AppColors.mainWhite,
-                elevation: 3,
-                child: Container(
-                  height: 120,
-                  child: Center(child: Text('Entry ${entries[index]}',style: AppTextStyles.textNormal)),
+              child: GestureDetector(
+
+                onTap: (){
+
+                },
+                child: Card(
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(20),
+                  ),
+                  color: AppColors.mainWhite,
+                  elevation: 3,
+                  child: Container(
+                    height: 120,
+                    child: Center(child: Text('${entries[index]}',
+                        style: AppTextStyles.textNormal,
+                    //maxLines: 1,
+                    overflow: TextOverflow.ellipsis
+                    )),
+                  ),
                 ),
               ),
             );
