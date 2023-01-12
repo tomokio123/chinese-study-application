@@ -1,6 +1,7 @@
 import 'package:chinese_study_applicaion/utilities/app_colors.dart';
 import 'package:chinese_study_applicaion/utilities/app_sized_boxes.dart';
 import 'package:chinese_study_applicaion/view/first_screen/first_screen.dart';
+import 'package:chinese_study_applicaion/view/main_screen/home_page/question_page/question_page.dart';
 import 'package:flutter/material.dart';
 
 import '../../../utilities/app_text_styles.dart';
@@ -21,9 +22,8 @@ class HomePage extends StatelessWidget {
             return Container(
               padding: EdgeInsets.all(7),
               child: GestureDetector(
-
                 onTap: (){
-
+                  Navigator.push(context, MaterialPageRoute(builder: (context) => QuestionPage()));
                 },
                 child: Card(
                   shape: RoundedRectangleBorder(

@@ -9,7 +9,7 @@ class TutorialPage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
           iconTheme: IconThemeData(color: AppColors.mainBlue),
-          title: Text('EditAccountPage',style: TextStyle(color: AppColors.mainBlue)),
+          title: Text('TutorialPage',style: TextStyle(color: AppColors.mainBlue)),
           backgroundColor: AppColors.mainWhite),
       body: SafeArea(
         child: Container(

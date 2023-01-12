@@ -1,4 +1,5 @@
 import 'package:chinese_study_applicaion/utilities/app_colors.dart';
+import 'package:chinese_study_applicaion/view/login_screen/login_screen.dart';
 import 'package:chinese_study_applicaion/view/main_screen/main_screen.dart';
 import 'package:chinese_study_applicaion/view/main_screen/my_page/account_page/edit_account_page/edit_account_page.dart';
 import 'package:chinese_study_applicaion/view/main_screen/my_page/other_setting_page/announcement_page.dart';
@@ -121,7 +122,7 @@ class MyPage extends ConsumerWidget {
                 Navigator.push(context, PageTransition(
                     type: PageTransitionType.scale,
                     alignment: Alignment.bottomCenter,
-                    child: MainScreen()));
+                    child: LoginScreen()));
               },
             ),
           ],
