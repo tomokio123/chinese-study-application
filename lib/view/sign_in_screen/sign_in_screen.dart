@@ -1,12 +1,12 @@
-import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
-
 import '../../utilities/app_colors.dart';
 import '../login_screen/login_screen.dart';
-import '../main_screen/main_screen.dart';
 
 class SignInScreen extends StatelessWidget {
-  const SignInScreen({Key? key}) : super(key: key);
+  SignInScreen({Key? key}) : super(key: key);
+
+  final TextEditingController emailController = TextEditingController();
+  final TextEditingController passwordController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -29,7 +29,7 @@ class SignInScreen extends StatelessWidget {
                     decoration: const InputDecoration(
                       hintText: 'メールアドレス',
                     ),
-                    //controller: emailController,
+                    controller: emailController,
                     autofocus: true,
                     keyboardType: TextInputType.emailAddress,
                     textInputAction: TextInputAction.next,
@@ -42,19 +42,19 @@ class SignInScreen extends StatelessWidget {
                         hintText: 'パスワード',
                         helperText: '※パスワードは6文字以上必要です'
                     ),
-                    //controller: passController,
+                    controller: passwordController,
                     keyboardType: TextInputType.visiblePassword,
                     textInputAction: TextInputAction.done,
                   ),
                 ),
                 SizedBox(
                   width: 300,
-                  child: TextField(
+                  child: TextFormField(
                     decoration: const InputDecoration(
                         hintText: 'パスワード(再入力)',
                         helperText: '※念の為再入力してください'
                     ),
-                    //controller: passController,
+                    controller: passwordController,
                     keyboardType: TextInputType.visiblePassword,
                     textInputAction: TextInputAction.done,
                   ),
@@ -67,14 +67,12 @@ class SignInScreen extends StatelessWidget {
                     child: Text('Button'))
               ],
             ),
-            /*child: ElevatedButton(
-                onPressed: (){
-                  Navigator.push(context, MaterialPageRoute(builder: (context) => const MainScreen()));
-                },
-                child: const Text('次の画面へ遷移')),*/
           ),
         ),
       ),
     );
+  }
+  Future<void> loginWithEmailAndPassword () async{
+
   }
 }

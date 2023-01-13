@@ -27,14 +27,14 @@ class LoginScreen extends ConsumerWidget {
                 Container(
                   padding: const EdgeInsets.symmetric(vertical: 20),
                   width: 300,
-                  child: TextField(
+                  child: TextFormField(
+                    autofillHints: const [AutofillHints.email],
                     cursorColor: AppColors.mainBlue,
                     decoration: const InputDecoration(
                       focusedBorder: UnderlineInputBorder(borderSide: BorderSide(color: AppColors.mainBlue, width: 2)),
-                      //enabledBorder: OutlineInputBorder(borderSide: BorderSide(color: AppColors.mainBlue)),
                       hintText: 'メールアドレス',
                     ),
-                    //controller: emailController,
+                    controller: emailController,
                     autofocus: true,
                     keyboardType: TextInputType.emailAddress,
                     textInputAction: TextInputAction.next,
@@ -42,14 +42,15 @@ class LoginScreen extends ConsumerWidget {
                 ),
                 SizedBox(
                   width: 300,
-                  child: TextField(
+                  child: TextFormField(
+                    autofillHints: const [AutofillHints.password],
                     cursorColor: AppColors.mainBlue,
                     decoration: const InputDecoration(
                       focusedBorder: UnderlineInputBorder(borderSide: BorderSide(color: AppColors.mainBlue, width: 2)),
                       //enabledBorder: OutlineInputBorder(borderSide: BorderSide(color: AppColors.mainBlue)),
                       hintText: 'パスワード',
                     ),
-                    //controller: passController,
+                    controller: passController,
                     keyboardType: TextInputType.visiblePassword,
                     textInputAction: TextInputAction.done,
                   ),
@@ -63,7 +64,7 @@ class LoginScreen extends ConsumerWidget {
                           TextSpan(text: 'こちら',
                               style: const TextStyle(color: AppColors.mainBlue),
                               recognizer: TapGestureRecognizer()..onTap = (){
-                                Navigator.push(context, MaterialPageRoute(builder: (context) => const SignInScreen()));
+                                Navigator.push(context, MaterialPageRoute(builder: (context) => SignInScreen()));
                             print('Tapped アカウント作成していない方はこちら');
                               }
                           )
