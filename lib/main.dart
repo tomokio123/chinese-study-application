@@ -9,7 +9,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 Future<void> main() async{
   WidgetsFlutterBinding.ensureInitialized();//これがないとエラー、要調査
-  //await Firebase.initializeApp();
+  await Firebase.initializeApp();
   runApp(ProviderScope(child: const MyApp()));
 }
 

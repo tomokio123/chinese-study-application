@@ -15,10 +15,15 @@ class SignUpScreen extends StatelessWidget {
   final _formKey = GlobalKey<FormState>();
 
   // SnackBarを定義
-  final snackBar = SnackBar(
+  final signInButtonSnackBar = SnackBar(
     // SnackBarの背景色
       backgroundColor: AppColors.mainPink,
     content: Text('全部の空欄を埋めてください')
+  );
+  final passwordSnackBar = SnackBar(
+    // SnackBarの背景色
+      backgroundColor: AppColors.mainPink,
+      content: Text('パスワードが一致していません')
   );
 
   @override
@@ -95,20 +100,26 @@ class SignUpScreen extends StatelessWidget {
                         passwordController.text.isNotEmpty &&
                         reInputtedPasswordController.text.isNotEmpty
                         ){
-                          var result = await Authentication.signUp(email: emailController.text, pass: passwordController.text);
-                          if(result is UserCredential) {
-                            //　「resultに入ってる値の型がUserCredential型なら」って意味
-                            var _result = await createAccount(result.user!.uid);//resultに入っているuidを_resultに格納
-                            if (_result == true) {
-                              result.user!.sendEmailVerification();//Emailアドレスにメールを送る処理
-                              // uploadが成功し終わってから元の画面に戻るってしたいので
-                              Navigator.push(context, MaterialPageRoute(builder: (context) => LoginScreen()));
-                              print('Go LoginScreen');
+                          if(passwordController.text == reInputtedPasswordController.text){
+                            var result = await Authentication.signUp(email: emailController.text, pass: passwordController.text);
+                            if(result is UserCredential) {
+                              //　「resultに入ってる値の型がUserCredential型なら」って意味
+                              var _result = await createAccount(result.user!.uid);//resultに入っているuidを_resultに格納
+                              if (_result == true) {
+                                result.user!.sendEmailVerification();//Emailアドレスにメールを送る処理
+                                // uploadが成功し終わってから元の画面に戻るってしたいので
+                                Navigator.push(context, MaterialPageRoute(builder: (context) => LoginScreen()));
+                                print('Go LoginScreen');
+                              }
                             }
+                          }
+                          else {
+                            ScaffoldMessenger.of(context).showSnackBar(passwordSnackBar);
+                            print('パスワードが一致しません');
                           }
                         } else {
                           // SnackBarを表示する
-                          ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                          ScaffoldMessenger.of(context).showSnackBar(signInButtonSnackBar);
                           print('全部の空欄を埋めてください');
                         }
                       },
