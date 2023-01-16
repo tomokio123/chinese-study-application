@@ -3,11 +3,13 @@ import 'package:chinese_study_applicaion/utilities/app_font_sizes.dart';
 import 'package:chinese_study_applicaion/utilities/app_text_styles.dart';
 import 'package:chinese_study_applicaion/view/first_screen/first_screen.dart';
 import 'package:chinese_study_applicaion/view/login_screen/login_screen.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-void main() {
+Future<void> main() async{
   WidgetsFlutterBinding.ensureInitialized();//これがないとエラー、要調査
+  //await Firebase.initializeApp();
   runApp(ProviderScope(child: const MyApp()));
 }
 

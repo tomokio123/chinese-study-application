@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../utilities/app_colors.dart';
-import '../sign_in_screen/sign_in_screen.dart';
+import '../sign_in_screen/sign_up_screen.dart';
 
 class LoginScreen extends ConsumerWidget {
   LoginScreen({Key? key}) : super(key: key);
@@ -64,7 +64,7 @@ class LoginScreen extends ConsumerWidget {
                           TextSpan(text: 'こちら',
                               style: const TextStyle(color: AppColors.mainBlue),
                               recognizer: TapGestureRecognizer()..onTap = (){
-                                Navigator.push(context, MaterialPageRoute(builder: (context) => SignInScreen()));
+                                Navigator.push(context, MaterialPageRoute(builder: (context) => SignUpScreen()));
                             print('Tapped アカウント作成していない方はこちら');
                               }
                           )

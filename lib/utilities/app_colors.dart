@@ -9,4 +9,5 @@ class AppColors{
   static const mainBlue = Color.fromRGBO(106 ,140, 198, 1);
   static const subBlue = Color.fromRGBO(174, 192, 227, 1);
   static const mainRed = Color.fromRGBO(244, 67, 54, 1);
+  static const mainPink = Color.fromRGBO(201, 60, 110, 1);
 }
