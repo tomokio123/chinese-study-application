@@ -1,3 +1,4 @@
+import 'package:chinese_study_applicaion/utilities/app_snack_bars.dart';
 import 'package:chinese_study_applicaion/utilities/firestore/user_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -12,19 +13,8 @@ class SignUpScreen extends StatelessWidget {
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
   final TextEditingController reInputtedPasswordController = TextEditingController();
-  final _formKey = GlobalKey<FormState>();
 
-  // SnackBarを定義
-  final signInButtonSnackBar = SnackBar(
-    // SnackBarの背景色
-      backgroundColor: AppColors.mainPink,
-    content: Text('全部の空欄を埋めてください')
-  );
-  final passwordSnackBar = SnackBar(
-    // SnackBarの背景色
-      backgroundColor: AppColors.mainPink,
-      content: Text('パスワードが一致していません')
-  );
+  final _formKey = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {
@@ -77,13 +67,6 @@ class SignUpScreen extends StatelessWidget {
                   SizedBox(
                     width: 300,
                     child: TextFormField(
-                      validator: (value) {
-                        if (value == null || value.isEmpty) {
-                          print('Please enter some text');
-                          return 'Please enter some text';
-                        }
-                        return null;
-                      },
                       decoration: const InputDecoration(
                           hintText: 'パスワード(再入力)',
                           helperText: '※念の為再入力してください'
@@ -101,10 +84,16 @@ class SignUpScreen extends StatelessWidget {
                         reInputtedPasswordController.text.isNotEmpty
                         ){
                           if(passwordController.text == reInputtedPasswordController.text){
-                            var result = await Authentication.signUp(email: emailController.text, pass: passwordController.text);
+                            var result = await Authentication.signUp(
+                                email: emailController.text, password: passwordController.text
+                            );
                             if(result is UserCredential) {
+                              //Auth登録成功SnackBar
+                              ScaffoldMessenger.of(context).showSnackBar(AppSnackBar.registeringSignUpIsSuccessful);
+
                               //　「resultに入ってる値の型がUserCredential型なら」って意味
-                              var _result = await createAccount(result.user!.uid);//resultに入っているuidを_resultに格納
+                              var _result = await createAccount(result.user!.uid);
+                              //resultに入っているuidを_resultに格納
                               if (_result == true) {
                                 result.user!.sendEmailVerification();//Emailアドレスにメールを送る処理
                                 // uploadが成功し終わってから元の画面に戻るってしたいので
@@ -112,14 +101,16 @@ class SignUpScreen extends StatelessWidget {
                                 print('Go LoginScreen');
                               }
                             }
+                            //Auth登録失敗SnackBar
+                            ScaffoldMessenger.of(context).showSnackBar(AppSnackBar.registeringSignUpIsFailed);
                           }
                           else {
-                            ScaffoldMessenger.of(context).showSnackBar(passwordSnackBar);
+                            ScaffoldMessenger.of(context).showSnackBar(AppSnackBar.passwordSnackBar);
                             print('パスワードが一致しません');
                           }
                         } else {
                           // SnackBarを表示する
-                          ScaffoldMessenger.of(context).showSnackBar(signInButtonSnackBar);
+                          ScaffoldMessenger.of(context).showSnackBar(AppSnackBar.signInButtonSnackBar);
                           print('全部の空欄を埋めてください');
                         }
                       },
