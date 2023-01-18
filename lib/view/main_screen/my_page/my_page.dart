@@ -15,9 +15,9 @@ import 'my_page_view_model.dart';
 
 class MyPage extends ConsumerWidget {
 
-  const MyPage({Key? key}) : super(key: key);
+  MyPage({Key? key}) : super(key: key);
   // [SliverAppBar]s are typically used in [CustomScrollView.slivers], which in
-  final bool _isSignin = true;//ログイン状態
+  final bool _isSignIn = true;//ログイン状態
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -32,7 +32,11 @@ class MyPage extends ConsumerWidget {
               title: Text('アカウント情報'),
               tiles: <SettingsTile>[
                 SettingsTile.navigation(
-                  onPressed: (value) => Navigator.push(context, MaterialPageRoute(builder: (context) => EditAccountPage())),
+                  onPressed: (value) => Navigator.push(
+                      context, MaterialPageRoute(builder: (context) => EditAccountPage(
+                        email: 'emailのモック',
+                        password: 'passwordのモック')
+                  )),
                   leading: Icon(Icons.person_outline_outlined),
                   title: Text('プロフィール'),
                   value: Text('編集'),
@@ -46,7 +50,7 @@ class MyPage extends ConsumerWidget {
                   onPressed: null,
                   leading: Icon(Icons.language),
                   title: Text('ログイン状況'),
-                  value: Text(_isSignin == true ? '有効' : '無効'),
+                  value: Text(_isSignIn == true ? '有効' : '無効'),
                 ),
               ],
             ),
@@ -83,7 +87,7 @@ class MyPage extends ConsumerWidget {
                 ),
               ],
             ),
-            if(_isSignin == true)SettingsSection(
+            if(_isSignIn == true)SettingsSection(
               tiles: <SettingsTile>[
                 SettingsTile.navigation(
                   onPressed: (value) => _logOutDialogBuilder(context),
