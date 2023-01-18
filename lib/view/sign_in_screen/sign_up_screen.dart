@@ -100,9 +100,11 @@ class SignUpScreen extends StatelessWidget {
                                 Navigator.push(context, MaterialPageRoute(builder: (context) => LoginScreen()));
                                 print('Go LoginScreen');
                               }
+                            } else {
+                              //Auth登録失敗SnackBar
+                              print('FirebaseAuth登録に失敗しました');
+                              ScaffoldMessenger.of(context).showSnackBar(AppSnackBar.registeringSignUpIsFailed);
                             }
-                            //Auth登録失敗SnackBar
-                            ScaffoldMessenger.of(context).showSnackBar(AppSnackBar.registeringSignUpIsFailed);
                           }
                           else {
                             ScaffoldMessenger.of(context).showSnackBar(AppSnackBar.passwordSnackBar);
@@ -124,9 +126,11 @@ class SignUpScreen extends StatelessWidget {
     );
   }
 
-  Future<dynamic> createAccount(String uid) async{
+  Future<dynamic> createAccount(String uid) async{//FireStoreに送るデータ
     //!でnull回避 await をつけておく一応
-    Account newAccount = Account(
+    Account newAccount = Account(//データのオブジェクト。所持するデータたち
+      //クライアント側から送るデータの「管」を作るイメージ。この後DB側のそのデータを受け取る「皿」たちとくっつける。
+        id: uid,
         email: emailController.text,
         password: passwordController.text
     );
