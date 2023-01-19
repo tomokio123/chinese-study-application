@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../utilities/app_colors.dart';
+import '../../utilities/app_snack_bars.dart';
 import '../sign_in_screen/sign_up_screen.dart';
 
 class LoginScreen extends ConsumerWidget {
@@ -24,6 +25,8 @@ class LoginScreen extends ConsumerWidget {
               children: [
                 SizedBox(height: 50),
                 Text('LoginScreen',style: TextStyle(fontSize: 35)),
+                Text('a@gmail.com',style: TextStyle(fontSize: 10)),
+                Text('aaaaaa',style: TextStyle(fontSize: 10)),
                 Container(
                   padding: const EdgeInsets.symmetric(vertical: 20),
                   width: 300,
@@ -49,6 +52,7 @@ class LoginScreen extends ConsumerWidget {
                       focusedBorder: UnderlineInputBorder(borderSide: BorderSide(color: AppColors.mainBlue, width: 2)),
                       //enabledBorder: OutlineInputBorder(borderSide: BorderSide(color: AppColors.mainBlue)),
                       hintText: 'パスワード',
+                      helperText: '※パスワードは6文字以上にしてください'
                     ),
                     controller: passController,
                     keyboardType: TextInputType.visiblePassword,
@@ -73,8 +77,17 @@ class LoginScreen extends ConsumerWidget {
                 ),
                 SizedBox(height: 30),
                 ElevatedButton(
-                    onPressed: (){
-                      Navigator.push(context, MaterialPageRoute(builder: (context) => const MainScreen()));
+                    onPressed: () async{
+                      if(emailController.text.isNotEmpty && passController.text.isNotEmpty) {
+                        ScaffoldMessenger.of(context).showSnackBar(AppSnackBar.logInIsSuccessful);
+                        print('FirebaseAuthログインに成功しました');
+                        Navigator.push(context, MaterialPageRoute(builder: (context) => const MainScreen()));
+                      } else {
+                        ScaffoldMessenger.of(context).showSnackBar(AppSnackBar.blankIsNotFilled);
+                        print('全部の空欄を埋めてください');
+                        ScaffoldMessenger.of(context).showSnackBar(AppSnackBar.logInIsFailed);
+                        print('FirebaseAuthログインに失敗しました');
+                      }
                       },
                     child: Text('Button'))
               ],

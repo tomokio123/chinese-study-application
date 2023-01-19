@@ -1,6 +1,5 @@
 import 'package:chinese_study_applicaion/utilities/app_colors.dart';
 import 'package:chinese_study_applicaion/view/login_screen/login_screen.dart';
-import 'package:chinese_study_applicaion/view/main_screen/main_screen.dart';
 import 'package:chinese_study_applicaion/view/main_screen/my_page/account_page/edit_account_page/edit_account_page.dart';
 import 'package:chinese_study_applicaion/view/main_screen/my_page/other_setting_page/announcement_page.dart';
 import 'package:chinese_study_applicaion/view/main_screen/my_page/other_setting_page/tutorial_page.dart';
@@ -9,8 +8,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:settings_ui/settings_ui.dart';
-
-import '../../first_screen/first_screen.dart';
 import 'my_page_view_model.dart';
 
 class MyPage extends ConsumerWidget {
@@ -18,6 +15,7 @@ class MyPage extends ConsumerWidget {
   MyPage({Key? key}) : super(key: key);
   // [SliverAppBar]s are typically used in [CustomScrollView.slivers], which in
   final bool _isSignIn = true;//ログイン状態
+  final bool _isOwner = true;//ログイン状態
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -84,6 +82,17 @@ class MyPage extends ConsumerWidget {
                   leading: Icon(Icons.language),
                   title: Text('チュートリアル'),
                   value: Text(''),
+                ),
+              ],
+            ),
+            if(_isOwner == true)SettingsSection(
+              title: Text('問題投稿'),
+              tiles: <SettingsTile>[
+                SettingsTile.navigation(
+                  onPressed: null,
+                  leading: Icon(Icons.language),
+                  title: Text('問題投稿'),
+                  value: Text('有効'),
                 ),
               ],
             ),

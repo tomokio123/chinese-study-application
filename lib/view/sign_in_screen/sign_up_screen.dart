@@ -48,13 +48,6 @@ class SignUpScreen extends StatelessWidget {
                   SizedBox(
                     width: 300,
                     child: TextFormField(
-                      validator: (value) {
-                        if (value == null || value.isEmpty) {
-                          print('Please enter some text');
-                          return 'Please enter some text';
-                        }
-                        return null;
-                      },
                       decoration: const InputDecoration(
                           hintText: 'パスワード',
                           helperText: '※パスワードは6文字以上必要です'
@@ -112,7 +105,7 @@ class SignUpScreen extends StatelessWidget {
                           }
                         } else {
                           // SnackBarを表示する
-                          ScaffoldMessenger.of(context).showSnackBar(AppSnackBar.signInButtonSnackBar);
+                          ScaffoldMessenger.of(context).showSnackBar(AppSnackBar.blankIsNotFilled);
                           print('全部の空欄を埋めてください');
                         }
                       },

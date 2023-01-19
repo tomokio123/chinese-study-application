@@ -1,6 +1,8 @@
 import 'package:chinese_study_applicaion/utilities/app_colors.dart';
 import 'package:chinese_study_applicaion/utilities/app_text_styles.dart';
 import 'package:chinese_study_applicaion/view/login_screen/login_screen.dart';
+import 'package:chinese_study_applicaion/view/main_screen/main_screen.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -32,7 +34,24 @@ class MyApp extends StatelessWidget {
             backgroundColor: AppColors.mainWhite),
       ),
       title: 'Chinese-study-application',
-      home: LoginScreen(),//ここに最初の画面
+      home: StreamBuilder<User?>(
+        stream: FirebaseAuth.instance.authStateChanges(),
+        builder: (context, snapshot) {
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            // スプラッシュ画面などに書き換えても良い
+            return const SizedBox();
+          }
+          if (snapshot.hasData) {
+            // User が null でなない、つまりサインイン済みのホーム画面へ
+            print('return MainScreen();');
+            return MainScreen();
+          }
+          // User が null である、つまり未サインインのサインイン画面へ
+          print('return LoginScreen();');
+          return LoginScreen();
+        },
+      ),
+      //home: LoginScreen(),//ここに最初の画面
     );
   }
 }
