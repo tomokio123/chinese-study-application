@@ -1,10 +1,11 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 import '../../model/account.dart';
+import '../authentication/authentication.dart';
 
-class UserFirestore {
-  static final _firestoreInstance = FirebaseFirestore.instance;
-  static final CollectionReference users = _firestoreInstance.collection('users');
+class UserFireStore {
+  static final _fireStoreInstance = FirebaseFirestore.instance;
+  static final CollectionReference users = _fireStoreInstance.collection('users');
 
   static Future<dynamic> setUser(Account newAccount) async{//ユーザーをfirestoreに登録する処理
     try{
@@ -21,6 +22,24 @@ class UserFirestore {
       return true;
     } on FirebaseException catch(e){
       print('新規ユーザー作成エラー $e');
+      return false;
+    }
+  }
+
+  static Future<dynamic> getUser(String uid) async{
+    try{
+      DocumentSnapshot documentSnapshot = await users.doc(uid).get();
+      Map<String, dynamic> data = documentSnapshot.data() as Map<String, dynamic>;
+      Account myAccount = Account(
+          id: uid,
+          email: data['email'],
+          password: data['password']
+      );
+      Authentication.myAccount = myAccount;
+      print('ユーザー取得完了');
+      return true;
+    } on FirebaseException catch(e){
+      print('ユーザー取得完了エラー: $e');
       return false;
     }
   }

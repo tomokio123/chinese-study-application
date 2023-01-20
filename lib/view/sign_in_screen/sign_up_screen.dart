@@ -80,7 +80,7 @@ class SignUpScreen extends StatelessWidget {
                             var result = await Authentication.signUp(
                                 email: emailController.text, password: passwordController.text
                             );
-                            if(result is UserCredential) {
+                            if(result is UserCredential) {//resultにちゃんとした値が入ってきた時
                               //Auth登録成功SnackBar
                               ScaffoldMessenger.of(context).showSnackBar(AppSnackBar.registeringSignUpIsSuccessful);
 
@@ -93,10 +93,14 @@ class SignUpScreen extends StatelessWidget {
                                 Navigator.push(context, MaterialPageRoute(builder: (context) => LoginScreen()));
                                 print('Go LoginScreen');
                               }
-                            } else {
-                              //Auth登録失敗SnackBar
-                              print('FirebaseAuth登録に失敗しました');
-                              ScaffoldMessenger.of(context).showSnackBar(AppSnackBar.registeringSignUpIsFailed);
+                            }
+                            if(result is FirebaseAuthException){//resultにfirebase系のエラーが入ってきた時
+                              if(result.code == 'email-already-in-use'){
+                                ScaffoldMessenger.of(context).showSnackBar(AppSnackBar.emailAddressAlreadyInUse);
+                              }
+                              if(result.code == 'invalid-email')
+                                ScaffoldMessenger.of(context).showSnackBar(AppSnackBar.invalidEmailAddress);
+
                             }
                           }
                           else {
@@ -127,7 +131,7 @@ class SignUpScreen extends StatelessWidget {
         email: emailController.text,
         password: passwordController.text
     );
-    var _result = await UserFirestore.setUser(newAccount);
+    var _result = await UserFireStore.setUser(newAccount);
     return _result;
   }
 }

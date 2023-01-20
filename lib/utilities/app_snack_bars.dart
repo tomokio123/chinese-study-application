@@ -35,9 +35,32 @@ class AppSnackBar {
   );
 
   static final logInIsFailed = SnackBar(
-      content: Text('FirebaseAuthログインに失敗しました'),
+      content: const Text('FirebaseAuthログインに失敗しました'),
       shape: snackBarShape,
       backgroundColor: AppColors.mainPink);
+
+  static final incorrectPasswordOrEmailAddress = SnackBar(
+      content: const Text('パスワードもしくはメールアドレスが間違っています'),
+      shape: snackBarShape,
+      backgroundColor: AppColors.mainPink);
+
+  //SignUp時の例外処理に引っかかった時のSnackBar
+  static final emailAddressAlreadyInUse = SnackBar(
+      content: const Text('そのメールアドレスを持つアカウントはすでに存在します'),
+      shape: snackBarShape,
+      backgroundColor: AppColors.mainPink);
+
+  static final invalidEmailAddress = SnackBar(
+      content: const Text('メールアドレスが無効です'),
+      shape: snackBarShape,
+      backgroundColor: AppColors.mainPink);
+
+  //Eメール認証で送ったメールのリンクをまだタップしていない時のSnackBar
+  static final yourEmailAddressIsNotApproved = SnackBar(
+      content: const Text('メールアドレス認証をしてください'),
+      shape: snackBarShape,
+      backgroundColor: AppColors.mainPink);
+
 
 
 
