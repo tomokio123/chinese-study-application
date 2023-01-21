@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../../../utilities/app_colors.dart';
-import '../account_page/edit_account_page/edit_account_view_model.dart';
+import '../../../../utilities/provider/providers.dart';
 
 class UserInfoPage extends ConsumerWidget {
   const UserInfoPage({Key? key}) : super(key: key);

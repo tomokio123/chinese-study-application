@@ -1,14 +1,11 @@
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-
 import '../../../../../model/account.dart';
 import '../../../../../utilities/app_colors.dart';
 import '../../../../../utilities/app_snack_bars.dart';
 import '../../../../../utilities/authentication/authentication.dart';
 import '../../../../../utilities/firestore/user_firestore.dart';
-import 'edit_account_view_model.dart';
+import '../../../../../utilities/provider/providers.dart';
 
 class EditAccountPage extends ConsumerWidget {
   const EditAccountPage({Key? key}) : super(key: key);

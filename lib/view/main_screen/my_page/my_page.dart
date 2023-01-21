@@ -7,11 +7,9 @@ import 'package:chinese_study_applicaion/view/main_screen/my_page/user_info_page
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:page_transition/page_transition.dart';
 import 'package:settings_ui/settings_ui.dart';
 import '../../../utilities/authentication/authentication.dart';
-import '../../../utilities/firestore/user_firestore.dart';
-import 'account_page/edit_account_page/edit_account_view_model.dart';
+import '../../../utilities/provider/providers.dart';
 import 'my_page_view_model.dart';
 
 class MyPage extends ConsumerWidget {
@@ -145,8 +143,8 @@ class MyPage extends ConsumerWidget {
                 textStyle: Theme.of(context).textTheme.labelLarge,
               ),
               child: const Text('サインアウト'),
-              onPressed: () {
-                Authentication.signOut();
+              onPressed: () async{
+                await Authentication.signOut();
                 while(Navigator.canPop(context)){//Navigator.canPop(context)＝「popできる状態だったら」
                   Navigator.pop(context);
                 }
@@ -189,17 +187,7 @@ class MyPage extends ConsumerWidget {
               ),
               child: const Text('アカウント削除'),
               onPressed: (){
-                UserFireStore.deleteUser(ref);
-                Authentication.deleteAuth();
-                Authentication.signOut();
-                while(Navigator.canPop(context)){//Navigator.canPop(context)＝「popできる状態だったら」
-                  Navigator.pop(context);
-                }
-                //popできないような状態になったらpushreplacement　＝　その画面を破棄して新しいルートに遷移する
-                Navigator.pushReplacement(context, MaterialPageRoute(
-                    builder: (context) => LoginScreen()
-                ));
-                print('サインアウトしてLoginScreen()へ遷移');
+                //まだ未記入
               },
             ),
           ],

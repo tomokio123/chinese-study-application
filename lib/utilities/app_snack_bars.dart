@@ -19,7 +19,8 @@ class AppSnackBar {
   );
 
   static final registeringSignUpIsSuccessful = SnackBar(
-      content: const Text('FirebaseAuth登録成功しました。また、メールアドレス宛に確認メールを送りました。'),
+      content: const Text('FirebaseAuth登録成功しました。'),
+      //TODO:FireBaseAuthの文言をよしなに変えておく。以下同じように。
       shape: snackBarShape,
       backgroundColor: AppColors.mainGreen);
 
@@ -60,6 +61,12 @@ class AppSnackBar {
       content: const Text('メールアドレス認証をしてください'),
       shape: snackBarShape,
       backgroundColor: AppColors.mainPink);
+
+  //Eメール認証で送ったメールのリンクをまだタップしていない時のSnackBar
+  static final sentVerificationEmail = SnackBar(
+      content: const Text('認証メールをメールアドレス宛に送りました。メール内リンクをタップしてください'),
+      shape: snackBarShape,
+      backgroundColor: AppColors.mainGreen);
 
   //プロフィール編集に成功時のSnackBar
   static final editingProfileIsSuccessful = SnackBar(

@@ -57,8 +57,15 @@ class Authentication {
     }
   }
 
-  static Future<void> signOut() async{
-    await _firebaseAuth.signOut();
+  static Future<bool> signOut() async{
+    try {
+      await _firebaseAuth.signOut();
+      print('${_firebaseAuth}のサインアウト成功しました');
+      return true;
+    } on FirebaseAuthException catch(e){
+      print('サインアウトerror: $e');
+      return false;
+    }
   }
 
   static Future<void> deleteAuth() async{
