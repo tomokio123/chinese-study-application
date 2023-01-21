@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 import '../../model/account.dart';
 import '../authentication/authentication.dart';
@@ -6,6 +7,7 @@ import '../authentication/authentication.dart';
 class UserFireStore {
   static final _fireStoreInstance = FirebaseFirestore.instance;
   static final CollectionReference users = _fireStoreInstance.collection('users');
+  static final currentUserId = FirebaseAuth.instance.currentUser!.uid;
 
   static Future<dynamic> setUser(Account newAccount) async{//ユーザーをfirestoreに登録する処理
     try{
@@ -42,5 +44,28 @@ class UserFireStore {
       print('ユーザー取得完了エラー: $e');
       return false;
     }
+  }
+
+  static Future<dynamic> updateProfile(Account updatedProfile) async{
+    //プロフィール(名前)をfirestoreで更新する処理
+    try{
+      await users.doc(updatedProfile.id).set({//データの追加は「set」メソッド
+        //「update」メソッドは
+        'name': updatedProfile.name,//「'name'」というフィールドの値をupdateしている
+      });
+      return true;
+    } on FirebaseException catch(e){
+      if(e.code == 'not-found'){
+        print("FireBase更新エラー: ${e}");
+        return e;
+      } else {
+        print('FireStoreプロフィール更新エラー $e');
+        return false;
+      }
+    }
+  }
+
+  static Future<dynamic> deleteUser(String accountId) async{
+    await users.doc(accountId).delete();//処理内容：ユーザを消す
   }
 }

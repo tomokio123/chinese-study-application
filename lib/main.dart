@@ -34,7 +34,7 @@ class MyApp extends StatelessWidget {
             backgroundColor: AppColors.mainWhite),
       ),
       title: 'Chinese-study-application',
-      home: StreamBuilder<User?>(
+      home: StreamBuilder<User?>(//ここに最初の画面
         stream: FirebaseAuth.instance.authStateChanges(),
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
@@ -51,7 +51,6 @@ class MyApp extends StatelessWidget {
           return LoginScreen();
         },
       ),
-      //home: LoginScreen(),//ここに最初の画面
     );
   }
 }

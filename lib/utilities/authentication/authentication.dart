@@ -35,6 +35,7 @@ class Authentication {
       //渡した引数の情報をもつオブジェクト「_result」のuserメソッドを呼び出す。
       // それをcurrentFirebaseUserとして再度保持する
       print("Auth signin ok");
+      print("$email");
       return _result;//返り値として_resultを返す
     } on FirebaseAuthException catch(e){
       if(e.code == 'invalid-email'){

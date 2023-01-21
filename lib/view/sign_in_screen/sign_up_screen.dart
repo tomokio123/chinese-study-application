@@ -108,7 +108,6 @@ class SignUpScreen extends StatelessWidget {
                             print('パスワードが一致しません');
                           }
                         } else {
-                          // SnackBarを表示する
                           ScaffoldMessenger.of(context).showSnackBar(AppSnackBar.blankIsNotFilled);
                           print('全部の空欄を埋めてください');
                         }

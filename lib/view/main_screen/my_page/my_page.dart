@@ -9,11 +9,15 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:settings_ui/settings_ui.dart';
+import '../../../utilities/authentication/authentication.dart';
+import '../../../utilities/firestore/user_firestore.dart';
+import 'account_page/edit_account_page/edit_account_view_model.dart';
 import 'my_page_view_model.dart';
 
 class MyPage extends ConsumerWidget {
 
-  MyPage({Key? key}) : super(key: key);
+  const MyPage({Key? key}) : super(key: key);
+
   // [SliverAppBar]s are typically used in [CustomScrollView.slivers], which in
   final bool _isSignIn = true;//ログイン状態
   final bool _isOwner = true;//ログイン状態
@@ -21,7 +25,8 @@ class MyPage extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
 
-    final checkedCurrentValue = ref.watch(myPageViewModelProvider);
+    final userId = ref.watch(userProvider)!.uid;
+    print('${userId.toString()}');
 
     return Scaffold(
         appBar: AppBar(title: Text('マイページ')),
@@ -32,9 +37,7 @@ class MyPage extends ConsumerWidget {
               tiles: <SettingsTile>[
                 SettingsTile.navigation(
                   onPressed: (value) => Navigator.push(
-                      context, MaterialPageRoute(builder: (context) => EditAccountPage(
-                        email: 'emailのモック',
-                        password: 'passwordのモック')
+                      context, MaterialPageRoute(builder: (context) => EditAccountPage()
                   )),
                   leading: Icon(Icons.person_outline_outlined),
                   title: Text('プロフィール'),
@@ -47,13 +50,11 @@ class MyPage extends ConsumerWidget {
               tiles: <SettingsTile>[
                 SettingsTile.navigation(
                   onPressed: (value) => Navigator.push(
-                      context, MaterialPageRoute(builder: (context) => UserInfoPage(
-                      email: 'emailのモック',
-                      password: 'passwordのモック')
+                      context, MaterialPageRoute(builder: (context) => UserInfoPage()
                   )),
                   leading: Icon(Icons.language),
-                  title: Text('ログイン状況'),
-                  value: Text(_isSignIn == true ? '有効' : '無効'),
+                  title: Text('詳細情報'),
+                  value: Text('確認'),
                 ),
               ],
             ),
@@ -109,6 +110,14 @@ class MyPage extends ConsumerWidget {
                 ),
               ],
             ),
+            if(_isSignIn == true)SettingsSection(
+              tiles: <SettingsTile>[
+                SettingsTile.navigation(
+                  onPressed: (value) => _deleteAccountDialogBuilder(context, userId),
+                  title: Text('アカウント削除',style: TextStyle(color: AppColors.mainRed)),
+                ),
+              ],
+            ),
           ],
         ),
     );
@@ -137,10 +146,60 @@ class MyPage extends ConsumerWidget {
               ),
               child: const Text('サインアウト'),
               onPressed: () {
-                Navigator.push(context, PageTransition(
-                    type: PageTransitionType.scale,
-                    alignment: Alignment.bottomCenter,
-                    child: LoginScreen()));
+                Authentication.signOut();
+                while(Navigator.canPop(context)){//Navigator.canPop(context)＝「popできる状態だったら」
+                  Navigator.pop(context);
+                }
+                //popできないような状態になったらpushreplacement　＝　その画面を破棄して新しいルートに遷移する
+                Navigator.pushReplacement(context, MaterialPageRoute(
+                    builder: (context) => LoginScreen()
+                ));
+                // Navigator.push(context, PageTransition(
+                //     type: PageTransitionType.scale,
+                //     alignment: Alignment.bottomCenter,
+                //     child: LoginScreen()));
+              },
+            ),
+          ],
+        );
+      },
+    );
+  }
+
+  Future<void> _deleteAccountDialogBuilder(BuildContext context, String ref) {
+    return showDialog<void>(
+      context: context,
+      builder: (BuildContext context) {
+        return CupertinoAlertDialog(
+          title: const Text('アカウント削除'),
+          content: const Text('本当にアカウント削除してよろしいでしょうか？'),
+          actions: <Widget>[
+            TextButton(
+              style: TextButton.styleFrom(
+                textStyle: Theme.of(context).textTheme.labelLarge,
+              ),
+              child: Text('戻る'),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+            TextButton(
+              style: TextButton.styleFrom(
+                textStyle: Theme.of(context).textTheme.labelLarge,
+              ),
+              child: const Text('アカウント削除'),
+              onPressed: (){
+                UserFireStore.deleteUser(ref);
+                Authentication.deleteAuth();
+                Authentication.signOut();
+                while(Navigator.canPop(context)){//Navigator.canPop(context)＝「popできる状態だったら」
+                  Navigator.pop(context);
+                }
+                //popできないような状態になったらpushreplacement　＝　その画面を破棄して新しいルートに遷移する
+                Navigator.pushReplacement(context, MaterialPageRoute(
+                    builder: (context) => LoginScreen()
+                ));
+                print('サインアウトしてLoginScreen()へ遷移');
               },
             ),
           ],

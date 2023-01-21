@@ -8,6 +8,6 @@ class Account {
   String favoriteQuestionId;
   Timestamp? createdAt;
 
-  Account({this.id = '', this.name = '', this.email = '',
+  Account({this.id = '', this.name = 'UnKnown', this.email = '',
     this.password = '', this.favoriteQuestionId = '', this.createdAt});
 }
