@@ -8,15 +8,23 @@ import '../../../../../utilities/firestore/user_firestore.dart';
 import '../../../../../utilities/provider/providers.dart';
 
 class EditAccountPage extends ConsumerWidget {
-  const EditAccountPage({Key? key}) : super(key: key);
+  String name;
+
+  EditAccountPage({Key? key, required this.name}) : super(key: key);
 
   @override
   Widget build(BuildContext context, WidgetRef ref){
-    final TextEditingController nameController = TextEditingController();
+
+    final email = ref.watch(currentUserProvider)!.email;
+    final userId = ref.watch(currentUserProvider)!.uid;
+    final name = ref.watch(nameProvider);
+
+
+
+    final nameController = TextEditingController(text: name);
     final _formKey = GlobalKey<FormState>();
 
-    final userId = ref.watch(userProvider)!.uid;
-    print('${userId.toString()}');
+    print('${email.toString()}');
 
     return GestureDetector(
       onTap: () => primaryFocus?.unfocus(),
@@ -45,12 +53,14 @@ class EditAccountPage extends ConsumerWidget {
                       textInputAction: TextInputAction.next,
                     ),
                   ),
+                  name is Account ? Text('名前：$name') : Text('名前：'),
                   const SizedBox(height: 20),
                   ElevatedButton(
                       onPressed: () async{
                         if(nameController.text.isNotEmpty){
                           Account updatedProfile = Account(
                             id: userId,
+                            email: email!,
                             name: nameController.text,
                           );
                           Authentication.myAccount = updatedProfile;

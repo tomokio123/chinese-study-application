@@ -23,7 +23,7 @@ class MyPage extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
 
-    final userId = ref.watch(userProvider)!.uid;
+    final userId = ref.watch(currentUserProvider)!.uid;
     print('${userId.toString()}');
 
     return Scaffold(
@@ -35,7 +35,7 @@ class MyPage extends ConsumerWidget {
               tiles: <SettingsTile>[
                 SettingsTile.navigation(
                   onPressed: (value) => Navigator.push(
-                      context, MaterialPageRoute(builder: (context) => EditAccountPage()
+                      context, MaterialPageRoute(builder: (context) => EditAccountPage(name: '初期値です')
                   )),
                   leading: Icon(Icons.person_outline_outlined),
                   title: Text('プロフィール'),

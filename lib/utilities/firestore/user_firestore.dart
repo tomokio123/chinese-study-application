@@ -34,6 +34,7 @@ class UserFireStore {
       Map<String, dynamic> data = documentSnapshot.data() as Map<String, dynamic>;
       Account myAccount = Account(
           id: uid,
+          name: data['name'],
           email: data['email'],
           password: data['password']
       );
@@ -47,10 +48,12 @@ class UserFireStore {
   }
 
   static Future<dynamic> updateProfile(Account updatedProfile) async{
-    //プロフィール(名前)をfirestoreで更新する処理
+    //プロフィール(名前)をfireStoreで更新する処理
     try{
       await users.doc(updatedProfile.id).set({//データの追加は「set」メソッド
         //「update」メソッドは
+        'email': updatedProfile.email,
+        'user_id': updatedProfile.id,
         'name': updatedProfile.name,//「'name'」というフィールドの値をupdateしている
       });
       return true;
