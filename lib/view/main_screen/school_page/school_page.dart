@@ -8,7 +8,6 @@ import '../../../utilities/app_colors.dart';
 import '../../../utilities/app_text_styles.dart';
 import '../../first_screen/first_screen.dart';
 import '../book_mark_page/book_mark_page.dart';
-import '../home_page/home_page.dart';
 //School = 問題のジャンルを選ぶページ
 class SchoolPage extends StatefulWidget {
   const SchoolPage({Key? key}) : super(key: key);

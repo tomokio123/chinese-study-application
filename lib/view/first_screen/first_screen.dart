@@ -1,7 +1,6 @@
 import 'dart:async';
 
 import 'package:chinese_study_applicaion/Utilities/app_colors.dart';
-import 'package:chinese_study_applicaion/view/main_screen/home_page/home_page.dart';
 import 'package:chinese_study_applicaion/view/main_screen/main_screen.dart';
 import 'package:flutter/material.dart';
 

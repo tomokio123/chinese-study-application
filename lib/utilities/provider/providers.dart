@@ -4,6 +4,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../model/account.dart';
+import '../../view/common_widget/buttons.dart';
 import '../authentication/authentication.dart';
 
 
@@ -11,6 +12,11 @@ import '../authentication/authentication.dart';
 //TODO: currentUser情報を持たせるProvider
 final currentUserProvider = StateProvider.autoDispose((ref) {
   return FirebaseAuth.instance.currentUser;
+});
+
+//TODO: ボタンが押されているかどうかを保持するProvider
+final buttonProvider = StateProvider.autoDispose((ref) {
+  return false;
 });
 
 // ユーザー情報の受け渡しを行うためのProvider
