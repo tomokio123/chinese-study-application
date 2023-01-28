@@ -1,17 +1,22 @@
+import 'package:chinese_study_applicaion/utilities/provider/providers.dart';
+import 'package:chinese_study_applicaion/view/main_screen/words_list_page/question_page/question_result_page.dart';
 import 'package:flutter/material.dart';
-
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../../utilities/app_colors.dart';
+import '../../../../utilities/app_text_styles.dart';
 
-class QuestionPage extends StatelessWidget {
+class QuestionPage extends ConsumerWidget {
   const QuestionPage({Key? key}) : super(key: key);
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     final Size size = MediaQuery.of(context).size;
+    int questionCounter = ref.watch(counterProvider);
 
     return Scaffold(
       appBar: AppBar(
           iconTheme: IconThemeData(color: AppColors.mainBlue),
+          title: Text('${ref.read(counterProvider) + 1}問目'),
           backgroundColor: AppColors.mainWhite,
           automaticallyImplyLeading: true),
         //以上の記述一行だけでNavigationのBack矢印が消せる。),
@@ -19,14 +24,46 @@ class QuestionPage extends StatelessWidget {
         child: SafeArea(
           child: Column(
             children: [
+              Text('${questionCounter + 1}問目'),
               Container(
                   width: double.infinity, height: size.height * 0.3,
                   color: AppColors.mainPink,
                   child: Center(child: Text('Container'))
               ),
-              Text("QuestionPage"),
-              Text("QuestionPage"),
-              Text("QuestionPage"),
+              Expanded(
+                child: Container(
+                  padding: EdgeInsets.fromLTRB(12,12,12,0),
+                  child: GridView.count(
+                      crossAxisCount: 2,
+                      mainAxisSpacing: 12,
+                      crossAxisSpacing: 12,
+                      children: List.generate(4, (index) => GestureDetector(
+                        onTap: (){
+                          if(ref.read(counterProvider) < 9){
+                            ref.read(counterProvider.notifier).state++;
+                          }
+                          if(questionCounter == 9){
+                            Navigator.push(context, MaterialPageRoute(builder: (context)=> QuestionResultPage(
+                              numberOfQuestions: questionCounter + 1,
+                              numberOfCorrectAnswers: 3,
+                            )
+                            ));
+                            ref.refresh(counterProvider.notifier).state;
+                          }
+                          print('${questionCounter + 1}');
+                        },
+                        child: Card(
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(10),
+                            ),
+                            color: AppColors.mainWhite,
+                            elevation: 5,
+                            child: Center(child: Text('${index + 1}', style: AppTextStyles.textBold))
+                        ),
+                      ))
+                  ),
+                ),
+              ),
             ],
           ),
         ),

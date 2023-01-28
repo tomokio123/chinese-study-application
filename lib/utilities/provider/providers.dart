@@ -19,6 +19,9 @@ final buttonProvider = StateProvider.autoDispose((ref) {
   return false;
 });
 
+//TODO: 数を保持するProvider
+final counterProvider = StateProvider((ref) => 0);
+
 // ユーザー情報の受け渡しを行うためのProvider
 final nameProvider = StateProvider.autoDispose((ref) {
   return '';

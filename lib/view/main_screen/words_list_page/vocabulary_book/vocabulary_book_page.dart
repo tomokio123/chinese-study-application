@@ -11,6 +11,12 @@ class VocabularyBookPage extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final Size size = MediaQuery.of(context).size;
+    final buttonState = ref.watch(buttonProvider);
+
+    List<String> questionTitleList = [
+      'りんご1','りんご2','りんご3','りんご4','りんご5',
+      'りんご6','りんご7','りんご8','りんご9''りんご10'
+    ];
 
     return Scaffold(
       appBar: AppBar(
@@ -18,24 +24,36 @@ class VocabularyBookPage extends ConsumerWidget {
           backgroundColor: AppColors.mainWhite,
           automaticallyImplyLeading: true),
       //以上の記述一行だけでNavigationのBack矢印が消せる。),
-      body: Center(
-        child: SafeArea(
-          child: Column(
-            children: [
-              Container(
-                  color: AppColors.mainGreen,
-                  width: double.infinity, height: size.height * 0.3,
-                  child: Center(
-                      child: Container(
-                        color: AppColors.mainPink,
-                        padding: EdgeInsets.symmetric(horizontal: 40),
-                        child: Text('VocabularyBookPageVocabularyBookPageVocabularyBookPageBookPageBookPageBookPage',
-                        style: TextStyle(fontSize: 20),),
-                      ))
-              ),
-              SizedBox(height: 40),
-              Buttons.normalOutlineButton(context, ref),
-            ],
+      body: SingleChildScrollView(//これは多分いらん
+        child: Center(
+          child: SafeArea(
+            child: Column(
+              children: [
+                Container(
+                    width: double.infinity, height: size.height * 0.3,
+                    child: Center(
+                        child: Container(
+                          color: AppColors.mainPink,
+                          padding: EdgeInsets.symmetric(horizontal: 40),
+                          child: Text(questionTitleList[1],
+                            style: TextStyle(fontSize: 20),),
+                        )
+                    )
+                ),
+                Buttons.normalOutlineButton(context, ref),
+                buttonState ? Container(
+                    width: double.infinity, height: size.height * 0.3,
+                    child: Center(
+                        child: Container(
+                          color: AppColors.mainPink,
+                          padding: EdgeInsets.symmetric(horizontal: 40),
+                          child: Text(questionTitleList[1],
+                            style: TextStyle(fontSize: 20),),
+                        )
+                    )
+                ) : Container()
+              ],
+            ),
           ),
         ),
       ),

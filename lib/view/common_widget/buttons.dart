@@ -32,4 +32,16 @@ class Buttons {
             : Text('答えを見る',style: TextStyle(fontSize: 20,fontWeight: FontWeight.bold))
     );
   }
+
+  static Widget normalButton(BuildContext context ,Future<void> function) {
+    return ElevatedButton(
+      child: const Text('次のp'),
+      style: ElevatedButton.styleFrom(
+        primary: Colors.red,
+        onPrimary: Colors.black,
+        shape: const StadiumBorder(),
+      ),
+      onPressed: () => function,
+    );
+  }
 }
