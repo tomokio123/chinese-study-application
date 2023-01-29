@@ -82,11 +82,10 @@ class SignUpScreen extends StatelessWidget {
                               var result = await Authentication.signUp(
                                   email: emailController.text, password: passwordController.text
                               );
-                              if(result is UserCredential) {//resultにちゃんとした値が入ってきた時
+                              if(result is UserCredential) {//resultにちゃんとした値が入ってきた時,つまり
+                                //　「resultに入ってる値の型がUserCredential型なら」って意味
                                 //Auth登録成功SnackBar
                                 ScaffoldMessenger.of(context).showSnackBar(AppSnackBar.registeringSignUpIsSuccessful);
-
-                                //　「resultに入ってる値の型がUserCredential型なら」って意味
                                 var _result = await createAccount(result.user!.uid);
                                 //resultに入っているuidを_resultに格納
                                 if (_result == true) {

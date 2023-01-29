@@ -74,17 +74,23 @@ class AppSnackBar {
       shape: snackBarShape,
       backgroundColor: AppColors.mainGreen);
 
-  //プロフィール編集に失敗c時のSnackBar
+  //プロフィール編集に失敗時のSnackBar
   static final editingProfileIsFailed = SnackBar(
       content: const Text('プロフィール編集に失敗しました'),
       shape: snackBarShape,
       backgroundColor: AppColors.mainPink);
 
-  //プロフィール編集に成功時のSnackBar
+  //問題の投稿に成功時のSnackBar
   static final postingQuestionIsSuccessful = SnackBar(
       content: const Text('問題の投稿に成功しました'),
       shape: snackBarShape,
       backgroundColor: AppColors.mainGreen);
+
+  //問題の投稿に失敗時のSnackBar
+  static final postingQuestionIsFailed = SnackBar(
+      content: const Text('問題の投稿に失敗しました'),
+      shape: snackBarShape,
+      backgroundColor: AppColors.mainPink);
 
 
 

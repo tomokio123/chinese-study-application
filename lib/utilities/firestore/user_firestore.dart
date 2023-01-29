@@ -20,7 +20,7 @@ class UserFireStore {
         'password': newAccount.password
       })
           .then((value) => print("FireStore新規ユーザー作成に成功"))
-          .catchError((error) => print("FireStore新規ユーザー作成に失敗しました!: $error"));
+          .catchError((error) => print("FireStore新規ユーザー作成に失敗: $error"));
       return true;
     } on FirebaseException catch(e){
       print('新規ユーザー作成エラー $e');

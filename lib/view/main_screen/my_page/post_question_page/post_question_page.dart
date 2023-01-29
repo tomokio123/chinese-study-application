@@ -1,14 +1,16 @@
-import 'package:chinese_study_applicaion/view/common_widget/buttons/buttons.dart';
+import 'package:chinese_study_applicaion/model/question.dart';
 import 'package:chinese_study_applicaion/view/common_widget/buttons/normal_button.dart';
 import 'package:chinese_study_applicaion/view/main_screen/main_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../../utilities/app_colors.dart';
 import '../../../../utilities/app_snack_bars.dart';
+import '../../../../utilities/firestore/question_firestore.dart';
 
 class PostQuestionPage extends ConsumerWidget {
   PostQuestionPage({Key? key}) : super(key: key);
 
+  final documentIdController = TextEditingController();
   final titleController = TextEditingController();
   final answerIdController = TextEditingController();
   final categoryIdController = TextEditingController();
@@ -29,6 +31,36 @@ class PostQuestionPage extends ConsumerWidget {
                   child: Column(
                     children: [
                       SizedBox(height: 50),
+                      Container(
+                        padding: EdgeInsets.symmetric(vertical: 20),
+                        width: size.width * 0.85,
+                        child: TextFormField(
+                          autofocus: true,
+                          cursorColor: AppColors.mainBlue,
+                          maxLines: 6,
+                          minLines: 1,
+                          decoration: const InputDecoration(
+                            labelStyle: TextStyle(color: AppColors.mainBlue),
+                            labelText: 'documentId',
+                            enabledBorder: OutlineInputBorder(
+                              borderSide: const BorderSide(
+                                width: 2,
+                                color: AppColors.mainBlue,
+                              ),
+                            ),
+                            focusedBorder: OutlineInputBorder(
+                                borderSide: BorderSide(
+                                    color: AppColors.mainBlue, width: 2)
+                            ),
+                            //enabledBorder: OutlineInputBorder(borderSide: BorderSide(color: AppColors.mainBlue)),
+                            hintText: 'documentId',
+                            helperText: '※FireStoreのドキュメントID',
+                          ),
+                          controller:documentIdController,
+                          keyboardType: TextInputType.visiblePassword,
+                          textInputAction: TextInputAction.next,
+                        ),
+                      ),
                       Container(
                         padding: EdgeInsets.symmetric(vertical: 20),
                         width: size.width * 0.85,
@@ -117,15 +149,23 @@ class PostQuestionPage extends ConsumerWidget {
                       ),
                       NormalButton(
                           buttonText: '問題を投稿',
-                          onPressed: (){
+                          onPressed: () async{
                             if(titleController.text.isNotEmpty &&
-                            answerIdController.text.isNotEmpty &&
-                            categoryIdController.text.isNotEmpty
+                                documentIdController.text.isNotEmpty &&
+                                answerIdController.text.isNotEmpty &&
+                                categoryIdController.text.isNotEmpty
                             ){
-                              ScaffoldMessenger.of(context).showSnackBar(AppSnackBar.postingQuestionIsSuccessful);
-                              Navigator.push(context, MaterialPageRoute(builder: (context) => MainScreen()));
+                              var _result = await postQuestion();
+                              if(_result == true){
+                                ScaffoldMessenger.of(context).showSnackBar(AppSnackBar.postingQuestionIsSuccessful);
+                                Navigator.push(context, MaterialPageRoute(builder: (context) => MainScreen()));
+                              } else {
+                                print('_result == true');
+                                ScaffoldMessenger.of(context).showSnackBar(AppSnackBar.postingQuestionIsFailed);
+                              }
                             } else {
                               ScaffoldMessenger.of(context).showSnackBar(AppSnackBar.blankIsNotFilled);
+                              print(titleController.text);
                               print('全部の空欄を埋めてください');
                             }
                       })
@@ -134,5 +174,16 @@ class PostQuestionPage extends ConsumerWidget {
                 )),
           )),
     );
+  }
+
+  Future<dynamic> postQuestion() async{//FireStoreに送るデータ
+    //!でnull回避 await をつけておく一応
+    Question newQuestion = Question(
+      title: titleController.text,
+      answerId: answerIdController.text,
+      categoryId: categoryIdController.text
+    );
+    var _result = await QuestionFireStore.setQuestion(newQuestion, documentIdController.text);
+    return _result;
   }
 }
