@@ -14,36 +14,45 @@ class QuestionPage extends ConsumerWidget {
     int questionCounter = ref.watch(counterProvider);
 
     return Scaffold(
-      appBar: AppBar(
-          iconTheme: IconThemeData(color: AppColors.mainBlue),
-          title: Text('${ref.read(counterProvider) + 1}問目'),
-          backgroundColor: AppColors.mainWhite,
-          automaticallyImplyLeading: true),
+      // appBar: AppBar(
+      //     iconTheme: IconThemeData(color: AppColors.mainBlue),
+      //     title: Text('${ref.read(counterProvider) + 1}問目'),
+      //     backgroundColor: AppColors.mainWhite,
+      //     automaticallyImplyLeading: true),
         //以上の記述一行だけでNavigationのBack矢印が消せる。),
       body: Center(
         child: SafeArea(
           child: Column(
             children: [
-              Text('${questionCounter + 1}問目'),
+              Container(
+                width: double.infinity,
+                //color: AppColors.mainPink,
+                padding: EdgeInsets.symmetric(horizontal: 30,vertical: 10),
+                  child: Center(
+                      child: Text('${questionCounter + 1}問目',
+                        style: TextStyle(fontSize: 30),)
+                  )),
               Container(
                   width: double.infinity, height: size.height * 0.3,
-                  color: AppColors.mainPink,
+                  //color: AppColors.mainBlue,
                   child: Center(child: Text('Container'))
               ),
               Expanded(
                 child: Container(
                   padding: EdgeInsets.fromLTRB(12,12,12,0),
                   child: GridView.count(
+                      physics: const NeverScrollableScrollPhysics(),
+                      //上記でスクロール固定
                       crossAxisCount: 2,
-                      mainAxisSpacing: 12,
-                      crossAxisSpacing: 12,
+                      mainAxisSpacing: 24,
+                      crossAxisSpacing: 24,
                       children: List.generate(4, (index) => GestureDetector(
                         onTap: (){
                           if(ref.read(counterProvider) < 9){
                             ref.read(counterProvider.notifier).state++;
                           }
                           if(questionCounter == 9){
-                            Navigator.push(context, MaterialPageRoute(builder: (context)=> QuestionResultPage(
+                            Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=> QuestionResultPage(
                               numberOfQuestions: questionCounter + 1,
                               numberOfCorrectAnswers: 3,
                             )

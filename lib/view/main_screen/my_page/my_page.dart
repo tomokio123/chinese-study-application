@@ -3,6 +3,7 @@ import 'package:chinese_study_applicaion/view/login_screen/login_screen.dart';
 import 'package:chinese_study_applicaion/view/main_screen/my_page/account_page/edit_account_page/edit_account_page.dart';
 import 'package:chinese_study_applicaion/view/main_screen/my_page/other_setting_page/announcement_page.dart';
 import 'package:chinese_study_applicaion/view/main_screen/my_page/other_setting_page/tutorial_page.dart';
+import 'package:chinese_study_applicaion/view/main_screen/my_page/post_question_page/post_question_page.dart';
 import 'package:chinese_study_applicaion/view/main_screen/my_page/user_info_page/user_info_page.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -93,7 +94,9 @@ class MyPage extends ConsumerWidget {
               title: Text('問題投稿'),
               tiles: <SettingsTile>[
                 SettingsTile.navigation(
-                  onPressed: null,
+                  onPressed: (value){
+                    Navigator.push(context, MaterialPageRoute(builder: (context)=> PostQuestionPage()));
+                  },
                   leading: Icon(Icons.language),
                   title: Text('問題投稿'),
                   value: Text('有効'),

@@ -1,4 +1,5 @@
 import 'package:chinese_study_applicaion/Utilities/app_colors.dart';
+import 'package:chinese_study_applicaion/view/main_screen/main_screen.dart';
 import 'package:chinese_study_applicaion/view/main_screen/school_page/school_page.dart';
 import 'package:flutter/material.dart';
 
@@ -32,7 +33,8 @@ class QuestionResultPage extends StatelessWidget {
                           ),
                           SizedBox(height: 24),
                           Text(
-                              'ここにresult：$numberOfQuestions問中$numberOfCorrectAnswers問正解'
+                              '$numberOfQuestions問中$numberOfCorrectAnswers問正解',
+                            style: TextStyle(fontSize: 28),
                           ),
                         ],
                       )),
@@ -49,7 +51,7 @@ class QuestionResultPage extends StatelessWidget {
                     shape: const StadiumBorder(),
                   ),
                   onPressed: () {
-                    Navigator.push(context, MaterialPageRoute(builder: (context) => SchoolPage()));
+                    Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => MainScreen()));
                   },
                 )
               ],

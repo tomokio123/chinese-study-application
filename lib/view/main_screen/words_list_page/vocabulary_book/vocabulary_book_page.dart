@@ -1,5 +1,5 @@
 import 'package:chinese_study_applicaion/utilities/provider/providers.dart';
-import 'package:chinese_study_applicaion/view/common_widget/buttons.dart';
+import 'package:chinese_study_applicaion/view/common_widget/buttons/buttons.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 

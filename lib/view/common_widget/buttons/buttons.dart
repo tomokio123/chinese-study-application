@@ -2,8 +2,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../../utilities/app_colors.dart';
-import '../../utilities/provider/providers.dart';
+import '../../../utilities/app_colors.dart';
+import '../../../utilities/provider/providers.dart';
 
 class Buttons {
   static Widget normalOutlineButton(BuildContext context, WidgetRef ref){
@@ -32,16 +32,18 @@ class Buttons {
             : Text('答えを見る',style: TextStyle(fontSize: 20,fontWeight: FontWeight.bold))
     );
   }
-
-  static Widget normalButton(BuildContext context ,Future<void> function) {
+  static Widget button(BuildContext context, String buttonText, Function function) {
     return ElevatedButton(
-      child: const Text('次のp'),
       style: ElevatedButton.styleFrom(
-        primary: Colors.red,
-        onPrimary: Colors.black,
+        primary: AppColors.mainBlue,
+        onPrimary: AppColors.mainWhite,
         shape: const StadiumBorder(),
       ),
       onPressed: () => function,
+      child: Container(
+        padding: EdgeInsets.symmetric(vertical: 10,horizontal: 20),
+          child: Text(buttonText,style: const TextStyle(fontSize: 30),)
+      ),
     );
   }
 }

@@ -80,6 +80,13 @@ class AppSnackBar {
       shape: snackBarShape,
       backgroundColor: AppColors.mainPink);
 
+  //プロフィール編集に成功時のSnackBar
+  static final postingQuestionIsSuccessful = SnackBar(
+      content: const Text('問題の投稿に成功しました'),
+      shape: snackBarShape,
+      backgroundColor: AppColors.mainGreen);
+
+
 
 
 
