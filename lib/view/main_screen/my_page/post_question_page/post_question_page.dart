@@ -1,6 +1,9 @@
 import 'package:chinese_study_applicaion/model/question.dart';
+import 'package:chinese_study_applicaion/utilities/provider/providers.dart';
 import 'package:chinese_study_applicaion/view/common_widget/buttons/normal_button.dart';
 import 'package:chinese_study_applicaion/view/main_screen/main_screen.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../../utilities/app_colors.dart';
@@ -10,14 +13,17 @@ import '../../../../utilities/firestore/question_firestore.dart';
 class PostQuestionPage extends ConsumerWidget {
   PostQuestionPage({Key? key}) : super(key: key);
 
-  final documentIdController = TextEditingController();
   final titleController = TextEditingController();
   final answerIdController = TextEditingController();
-  final categoryIdController = TextEditingController();
+  final documentIdController = TextEditingController();
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final Size size = MediaQuery.of(context).size;
+
+    String isSelectedValue = ref.watch(dramProvider);
+    final categoryIdController = TextEditingController(text: isSelectedValue);
+
     return GestureDetector(
       onTap: () => primaryFocus?.unfocus(),
       child: Scaffold(
@@ -31,6 +37,71 @@ class PostQuestionPage extends ConsumerWidget {
                   child: Column(
                     children: [
                       SizedBox(height: 50),
+                      Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          DropdownButton(
+                            items: const[
+                              DropdownMenuItem(
+                                value: 'fruits',
+                                child: Text('フルーツ'),
+                              ),
+                              DropdownMenuItem(
+                                value: 'home_appliances',
+                                child: Text('家電'),
+                              ),
+                              DropdownMenuItem(
+                                value: 'vegetables',
+                                child: Text('野菜'),
+                              ),
+                              DropdownMenuItem(
+                                value: 'people',
+                                child: Text('人称'),
+                              ),
+                              DropdownMenuItem(
+                                value: 'vehicles',
+                                child: Text('乗り物'),
+                              ),
+
+                            ],
+                            value: isSelectedValue,
+                            onChanged: (String? value) {
+                              try{
+                                ref.read(dramProvider.notifier).state = value!;
+                              } on NullThrownError catch(e) {
+                                print(e.toString());
+                              }
+                            },
+                          )
+                        ],
+                      ),
+                      Container(
+                        padding: EdgeInsets.symmetric(vertical: 20),
+                        width: size.width * 0.85,
+                        child: TextFormField(
+                          autofillHints: const [AutofillHints.telephoneNumber],
+                          cursorColor: AppColors.mainBlue,
+                          decoration: const InputDecoration(
+                            labelStyle: TextStyle(color: AppColors.mainBlue),
+                            labelText: 'category_id',
+                            enabledBorder: OutlineInputBorder(
+                              borderSide: const BorderSide(
+                                width: 2,
+                                color: AppColors.mainBlue,
+                              ),
+                            ),
+                            focusedBorder: OutlineInputBorder(
+                                borderSide: BorderSide(
+                                    color: AppColors.mainBlue, width: 2)
+                            ),
+                            //enabledBorder: OutlineInputBorder(borderSide: BorderSide(color: AppColors.mainBlue)),
+                            hintText: 'category_id',
+                          ),
+                          controller: categoryIdController,
+                          keyboardType: TextInputType.visiblePassword,
+                          textInputAction: TextInputAction.done,
+                        ),
+                      ),
                       Container(
                         padding: EdgeInsets.symmetric(vertical: 20),
                         width: size.width * 0.85,
@@ -57,7 +128,34 @@ class PostQuestionPage extends ConsumerWidget {
                             helperText: '※FireStoreのドキュメントID',
                           ),
                           controller:documentIdController,
-                          keyboardType: TextInputType.visiblePassword,
+                          keyboardType: TextInputType.phone,
+                          textInputAction: TextInputAction.next,
+                        ),
+                      ),
+                      Container(
+                        padding: EdgeInsets.symmetric(vertical: 20),
+                        width: size.width * 0.85,
+                        child: TextFormField(
+                          cursorColor: AppColors.mainBlue,
+                          decoration: const InputDecoration(
+                            labelStyle: TextStyle(color: AppColors.mainBlue),
+                            labelText: 'answer_id',
+                            enabledBorder: OutlineInputBorder(
+                              borderSide: const BorderSide(
+                                width: 2,
+                                color: AppColors.mainBlue,
+                              ),
+                            ),
+                            focusedBorder: OutlineInputBorder(
+                                borderSide: BorderSide(
+                                    color: AppColors.mainBlue, width: 2)
+                            ),
+                            //enabledBorder: OutlineInputBorder(borderSide: BorderSide(color: AppColors.mainBlue)),
+                            hintText: 'answer_id',
+                            helperText: '※answer_id',
+                          ),
+                          controller: answerIdController,
+                          keyboardType: TextInputType.phone,
                           textInputAction: TextInputAction.next,
                         ),
                       ),
@@ -90,63 +188,6 @@ class PostQuestionPage extends ConsumerWidget {
                           textInputAction: TextInputAction.next,
                         ),
                       ),
-                      Container(
-                        padding: EdgeInsets.symmetric(vertical: 20),
-                        width: size.width * 0.85,
-                        child: TextFormField(
-                          autofillHints: const [AutofillHints.telephoneNumber],
-                          cursorColor: AppColors.mainBlue,
-                          decoration: const InputDecoration(
-                            labelStyle: TextStyle(color: AppColors.mainBlue),
-                            labelText: 'answer_id',
-                            enabledBorder: OutlineInputBorder(
-                              borderSide: const BorderSide(
-                                width: 2,
-                                color: AppColors.mainBlue,
-                              ),
-                            ),
-                            focusedBorder: OutlineInputBorder(
-                                borderSide: BorderSide(
-                                    color: AppColors.mainBlue, width: 2)
-                            ),
-                            //enabledBorder: OutlineInputBorder(borderSide: BorderSide(color: AppColors.mainBlue)),
-                            hintText: 'answer_id',
-                            helperText: '※answer_id',
-                          ),
-                          controller: answerIdController,
-                          keyboardType: TextInputType.visiblePassword,
-                          textInputAction: TextInputAction.next,
-                        ),
-                      ),
-                      Container(
-                        padding: EdgeInsets.symmetric(vertical: 20),
-                        width: size.width * 0.85,
-                        child: TextFormField(
-                          autofillHints: const [AutofillHints.telephoneNumber],
-                          cursorColor: AppColors.mainBlue,
-                          decoration: const InputDecoration(
-                            labelStyle: TextStyle(color: AppColors.mainBlue),
-                            labelText: 'category_id',
-                            enabledBorder: OutlineInputBorder(
-                              borderSide: const BorderSide(
-                                width: 2,
-                                color: AppColors.mainBlue,
-                              ),
-                            ),
-                            focusedBorder: OutlineInputBorder(
-                                borderSide: BorderSide(
-                                    color: AppColors.mainBlue, width: 2)
-                            ),
-                            //enabledBorder: OutlineInputBorder(borderSide: BorderSide(color: AppColors.mainBlue)),
-                            hintText: 'category_id',
-                            helperStyle: TextStyle(color: AppColors.mainBlue),
-                            helperText: '※category_id',
-                          ),
-                          controller: categoryIdController,
-                          keyboardType: TextInputType.visiblePassword,
-                          textInputAction: TextInputAction.done,
-                        ),
-                      ),
                       NormalButton(
                           buttonText: '問題を投稿',
                           onPressed: () async{
@@ -155,12 +196,12 @@ class PostQuestionPage extends ConsumerWidget {
                                 answerIdController.text.isNotEmpty &&
                                 categoryIdController.text.isNotEmpty
                             ){
-                              var _result = await postQuestion();
-                              if(_result == true){
+                              var result = await postQuestion(categoryIdController.text);
+                              if(result == true){
                                 ScaffoldMessenger.of(context).showSnackBar(AppSnackBar.postingQuestionIsSuccessful);
                                 Navigator.push(context, MaterialPageRoute(builder: (context) => MainScreen()));
                               } else {
-                                print('_result == true');
+                                print('${result}');
                                 ScaffoldMessenger.of(context).showSnackBar(AppSnackBar.postingQuestionIsFailed);
                               }
                             } else {
@@ -174,16 +215,17 @@ class PostQuestionPage extends ConsumerWidget {
                 )),
           )),
     );
+
   }
 
-  Future<dynamic> postQuestion() async{//FireStoreに送るデータ
+  Future<dynamic> postQuestion(String categoryIdControllerText) async{//FireStoreに送るデータ
     //!でnull回避 await をつけておく一応
     Question newQuestion = Question(
       title: titleController.text,
       answerId: answerIdController.text,
-      categoryId: categoryIdController.text
+      categoryId: categoryIdControllerText
     );
-    var _result = await QuestionFireStore.setQuestion(newQuestion, documentIdController.text);
-    return _result;
+    var result = await QuestionFireStore.setQuestion(newQuestion, documentIdController.text);
+    return result;
   }
 }

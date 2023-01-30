@@ -16,8 +16,15 @@ class QuestionFireStore {
           .catchError((error) => print("FireStore新規問題投稿に失敗: $error"));
       return true;
     } on FirebaseException catch(e){
-      print('新規問題投稿エラー $e');
-      return false;
+      print('新規問題投稿エラー：$e');
+      // if(e.code == 'invalid-email'){
+      //   print("新規問題投稿エラー：${e.code}");
+      //   return e;
+      // }
+      // if(e.code == 'email-already-in-use'){
+      //   print("新規問題投稿エラー： ${e.code}");
+      //   return e;
+      // }
     }
   }
 

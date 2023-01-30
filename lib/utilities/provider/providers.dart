@@ -4,7 +4,6 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../model/account.dart';
-import '../../view/common_widget/buttons/buttons.dart';
 import '../authentication/authentication.dart';
 
 
@@ -22,9 +21,14 @@ final buttonProvider = StateProvider.autoDispose((ref) {
 //TODO: 数を保持するProvider
 final counterProvider = StateProvider((ref) => 0);
 
-// ユーザー情報の受け渡しを行うためのProvider
+// TODO:ユーザー情報の受け渡しを行うためのProvider
 final nameProvider = StateProvider.autoDispose((ref) {
   return '';
+});
+
+// TODO:ドラムロールの値を保持するProvider
+final dramProvider = StateProvider.autoDispose((ref) {
+  return 'fruits';
 });
 // final nameProvider = StateProvider.autoDispose((ref) {
 //   var result = ProvidersViewModel.fetchUserName();
