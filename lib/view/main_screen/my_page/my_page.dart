@@ -16,16 +16,15 @@ import 'my_page_view_model.dart';
 class MyPage extends ConsumerWidget {
 
   const MyPage({Key? key}) : super(key: key);
-
   // [SliverAppBar]s are typically used in [CustomScrollView.slivers], which in
   final bool _isSignIn = true;//ログイン状態
-  final bool _isOwner = true;//ログイン状態
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
 
     final userId = ref.watch(currentUserProvider)!.uid;
-    print('${userId.toString()}');
+    final currentUserEmail = ref.watch(currentUserProvider)!.email;
+    print('MyPage:$currentUserEmail');
 
     return Scaffold(
         appBar: AppBar(title: Text('マイページ')),
@@ -90,7 +89,7 @@ class MyPage extends ConsumerWidget {
                 ),
               ],
             ),
-            if(_isOwner == true)SettingsSection(
+            if(currentUserEmail == 't.fukuyama0123@gmail.com')SettingsSection(
               title: Text('問題投稿'),
               tiles: <SettingsTile>[
                 SettingsTile.navigation(

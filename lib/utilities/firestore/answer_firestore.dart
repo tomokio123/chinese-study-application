@@ -6,6 +6,12 @@ class AnswerFireStore {
   static final _fireStoreInstance = FirebaseFirestore.instance;
   static final CollectionReference answers = _fireStoreInstance.collection('answers');
 
+  static Future<dynamic> setAnswer(Answer newAnswer, String answerId) async{//ユーザーをfirestoreに登録する処理
+    try{
+    } on Exception catch(e){
+    }
+  }
+
   static Future<dynamic> getAnswer(String uid) async{
     try{
       DocumentSnapshot documentSnapshot = await answers.doc(uid).get();

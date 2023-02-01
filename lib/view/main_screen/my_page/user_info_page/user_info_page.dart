@@ -10,9 +10,7 @@ class UserInfoPage extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final email = ref.watch(currentUserProvider)!.email;
-    print('${email.toString()}');
     final password = ref.watch(currentUserProvider)!.uid;
-    print('${password.toString()}');
 
     final _formKey = GlobalKey<FormState>();
     final Size size = MediaQuery.of(context).size;
