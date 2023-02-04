@@ -385,20 +385,22 @@ class PostQuestionPage extends ConsumerWidget {
                                 correctAnswerIdController.text.isNotEmpty &&
                                 commentaryController.text.isNotEmpty
                             ){
-                              var result = await postQuestion(categoryIdController.text);
-                              if(result == true){
+                              var postingQuestionResult = await postQuestion(categoryIdController.text);
+                              var postingAnswerResult = await postAnswer();
+                              if(postingQuestionResult == true && postingAnswerResult == true){
                                 ScaffoldMessenger.of(context).showSnackBar(AppSnackBar.postingQuestionIsSuccessful);
                                 Navigator.push(context, MaterialPageRoute(builder: (context) => MainScreen()));
                               } else {
-                                print('${result}');
+                                print('${postingQuestionResult}');
+                                print('${postingAnswerResult}');
                                 ScaffoldMessenger.of(context).showSnackBar(AppSnackBar.postingQuestionIsFailed);
                               }
                             } else {
                               ScaffoldMessenger.of(context).showSnackBar(AppSnackBar.blankIsNotFilled);
-                              print(titleController.text);
                               print('全部の空欄を埋めてください');
                             }
-                      })
+                      }),
+                      const SizedBox(height: 30)
                     ],
                   ),
                 )),
@@ -418,9 +420,8 @@ class PostQuestionPage extends ConsumerWidget {
     return result;
   }
 
-  Future<dynamic> postAnswer(String answerIdControllerText) async{//FireStoreに送るデータ
+  Future<dynamic> postAnswer() async{//FireStoreに送るデータ
     Answer newAnswer = Answer(
-      id: answerIdControllerText,
       answer1: answer1Controller.text,
       answer2: answer2Controller.text,
       answer3: answer3Controller.text,
