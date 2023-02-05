@@ -8,6 +8,7 @@ class QuestionFireStore {
   static Future<dynamic> setQuestion(Question newQuestion, String documentId) async{//ユーザーをfirestoreに登録する処理
     try{
       await questions.doc(documentId).set({//データの追加は「set」メソッド
+        'question_id': newQuestion.questionId,
         'title': newQuestion.title,
         'answer_id': newQuestion.answerId,
         'category_id': newQuestion.categoryId,
@@ -25,7 +26,7 @@ class QuestionFireStore {
       DocumentSnapshot documentSnapshot = await questions.doc(questionId).get();
       Map<String, dynamic> data = documentSnapshot.data() as Map<String, dynamic>;
       Question question = Question(
-        id: questionId,
+        questionId: data[questionId],
         title: data['title'],
         answerId: data['answer_id'],
         categoryId: data['category_id']
@@ -36,5 +37,23 @@ class QuestionFireStore {
       print('ユーザー取得完了エラー: $e');
       return false;
     }
+  }
+
+  static Future<Map<String, Question>?> getQuestionCategoryList(List<String> categoryId) async{
+    Map<String, Question> map = {};
+    try{
+      await Future.forEach(categoryId, (String accountId) async{
+        var doc = await questions.doc(accountId).get();
+        Map<String, dynamic> data = doc.data() as Map<String, dynamic>;
+        Question questionCategory = Question(
+          categoryId: data["category_id"]
+        );
+        map[accountId] = questionCategory;
+      });
+      return map;
+    } on Exception catch(e) {
+      return null;
+    }
+
   }
 }

@@ -408,6 +408,7 @@ class PostQuestionPage extends ConsumerWidget {
   Future<dynamic> postQuestion(String categoryIdControllerText) async{//FireStoreに送るデータ
     //!でnull回避 await をつけておく一応
     Question newQuestion = Question(
+      questionId: documentIdController.text,
       categoryId: categoryIdControllerText,
       title: titleController.text,
       answerId: documentIdController.text
@@ -418,6 +419,7 @@ class PostQuestionPage extends ConsumerWidget {
 
   Future<dynamic> postAnswer() async{//FireStoreに送るデータ
     Answer newAnswer = Answer(
+      answerId: documentIdController.text,
       answer1: answer1Controller.text,
       answer2: answer2Controller.text,
       answer3: answer3Controller.text,

@@ -1,7 +1,5 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
-
 class Answer {
-  String id;
+  String answerId;
   String correctAnswerIndexNumber;
   String answer1;
   String answer2;
@@ -9,6 +7,6 @@ class Answer {
   String answer4;
   String commentary;
 
-  Answer({this.id = '', this.correctAnswerIndexNumber = '', this.answer1 = '',
+  Answer({this.answerId = '', this.correctAnswerIndexNumber = '', this.answer1 = '',
     this.answer2 = '', this.answer3 = '', this.answer4 = '',this.commentary = ''});
 }

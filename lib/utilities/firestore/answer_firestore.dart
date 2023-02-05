@@ -10,6 +10,7 @@ class AnswerFireStore {
     //解答をfireStoreに登録する処理
     try{
       await answers.doc(answerId).set({//データの追加は「set」メソッド
+        'answer_id': newAnswer.answerId,
         'answer1': newAnswer.answer1,
         'answer2': newAnswer.answer2,
         'answer3': newAnswer.answer3,
@@ -30,7 +31,7 @@ class AnswerFireStore {
       DocumentSnapshot documentSnapshot = await answers.doc(uid).get();
       Map<String, dynamic> data = documentSnapshot.data() as Map<String, dynamic>;
       Answer answer = Answer(
-        id: uid,
+        answerId: data['answer_id'],
         correctAnswerIndexNumber: data['correct_answer_index_number'],
         answer1: data['answer1'],
         answer2: data['answer2'],
