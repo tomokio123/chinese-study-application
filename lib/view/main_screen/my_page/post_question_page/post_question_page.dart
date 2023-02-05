@@ -3,8 +3,6 @@ import 'package:chinese_study_applicaion/model/question.dart';
 import 'package:chinese_study_applicaion/utilities/provider/providers.dart';
 import 'package:chinese_study_applicaion/view/common_widget/buttons/normal_button.dart';
 import 'package:chinese_study_applicaion/view/main_screen/main_screen.dart';
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../../utilities/app_colors.dart';
@@ -36,8 +34,8 @@ class PostQuestionPage extends ConsumerWidget {
       onTap: () => primaryFocus?.unfocus(),
       child: Scaffold(
           appBar: AppBar(
-              iconTheme: IconThemeData(color: AppColors.mainBlue),
-              title: Text('PostQuestionPage',style: TextStyle(color: AppColors.mainBlue)),
+              iconTheme: const IconThemeData(color: AppColors.mainBlue),
+              title: const Text('PostQuestionPage',style: TextStyle(color: AppColors.mainBlue)),
               backgroundColor: AppColors.mainWhite),
           body: SingleChildScrollView(
             child: SafeArea(
@@ -367,7 +365,7 @@ class PostQuestionPage extends ConsumerWidget {
                           ),
                           controller: commentaryController,
                           keyboardType: TextInputType.visiblePassword,
-                          textInputAction: TextInputAction.next,
+                          textInputAction: TextInputAction.done,
                         ),
                       ),
                       NormalButton(
@@ -388,11 +386,9 @@ class PostQuestionPage extends ConsumerWidget {
                               var postingQuestionResult = await postQuestion(categoryIdController.text);
                               var postingAnswerResult = await postAnswer();
                               if(postingQuestionResult == true && postingAnswerResult == true){
-                                ScaffoldMessenger.of(context).showSnackBar(AppSnackBar.postingQuestionIsSuccessful);
+                                ScaffoldMessenger.of(context).showSnackBar(AppSnackBar.postingQuestionAndAnswerIsSuccessful);
                                 Navigator.push(context, MaterialPageRoute(builder: (context) => MainScreen()));
                               } else {
-                                print('${postingQuestionResult}');
-                                print('${postingAnswerResult}');
                                 ScaffoldMessenger.of(context).showSnackBar(AppSnackBar.postingQuestionIsFailed);
                               }
                             } else {
