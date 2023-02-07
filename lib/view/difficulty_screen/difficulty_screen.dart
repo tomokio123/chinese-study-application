@@ -7,7 +7,10 @@ import '../../utilities/firestore/difficulty_firestore.dart';
 import '../main_screen/words_list_page/vocabulary_book/vocabulary_book_page.dart';
 
 class DifficultyScreen extends StatelessWidget {
-  const DifficultyScreen({Key? key}) : super(key: key);
+  final String categoryId;
+  const DifficultyScreen({Key? key, required this.categoryId}) : super(key: key);
+
+
 
   @override
   Widget build(BuildContext context) {
@@ -31,7 +34,9 @@ class DifficultyScreen extends StatelessWidget {
                             padding: EdgeInsets.all(7),
                             child: GestureDetector(
                               onTap: (){
-                                Navigator.push(context, MaterialPageRoute(builder: (context) => VocabularyBookPage()));
+                                Navigator.push(context, MaterialPageRoute(builder: (context) => VocabularyBookPage(
+                                    questionList: [],
+                                )));
                               },
                               child: Card(
                                 shape: RoundedRectangleBorder(

@@ -38,22 +38,4 @@ class QuestionFireStore {
       return false;
     }
   }
-
-  static Future<Map<String, Question>?> getQuestionCategoryList(List<String> categoryId) async{
-    Map<String, Question> map = {};
-    try{
-      await Future.forEach(categoryId, (String accountId) async{
-        var doc = await questions.doc(accountId).get();
-        Map<String, dynamic> data = doc.data() as Map<String, dynamic>;
-        Question questionCategory = Question(
-          categoryId: data["category_id"]
-        );
-        map[accountId] = questionCategory;
-      });
-      return map;
-    } on Exception catch(e) {
-      return null;
-    }
-
-  }
 }

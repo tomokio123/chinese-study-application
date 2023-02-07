@@ -36,4 +36,21 @@ class CategoryFireStore {
       return false;
     }
   }
+  static Future<Map<String, Category>?> getCategoryList(List<String> categoryId) async{
+    Map<String, Category> map = {};
+    try{
+      await Future.forEach(categoryId, (String accountId) async{
+        var doc = await categories.doc(accountId).get();
+        Map<String, dynamic> data = doc.data() as Map<String, dynamic>;
+        Category questionCategory = Category(
+            categoryId: data["category_id"]
+        );
+        map[accountId] = questionCategory;
+      });
+      return map;
+    } on Exception catch(e) {
+      return null;
+    }
+
+  }
 }

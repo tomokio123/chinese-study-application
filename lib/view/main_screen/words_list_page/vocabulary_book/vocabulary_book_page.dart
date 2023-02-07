@@ -8,7 +8,8 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../../utilities/app_colors.dart';
 
 class VocabularyBookPage extends ConsumerWidget {
-  const VocabularyBookPage({Key? key}) : super(key: key);
+  final List<String> questionList;
+  const VocabularyBookPage({Key? key, required this.questionList}) : super(key: key);
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
