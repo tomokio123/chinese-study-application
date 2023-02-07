@@ -45,7 +45,17 @@ class _FirstScreenState extends State<FirstScreen> {
       backgroundColor: AppColors.mainWhite,
       body: SafeArea(
         child: Center(
-          child: Text('FirstScreen',style: TextStyle(fontSize: 35)),
+          child: Column(
+            children: [
+              SizedBox(height: 150),
+              Text('FirstScreen',style: TextStyle(fontSize: 35)),
+              SizedBox(height: 120),
+              Container(
+                height: 120,
+                child: Image.asset('images/main_image.png'),
+              ),
+            ],
+          ),
           /*child: ElevatedButton(
               onPressed: (){
                 Navigator.push(context, MaterialPageRoute(builder: (context) => const MainScreen()));
