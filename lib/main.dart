@@ -45,10 +45,10 @@ class MyApp extends StatelessWidget {
             // User が null でなない、つまりサインイン済みのホーム画面へ
             print('return MainScreen();');
             return MainScreen();
+          } else {
+            // User が null である、つまり未サインインのサインイン画面へ
+            return LoginScreen();
           }
-          // User が null である、つまり未サインインのサインイン画面へ
-          print('return LoginScreen();');
-          return LoginScreen();
         },
       ),
     );

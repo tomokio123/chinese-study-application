@@ -1,7 +1,6 @@
 import 'package:chinese_study_applicaion/utilities/app_colors.dart';
 import 'package:chinese_study_applicaion/utilities/firestore/category_firestore.dart';
-import 'package:chinese_study_applicaion/utilities/firestore/question_firestore.dart';
-import 'package:chinese_study_applicaion/view/main_screen/words_list_page/vocabulary_book/vocabulary_book_page.dart';
+import 'package:chinese_study_applicaion/view/difficulty_screen/difficulty_screen.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
@@ -28,7 +27,7 @@ class WordsListPage extends StatelessWidget {
                     padding: EdgeInsets.all(7),
                     child: GestureDetector(
                       onTap: (){
-                        Navigator.push(context, MaterialPageRoute(builder: (context) => VocabularyBookPage()));
+                        Navigator.push(context, MaterialPageRoute(builder: (context) => const DifficultyScreen()));
                       },
                       child: Card(
                         shape: RoundedRectangleBorder(
@@ -50,7 +49,8 @@ class WordsListPage extends StatelessWidget {
                 }
             );
           } else {
-            return Text("${snapshot.hasData}");
+            // return Text("${snapshot.hasData}です！");
+            return Container();
           }
         }
       )
