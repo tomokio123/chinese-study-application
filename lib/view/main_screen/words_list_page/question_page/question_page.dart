@@ -19,6 +19,8 @@ class QuestionPage extends ConsumerWidget {
     final questionFuture = QuestionFireStore.questions.get();
     final answerFuture = AnswerFireStore.answers.get();
 
+    bool isAnswered = ref.watch(buttonProvider);//解答提出したかどうか
+
     return Scaffold(
       body: Center(
         child: SafeArea(
@@ -37,13 +39,12 @@ class QuestionPage extends ConsumerWidget {
                               style: TextStyle(fontSize: 30),)
                         )),
                     Container(
-                        color: AppColors.mainPink,
+                        color: AppColors.mainBlue,
                         width: double.infinity, height: size.height * 0.28,
-                        //color: AppColors.mainBlue,
                         child: Center(
                           //questionのタイトル
                             child: Text('${snapshot.data!.docs[questionCounter].get("title")}',
-                                style: TextStyle(fontSize: 20)))
+                                style: TextStyle(fontSize: 26)))
                     ),
                     Expanded(
                       child: Container(
@@ -52,46 +53,70 @@ class QuestionPage extends ConsumerWidget {
                           future: answerFuture,
                           builder: (context, snapshot) {
                             if(snapshot.hasData) {
-                              return GridView.count(
-                                  physics: const NeverScrollableScrollPhysics(),
-                                  //上記でスクロール固定
-                                  crossAxisCount: 2,
-                                  mainAxisSpacing: 24,
-                                  crossAxisSpacing: 24,
-                                  children: List.generate(4, (index) => GestureDetector(
-                                    onTap: (){
-                                      if(ref.read(counterProvider) < 9){
-                                        ref.read(counterProvider.notifier).state++;
-                                      }
-                                      if(questionCounter == 9){
-                                        Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=> QuestionResultPage(
-                                          numberOfQuestions: questionCounter + 1,
-                                          numberOfCorrectAnswers: 3,
-                                        )
-                                        ));
-                                        ref.refresh(counterProvider.notifier).state;
-                                      }
-                                      print('${questionCounter + 1}');
-                                    },
-                                    child: Card(
-                                        shape: RoundedRectangleBorder(
-                                          borderRadius: BorderRadius.circular(10),
-                                        ),
-                                        color: AppColors.mainWhite,
-                                        elevation: 5,
-                                        child: Center(
-                                            child: Text('${snapshot.data!.docs[questionCounter].get("answer${index + 1}")}', style: AppTextStyles.textBold)
-                                        )
-                                    ),
-                                  ))
+                              return
+                                isAnswered == false ? //未解答状態の時
+                                Container(//選択肢を出す
+                                  child: GridView.count(
+                                    physics: const NeverScrollableScrollPhysics(),
+                                    //上記でスクロール固定
+                                    crossAxisCount: 2,
+                                    mainAxisSpacing: 24,
+                                    crossAxisSpacing: 24,
+                                    children: List.generate(4, (index) => GestureDetector(
+                                      onTap: () async{
+                                        if(ref.read(counterProvider) < 9){
+                                          ref.read(buttonProvider.notifier).state = true;
+                                          //解答状態(isAnswered)をfalse => trueにする処理。
+                                          ref.read(counterProvider.notifier).state++;
+                                        }
+                                        if(questionCounter == 9){
+                                          Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=> QuestionResultPage(
+                                            numberOfQuestions: questionCounter + 1,
+                                            numberOfCorrectAnswers: 3,
+                                          )
+                                          ));
+                                          ref.refresh(counterProvider.notifier).state;
+                                        }
+                                        print('${questionCounter + 1}');
+                                      },
+                                      child: Card(
+                                          shape: RoundedRectangleBorder(
+                                            borderRadius: BorderRadius.circular(10),
+                                          ),
+                                          color: AppColors.mainWhite,
+                                          elevation: 5,
+                                          child: Center(
+                                              child: Text('${snapshot.data!.docs[questionCounter].get("answer${index + 1}")}', style: AppTextStyles.textBold)
+                                          )
+                                      ),
+                                    ))
+                                ),
+                              ) :
+                              GestureDetector(//解答すると
+                                onTap: (){
+                                  ref.read(buttonProvider.notifier).state = false;
+                                  print(ref.read(buttonProvider.notifier).state);
+                                },
+                                child: Container(
+                                  //color: AppColors.mainBlue,
+                                  child: Center(
+                                      child: Column(
+                                        children: [
+                                          SizedBox(height: 30),
+                                          Text("正解！or 不正解！",style: TextStyle(fontSize: 30)),
+                                          SizedBox(height: 30),
+                                          Text("解説:${snapshot.data!.docs[questionCounter].get("commentary")}")
+                                        ],
+                                      )),
+                                ),
                               );
                             } else {
-                              return Container();
+                              return Container(child: Text("${snapshot.hasData}"));
                             }
                           }
                         ),
                       ),
-                    ),
+                    )
                   ],
                 );
               } else {

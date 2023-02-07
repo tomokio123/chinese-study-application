@@ -14,7 +14,7 @@ final currentUserProvider = StateProvider.autoDispose((ref) {
 });
 
 //TODO: ボタンが押されているかどうかを保持するProvider
-final buttonProvider = StateProvider.autoDispose((ref) {
+final buttonProvider = StateProvider.autoDispose<bool>((ref) {
   return false;
 });
 
