@@ -7,7 +7,7 @@ class NormalButton extends StatelessWidget{
   final String buttonText;
   final VoidCallback onPressed;//ここがVoidCallBackじゃ無かったら以下のonPressedが回らん、なぜ
 
-  NormalButton({required this.buttonText, required this.onPressed});
+  const NormalButton({super.key, required this.buttonText, required this.onPressed});
 
   @override
   Widget build(BuildContext context) {
