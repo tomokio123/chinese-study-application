@@ -424,7 +424,7 @@ class PostQuestionPage extends ConsumerWidget {
       answer2: answer2Controller.text,
       answer3: answer3Controller.text,
       answer4: answer4Controller.text,
-      correctAnswerIndexNumber:correctAnswerIdController.text,
+      correctAnswerIndexNumber: correctAnswerIdController.text,
       commentary: commentaryController.text
     );
     var result = await AnswerFireStore.setAnswer(newAnswer, documentIdController.text);

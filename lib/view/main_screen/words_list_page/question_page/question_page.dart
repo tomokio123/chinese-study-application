@@ -19,7 +19,11 @@ class QuestionPage extends ConsumerWidget {
     final questionFuture = QuestionFireStore.questions.get();
     final answerFuture = AnswerFireStore.answers.get();
 
-    bool isAnswered = ref.watch(buttonProvider);//解答提出したかどうか
+    //解答提出したかどうか,default = false
+    final bool isAnswered = ref.watch(buttonProvider);
+    //正解かどうか,default = false
+    final bool isCorrect = ref.watch(isCorrectProvider);
+    final int numberOfCorrectAnswers = ref.watch(numberOfCorrectAnswersProvider);
 
     return Scaffold(
       body: Center(
@@ -28,6 +32,7 @@ class QuestionPage extends ConsumerWidget {
             future: questionFuture,
             builder: (context, snapshot) {
               if(snapshot.hasData){//これ忘れると「null check Operator」の例外吐かれるので対策しておく
+                //titleを先に取得しておく
                 return Column(
                   children: [
                     Container(
@@ -35,16 +40,20 @@ class QuestionPage extends ConsumerWidget {
                         //color: AppColors.mainPink,
                         padding: const EdgeInsets.only(top: 40),
                         child: Center(
-                            child: Text('${questionCounter + 1}問目',
-                              style: TextStyle(fontSize: 30),)
+                            child: Text(isAnswered ? "" : "${questionCounter + 1} 問目",
+                              style: const TextStyle(fontSize: 30),)
                         )),
                     Container(
                         color: AppColors.mainBlue,
                         width: double.infinity, height: size.height * 0.28,
                         child: Center(
                           //questionのタイトル
-                            child: Text('${snapshot.data!.docs[questionCounter].get("title")}',
-                                style: TextStyle(fontSize: 26)))
+                            child: isAnswered
+                                ? Text(isCorrect ? "正解です" : "不正解です",
+                                style: TextStyle(fontSize: 26))
+                                : Text(snapshot.data!.docs[questionCounter].get("title"),
+                                style: TextStyle(fontSize: 26)),
+                        )
                     ),
                     Expanded(
                       child: Container(
@@ -64,20 +73,32 @@ class QuestionPage extends ConsumerWidget {
                                     crossAxisSpacing: 24,
                                     children: List.generate(4, (index) => GestureDetector(
                                       onTap: () async{
+                                        //Tap時に先にやることは正誤判定を行うこと
+                                        if(index.toString() == snapshot.data!.docs[questionCounter].get("correct_answer_index_number")){
+                                          //正答時
+                                          ref.read(isCorrectProvider.notifier).state = true;
+                                          ref.read(numberOfCorrectAnswersProvider.notifier).state++;//正答数を+1
+                                        }
+                                        if(index.toString() != snapshot.data!.docs[questionCounter].get("correct_answer_index_number")){
+                                          //不正答時
+                                          ref.read(isCorrectProvider.notifier).state = false;
+                                        }
                                         if(ref.read(counterProvider) < 9){
                                           ref.read(buttonProvider.notifier).state = true;
                                           //解答状態(isAnswered)をfalse => trueにする処理。
                                           ref.read(counterProvider.notifier).state++;
                                         }
                                         if(questionCounter == 9){
-                                          Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=> QuestionResultPage(
+                                          Navigator.pushReplacement(context, MaterialPageRoute(
+                                              builder: (context)=> QuestionResultPage(
                                             numberOfQuestions: questionCounter + 1,
-                                            numberOfCorrectAnswers: 3,
-                                          )
-                                          ));
+                                            numberOfCorrectAnswers: ref.read(numberOfCorrectAnswersProvider)
+                                              )));
                                           ref.refresh(counterProvider.notifier).state;
                                         }
-                                        print('${questionCounter + 1}');
+                                        print("indexNumber:$index");
+                                        print('${questionCounter + 1}問目を回答した');
+                                        print("numberOfCorrectAnswers:${ref.read(numberOfCorrectAnswersProvider)}");
                                       },
                                       child: Card(
                                           shape: RoundedRectangleBorder(
@@ -95,20 +116,27 @@ class QuestionPage extends ConsumerWidget {
                               GestureDetector(//解答すると
                                 onTap: (){
                                   ref.read(buttonProvider.notifier).state = false;
-                                  print(ref.read(buttonProvider.notifier).state);
                                 },
-                                child: Container(
-                                  //color: AppColors.mainBlue,
-                                  child: Center(
-                                      child: Column(
-                                        children: [
-                                          SizedBox(height: 30),
-                                          Text("正解！or 不正解！",style: TextStyle(fontSize: 30)),
-                                          SizedBox(height: 30),
-                                          Text("解説:${snapshot.data!.docs[questionCounter].get("commentary")}")
-                                        ],
-                                      )),
-                                ),
+                                child: Center(
+                                    child: Column(
+                                      mainAxisAlignment: MainAxisAlignment.start,
+                                      children: [
+                                        Expanded(
+                                          child: Container(
+                                            padding: EdgeInsets.fromLTRB(20, 0, 20, 50),
+                                              child: Center(
+                                                  child: Text(
+                                                      "解説解説解説解説解説解説解説解説解説解説解説解説解説"
+                                                      "解説解説解説解説解説解説解説解説解説解説解説解説解説"
+                                                          "解説解説解説解説解説解説解説解説解説解説解"
+                                                      "説解説解説解説解説:"
+                                                      "${snapshot.data!.docs[questionCounter].get("commentary")}",
+                                                    style: TextStyle(fontSize: 22),)),
+                                            color: AppColors.mainGreen,
+                                          ),
+                                        ),
+                                      ],
+                                    )),
                               );
                             } else {
                               return Container(child: Text("${snapshot.hasData}"));

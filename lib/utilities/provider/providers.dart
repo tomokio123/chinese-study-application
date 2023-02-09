@@ -17,6 +17,15 @@ final currentUserProvider = StateProvider.autoDispose((ref) {
 final buttonProvider = StateProvider.autoDispose<bool>((ref) {
   return false;
 });
+//TODO: 正解かどうかを保持するProvider
+final isCorrectProvider = StateProvider.autoDispose<bool>((ref) {
+  return false;
+});
+
+//TODO: 正解数を保持するProvider
+final numberOfCorrectAnswersProvider = StateProvider.autoDispose<int>((ref) {
+  return 0;
+});
 
 //TODO: 数を保持するProvider
 final counterProvider = StateProvider((ref) => 0);
