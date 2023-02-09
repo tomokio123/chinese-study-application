@@ -1,5 +1,6 @@
 import 'package:chinese_study_applicaion/utilities/app_colors.dart';
 import 'package:chinese_study_applicaion/utilities/firestore/category_firestore.dart';
+import 'package:chinese_study_applicaion/view/common_widget/Indicators/normal_circular_indicator.dart';
 import 'package:chinese_study_applicaion/view/difficulty_screen/difficulty_screen.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
@@ -53,7 +54,7 @@ class WordsListPage extends StatelessWidget {
             );
           } else {
             // return Text("${snapshot.hasData}です！");
-            return Container();
+            return const NormalCircularIndicator();
           }
         }
       )
