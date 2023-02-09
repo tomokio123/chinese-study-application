@@ -1,5 +1,6 @@
 import 'package:chinese_study_applicaion/utilities/app_colors.dart';
 import 'package:chinese_study_applicaion/utilities/app_text_styles.dart';
+import 'package:chinese_study_applicaion/view/first_screen/first_screen.dart';
 import 'package:chinese_study_applicaion/view/login_screen/login_screen.dart';
 import 'package:chinese_study_applicaion/view/main_screen/main_screen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -43,8 +44,8 @@ class MyApp extends StatelessWidget {
           }
           if (snapshot.hasData) {
             // User が null でなない、つまりサインイン済みのホーム画面へ
-            print('return MainScreen();');
-            return MainScreen();
+            print('return firstScreen();');
+            return const FirstScreen();
           } else {
             // User が null である、つまり未サインインのサインイン画面へ
             return LoginScreen();

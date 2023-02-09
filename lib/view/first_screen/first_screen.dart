@@ -1,66 +1,40 @@
-import 'dart:async';
-
-import 'package:chinese_study_applicaion/Utilities/app_colors.dart';
+import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:chinese_study_applicaion/view/main_screen/main_screen.dart';
 import 'package:flutter/material.dart';
 
-class FirstScreen extends StatefulWidget {
+import '../../utilities/app_colors.dart';
+
+class FirstScreen extends StatelessWidget {
   const FirstScreen({Key? key}) : super(key: key);
-
-  @override
-  State<FirstScreen> createState() => _FirstScreenState();
-}
-
-class _FirstScreenState extends State<FirstScreen> {
-  //Declare a timer
-  Timer? timer;
-  @override
-  void initState() {
-    super.initState();
-
-    timer = Timer(
-      const Duration(seconds: 2),
-          () {
-        print('遷移完了');
-        Navigator.push(
-          context,
-          MaterialPageRoute(
-            builder: (context) => const MainScreen(),
-          ),
-        );
-      },
-    );
-  }
-
-  @override
-  void dispose() {
-    super.dispose();
-    timer?.cancel();
-  }
-
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: AppColors.mainWhite,
-      body: SafeArea(
-        child: Center(
-          child: Column(
-            children: [
-              SizedBox(height: 150),
-              Text('FirstScreen',style: TextStyle(fontSize: 35)),
-              SizedBox(height: 120),
-              Container(
-                height: 120,
-                child: Image.asset('images/main_image.png'),
-              ),
-            ],
+      body: GestureDetector(
+        onTap:  (){
+          Navigator.push(context, MaterialPageRoute(builder: (context) => const MainScreen()));
+        },
+        child: SafeArea(
+          child: Center(
+            child: Column(
+              children: [
+                SizedBox(height: 150),
+                AnimatedTextKit(
+                  animatedTexts: [
+                    ColorizeAnimatedText('AppTitle',
+                        colors: [AppColors.subBlue, AppColors.mainBlue, AppColors.subBlue],
+                        textStyle: TextStyle(fontSize: 45,letterSpacing: 1)
+                    ),
+                  ],
+                ),
+                SizedBox(height: 100),
+                Container(
+                  height: 170,
+                  child: Image.asset('images/main_image.png'))
+              ],
+            ),
           ),
-          /*child: ElevatedButton(
-              onPressed: (){
-                Navigator.push(context, MaterialPageRoute(builder: (context) => const MainScreen()));
-              },
-              child: const Text('次の画面へ遷移')),*/
         ),
       ),
     );

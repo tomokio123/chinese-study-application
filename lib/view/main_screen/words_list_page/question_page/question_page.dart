@@ -89,10 +89,11 @@ class QuestionPage extends ConsumerWidget {
                                           ref.read(counterProvider.notifier).state++;
                                         }
                                         if(questionCounter == 9){
+                                          int result = ref.read(numberOfCorrectAnswersProvider);
                                           Navigator.pushReplacement(context, MaterialPageRoute(
                                               builder: (context)=> QuestionResultPage(
                                             numberOfQuestions: questionCounter + 1,
-                                            numberOfCorrectAnswers: ref.read(numberOfCorrectAnswersProvider)
+                                            numberOfCorrectAnswers: numberOfCorrectAnswers
                                               )));
                                           ref.refresh(counterProvider.notifier).state;
                                         }

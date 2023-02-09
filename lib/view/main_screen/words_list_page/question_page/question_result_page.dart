@@ -39,10 +39,6 @@ class QuestionResultPage extends StatelessWidget {
                         ],
                       )),
                 ),
-                Text('text'),
-                Text('text'),
-                Text('text'),
-                Text('text'),
                 ElevatedButton(
                   child: const Text('次のページへ'),
                   style: ElevatedButton.styleFrom(
