@@ -2,7 +2,6 @@ import 'package:chinese_study_applicaion/utilities/app_colors.dart';
 import 'package:chinese_study_applicaion/utilities/app_text_styles.dart';
 import 'package:chinese_study_applicaion/view/first_screen/first_screen.dart';
 import 'package:chinese_study_applicaion/view/login_screen/login_screen.dart';
-import 'package:chinese_study_applicaion/view/main_screen/main_screen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
@@ -25,6 +24,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      key: GlobalKey(),
       darkTheme: ThemeData.dark(),
       theme: ThemeData(
         primaryColor: AppColors.mainBlue,
@@ -42,9 +42,8 @@ class MyApp extends StatelessWidget {
             // スプラッシュ画面などに書き換えても良い
             return const SizedBox();
           }
-          if (snapshot.hasData) {
+          else if (snapshot.hasData) {
             // User が null でなない、つまりサインイン済みのホーム画面へ
-            print('return firstScreen();');
             return const FirstScreen();
           } else {
             // User が null である、つまり未サインインのサインイン画面へ

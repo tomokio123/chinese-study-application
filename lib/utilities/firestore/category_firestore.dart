@@ -4,6 +4,10 @@ class CategoryFireStore {
   static final _fireStoreInstance = FirebaseFirestore.instance;
   static final CollectionReference categories= _fireStoreInstance.collection('categories');
 
+  static Future<QuerySnapshot> getCategory() async{
+      return CategoryFireStore.categories.get();
+  }
+
   static Future<dynamic> setCategory(Category newCategory, String categoryId) async{
     //解答をfireStoreに登録する処理
     try{
@@ -17,40 +21,5 @@ class CategoryFireStore {
     } on Exception catch(e){
       print('新規カテゴリ投稿エラー：$e');
     }
-  }
-
-  static Future<dynamic> getCategory(String categoryId) async {
-    try {
-      DocumentSnapshot documentSnapshot = await categories.doc(categoryId)
-          .get();
-      Map<String, dynamic> data = documentSnapshot.data() as Map<String,
-          dynamic>;
-      Category question = Category(
-        categoryTitle: data["category_title"],
-        categoryId: data["category_id"],
-      );
-      print('カテゴリー取得完了');
-      return question;
-    } on FirebaseException catch (e) {
-      print('カテゴリー取得完了エラー: $e');
-      return false;
-    }
-  }
-  static Future<Map<String, Category>?> getCategoryList(List<String> categoryId) async{
-    Map<String, Category> map = {};
-    try{
-      await Future.forEach(categoryId, (String accountId) async{
-        var doc = await categories.doc(accountId).get();
-        Map<String, dynamic> data = doc.data() as Map<String, dynamic>;
-        Category questionCategory = Category(
-            categoryId: data["category_id"]
-        );
-        map[accountId] = questionCategory;
-      });
-      return map;
-    } on Exception catch(e) {
-      return null;
-    }
-
   }
 }

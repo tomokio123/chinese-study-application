@@ -89,17 +89,16 @@ class QuestionPage extends ConsumerWidget {
                                           ref.read(counterProvider.notifier).state++;
                                         }
                                         if(questionCounter == 9){
-                                          int result = ref.read(numberOfCorrectAnswersProvider);
                                           Navigator.pushReplacement(context, MaterialPageRoute(
                                               builder: (context)=> QuestionResultPage(
                                             numberOfQuestions: questionCounter + 1,
-                                            numberOfCorrectAnswers: numberOfCorrectAnswers
+                                            numberOfCorrectAnswers: ref.read(numberOfCorrectAnswersProvider.notifier).state
                                               )));
                                           ref.refresh(counterProvider.notifier).state;
                                         }
                                         print("indexNumber:$index");
                                         print('${questionCounter + 1}問目を回答した');
-                                        print("numberOfCorrectAnswers:${ref.read(numberOfCorrectAnswersProvider)}");
+                                        print("numberOfCorrectAnswers:${ref.read(numberOfCorrectAnswersProvider.notifier).state}");
                                       },
                                       child: Card(
                                           shape: RoundedRectangleBorder(

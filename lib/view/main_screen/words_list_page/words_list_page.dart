@@ -8,25 +8,20 @@ import '../../../utilities/app_text_styles.dart';
 class WordsListPage extends StatelessWidget {
    WordsListPage({Key? key}) : super(key: key);
 
-   final _categoriesFuture = CategoryFireStore.categories.get();
-
-   // final List<String> entries = <String>[
-   //   '1章　果物', '2　野菜', 'さいだいじゅうはちもじ。さいだいじゅ', '4', '5', '6', '7', '8'
-   // ];
-
   @override
   Widget build(BuildContext context) {
     final Size size = MediaQuery.of(context).size;
     return SafeArea(
       child: FutureBuilder<QuerySnapshot>(
-        future: _categoriesFuture,
+        future: CategoryFireStore.getCategory(),//Categoryをget
         builder: (context, snapshot) {
           if(snapshot.hasData){
             return ListView.builder(
                 padding: const EdgeInsets.all(8),
                 itemCount: snapshot.data!.docs.length,
                 itemBuilder: (BuildContext context, int index) {
-                  String title = snapshot.data!.docs[index].get("category_title");
+                  //category_titleを変数に格納
+                  final String title = snapshot.data!.docs[index].get("category_title");
                   return Container(
                     padding: EdgeInsets.all(7),
                     child: GestureDetector(
@@ -43,7 +38,7 @@ class WordsListPage extends StatelessWidget {
                         elevation: 3,
                         child: Container(
                           height: 120,
-                          child: Center(child: Text('${title}',
+                          child: Center(child: Text(title,
                               style: AppTextStyles.textNormal,
                               //maxLines: 1,
                               overflow: TextOverflow.ellipsis
