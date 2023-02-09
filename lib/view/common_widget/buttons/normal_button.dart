@@ -11,16 +11,19 @@ class NormalButton extends StatelessWidget{
 
   @override
   Widget build(BuildContext context) {
-    return ElevatedButton(
-      style: ElevatedButton.styleFrom(
-        primary: AppColors.mainBlue,
-        onPrimary: AppColors.mainWhite,
-        shape: const StadiumBorder(),
-      ),
-      onPressed: onPressed,
-      child: Container(
-          padding: EdgeInsets.symmetric(vertical: 15,horizontal: 30),
-          child: Text(buttonText,style: const TextStyle(fontSize: 20),)
+    return Container(
+      width: 300,
+      child: ElevatedButton(
+        style: ElevatedButton.styleFrom(
+          primary: AppColors.mainBlue,
+          onPrimary: AppColors.mainWhite,
+          shape: const StadiumBorder(),
+        ),
+        onPressed: onPressed,
+        child: Container(
+            padding: EdgeInsets.symmetric(vertical: 12,horizontal: 30),
+            child: Text(buttonText,style: const TextStyle(fontSize: 20),)
+        ),
       ),
     );
   }

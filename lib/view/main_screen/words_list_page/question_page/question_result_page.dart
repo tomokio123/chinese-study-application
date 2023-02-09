@@ -50,7 +50,7 @@ class QuestionResultPage extends StatelessWidget {
                 ),
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 0,vertical: 30),
-                  child: NormalButton(buttonText: "buttonText", onPressed: (){
+                  child: NormalButton(buttonText: "戻る", onPressed: (){
                     Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => MainScreen()));
                   }),
                 ),
