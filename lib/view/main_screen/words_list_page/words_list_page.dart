@@ -13,7 +13,9 @@ class WordsListPage extends StatelessWidget {
     final Size size = MediaQuery.of(context).size;
     return SafeArea(
       child: FutureBuilder<QuerySnapshot>(
-        future: CategoryFireStore.getCategory(),//Categoryをget
+        future: CategoryFireStore.categories.get(),
+          //Categoryをget。これメソッドをCategoryFireStoreにstaticで分けるよりCategoryFireStore.categories.get()
+          //で直接書いた方なんか動きがいい。調べる。
         builder: (context, snapshot) {
           if(snapshot.hasData){
             return ListView.builder(

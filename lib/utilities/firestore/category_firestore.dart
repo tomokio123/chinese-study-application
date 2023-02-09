@@ -5,7 +5,7 @@ class CategoryFireStore {
   static final CollectionReference categories= _fireStoreInstance.collection('categories');
 
   static Future<QuerySnapshot> getCategory() async{
-      return CategoryFireStore.categories.get();
+      return CategoryFireStore.categories.get();//書いてはみたがなんか挙動が明らかに遅く没かな、、、
   }
 
   static Future<dynamic> setCategory(Category newCategory, String categoryId) async{
