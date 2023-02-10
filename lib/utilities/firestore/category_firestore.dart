@@ -8,10 +8,10 @@ class CategoryFireStore {
       return CategoryFireStore.categories.get();//書いてはみたがなんか挙動が明らかに遅く没かな、、、
   }
 
-  static Future<dynamic> setCategory(Category newCategory, String categoryId) async{
+  static Future<dynamic> setCategory(Category newCategory) async{
     //解答をfireStoreに登録する処理
     try{
-      await categories.doc(categoryId).set({//データの追加は「set」メソッド
+      await categories.doc(newCategory.categoryId).set({//データの追加は「set」メソッド
         'category_id': newCategory.categoryId,
         'category_title': newCategory.categoryTitle
       })

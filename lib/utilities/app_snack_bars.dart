@@ -80,9 +80,15 @@ class AppSnackBar {
       shape: snackBarShape,
       backgroundColor: AppColors.mainPink);
 
-  //問題の投稿に成功時のSnackBar
+  //問題と答えの投稿に成功時のSnackBar
   static final postingQuestionAndAnswerIsSuccessful = SnackBar(
       content: const Text('問題と答えの投稿に成功しました'),
+      shape: snackBarShape,
+      backgroundColor: AppColors.subGreen);
+
+  //カテゴリの投稿に成功時のSnackBar
+  static final postingCategoryIsSuccessful = SnackBar(
+      content: const Text('カテゴリの投稿に成功しました'),
       shape: snackBarShape,
       backgroundColor: AppColors.subGreen);
 

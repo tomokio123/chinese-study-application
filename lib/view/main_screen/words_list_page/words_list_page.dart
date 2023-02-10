@@ -42,7 +42,7 @@ class WordsListPage extends StatelessWidget {
                         child: Container(
                           height: 120,
                           child: Center(child: Text(title,
-                              style: AppTextStyles.textNormal,
+                              style: AppTextStyles.textBold,
                               //maxLines: 1,
                               overflow: TextOverflow.ellipsis
                           )),

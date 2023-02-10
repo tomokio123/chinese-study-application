@@ -1,4 +1,5 @@
 import 'package:chinese_study_applicaion/model/answer.dart';
+import 'package:chinese_study_applicaion/model/category.dart';
 import 'package:chinese_study_applicaion/model/question.dart';
 import 'package:chinese_study_applicaion/utilities/provider/providers.dart';
 import 'package:chinese_study_applicaion/view/common_widget/buttons/normal_button.dart';
@@ -8,6 +9,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../../utilities/app_colors.dart';
 import '../../../../utilities/app_snack_bars.dart';
 import '../../../../utilities/firestore/answer_firestore.dart';
+import '../../../../utilities/firestore/category_firestore.dart';
 import '../../../../utilities/firestore/question_firestore.dart';
 
 class PostQuestionPage extends ConsumerWidget {
@@ -22,6 +24,7 @@ class PostQuestionPage extends ConsumerWidget {
   final answer4Controller = TextEditingController();
   final correctAnswerIdController = TextEditingController();
   final commentaryController = TextEditingController();
+  final categoryTitleController = TextEditingController();
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -68,7 +71,14 @@ class PostQuestionPage extends ConsumerWidget {
                                 value: 'vehicles',
                                 child: Text('乗り物'),
                               ),
-
+                              DropdownMenuItem(
+                                value: 'sports',
+                                child: Text('スポーツ'),
+                              ),
+                              DropdownMenuItem(
+                                value: 'countries',
+                                child: Text('国'),
+                              ),
                             ],
                             value: isSelectedValue,
                             onChanged: (String? value) {
@@ -105,6 +115,34 @@ class PostQuestionPage extends ConsumerWidget {
                           ),
                           controller: categoryIdController,
                           keyboardType: TextInputType.visiblePassword,
+                          textInputAction: TextInputAction.done,
+                        ),
+                      ),
+                      Container(
+                        padding: EdgeInsets.symmetric(vertical: 20),
+                        width: size.width * 0.85,
+                        child: TextFormField(
+                          autofillHints: const [AutofillHints.telephoneNumber],
+                          cursorColor: AppColors.mainBlue,
+                          decoration: const InputDecoration(
+                            labelStyle: TextStyle(color: AppColors.mainBlue),
+                            labelText: 'category_title',
+                            enabledBorder: OutlineInputBorder(
+                              borderSide: const BorderSide(
+                                width: 2,
+                                color: AppColors.mainBlue,
+                              ),
+                            ),
+                            focusedBorder: OutlineInputBorder(
+                                borderSide: BorderSide(
+                                    color: AppColors.mainBlue, width: 2)
+                            ),
+                            //enabledBorder: OutlineInputBorder(borderSide: BorderSide(color: AppColors.mainBlue)),
+                            hintText: 'category_Title',
+                            helperText: '※カテゴリの日本語記入',
+                          ),
+                          controller: categoryTitleController,
+                          keyboardType: TextInputType.text,
                           textInputAction: TextInputAction.done,
                         ),
                       ),
@@ -385,8 +423,10 @@ class PostQuestionPage extends ConsumerWidget {
                             ){
                               var postingQuestionResult = await postQuestion(categoryIdController.text);
                               var postingAnswerResult = await postAnswer();
-                              if(postingQuestionResult == true && postingAnswerResult == true){
+                              var postingCategoryResult = await postCategory(categoryIdController.text);
+                              if(postingQuestionResult == true && postingAnswerResult == true && postingCategoryResult == true){
                                 ScaffoldMessenger.of(context).showSnackBar(AppSnackBar.postingQuestionAndAnswerIsSuccessful);
+                                ScaffoldMessenger.of(context).showSnackBar(AppSnackBar.postingCategoryIsSuccessful);
                                 Navigator.push(context, MaterialPageRoute(builder: (context) => MainScreen()));
                               } else {
                                 ScaffoldMessenger.of(context).showSnackBar(AppSnackBar.postingQuestionIsFailed);
@@ -414,6 +454,16 @@ class PostQuestionPage extends ConsumerWidget {
       answerId: documentIdController.text
     );
     var result = await QuestionFireStore.setQuestion(newQuestion, documentIdController.text);
+    return result;
+  }
+
+  Future<dynamic> postCategory(String categoryIdControllerText) async{//FireStoreに送るデータ
+    //!でnull回避 await をつけておく一応
+    Category newCategory = Category(
+        categoryId: categoryIdControllerText,
+        categoryTitle: categoryTitleController.text
+    );
+    var result = await CategoryFireStore.setCategory(newCategory);
     return result;
   }
 
