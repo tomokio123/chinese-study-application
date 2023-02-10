@@ -12,6 +12,11 @@ class AppTextStyles{
     fontSize: 24,
     color: AppColors.mainBlue,
   );
+  static const textBoldNormal = TextStyle(
+    fontWeight: FontWeight.bold,
+    fontSize: 20,
+    color: AppColors.mainBlue,
+  );
   static const textNormal = TextStyle(
     fontWeight: FontWeight.normal,
     fontSize: 20,

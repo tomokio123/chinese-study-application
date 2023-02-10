@@ -17,6 +17,7 @@ class QuestionPage extends ConsumerWidget {
     final Size size = MediaQuery.of(context).size;
     int questionCounter = ref.watch(counterProvider);
     final questionFuture = QuestionFireStore.questions.get();
+    //final questionFuture = QuestionFireStore.questions.where('category_id', isEqualTo: 'fruits').get();問題だけが検索されて取得してしまう
     final answerFuture = AnswerFireStore.answers.get();
 
     //解答提出したかどうか,default = false

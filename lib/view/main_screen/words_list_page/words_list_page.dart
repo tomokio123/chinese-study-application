@@ -2,6 +2,7 @@ import 'package:chinese_study_applicaion/utilities/app_colors.dart';
 import 'package:chinese_study_applicaion/utilities/firestore/category_firestore.dart';
 import 'package:chinese_study_applicaion/view/common_widget/Indicators/normal_circular_indicator.dart';
 import 'package:chinese_study_applicaion/view/difficulty_screen/difficulty_screen.dart';
+import 'package:chinese_study_applicaion/view/main_screen/words_list_page/question_page/question_page.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import '../../../utilities/app_text_styles.dart';
@@ -29,8 +30,8 @@ class WordsListPage extends StatelessWidget {
                     padding: EdgeInsets.all(7),
                     child: GestureDetector(
                       onTap: (){
-                        Navigator.push(context, MaterialPageRoute(builder: (context) => DifficultyScreen(
-                          categoryId: title,
+                        Navigator.push(context, MaterialPageRoute(builder: (context) => QuestionPage(
+                          //categoryId: snapshot.data!.docs[index].id
                         )));
                       },
                       child: Card(
@@ -42,7 +43,7 @@ class WordsListPage extends StatelessWidget {
                         child: Container(
                           height: 120,
                           child: Center(child: Text(title,
-                              style: AppTextStyles.textBold,
+                              style: AppTextStyles.textBoldNormal,
                               //maxLines: 1,
                               overflow: TextOverflow.ellipsis
                           )),
@@ -53,7 +54,6 @@ class WordsListPage extends StatelessWidget {
                 }
             );
           } else {
-            // return Text("${snapshot.hasData}です！");
             return const NormalCircularIndicator();
           }
         }

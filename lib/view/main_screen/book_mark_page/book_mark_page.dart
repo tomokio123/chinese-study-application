@@ -1,5 +1,6 @@
 import 'package:chinese_study_applicaion/utilities/app_text_styles.dart';
 import 'package:chinese_study_applicaion/view/common_widget/two_column_grid_card.dart';
+import 'package:chinese_study_applicaion/view/difficulty_screen/difficulty_screen.dart';
 import 'package:flutter/material.dart';
 
 import '../../../utilities/app_colors.dart';
@@ -21,7 +22,9 @@ class BookMarkPage extends StatelessWidget {
               crossAxisSpacing: 12,
               children: List.generate(10, (index) => GestureDetector(
                 onTap: (){
-                  Navigator.push(context, MaterialPageRoute(builder: (context)=> FirstScreen()));
+                  Navigator.push(context, MaterialPageRoute(builder: (context)=> DifficultyScreen(
+                      categoryId: "categoryIdのモックです")
+                  ));
                 },
                 child: Card(
                     color: AppColors.mainWhite,
