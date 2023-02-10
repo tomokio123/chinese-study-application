@@ -62,6 +62,7 @@ class QuestionPage extends ConsumerWidget {
                           future: answerFuture,
                           builder: (context, snapshot) {
                             if(snapshot.hasData) {
+                              int questionLength = snapshot.data!.size;//問題のListの長さを先に取得する
                               return
                                 isAnswered == false ? //未解答状態の時
                                 Container(//選択肢を出す
@@ -73,6 +74,7 @@ class QuestionPage extends ConsumerWidget {
                                     crossAxisSpacing: 24,
                                     children: List.generate(4, (index) => GestureDetector(
                                       onTap: () async{
+                                        print(questionLength);
                                         //Tap時に先にやることは正誤判定を行うこと
                                         if(index.toString() == snapshot.data!.docs[questionCounter].get("correct_answer_index_number")){
                                           //正答時
@@ -83,15 +85,15 @@ class QuestionPage extends ConsumerWidget {
                                           //不正答時
                                           ref.read(isCorrectProvider.notifier).state = false;
                                         }
-                                        if(ref.read(counterProvider) < 9){
+                                        if(ref.read(counterProvider) < questionLength - 1){
                                           ref.read(buttonProvider.notifier).state = true;
                                           //解答状態(isAnswered)をfalse => trueにする処理。
                                           ref.read(counterProvider.notifier).state++;
                                         }
-                                        if(questionCounter == 9){
+                                        if(questionCounter == questionLength - 1){
                                           Navigator.pushReplacement(context, MaterialPageRoute(
                                               builder: (context)=> QuestionResultPage(
-                                            numberOfQuestions: questionCounter + 1,
+                                            questionLength: questionCounter + 1,
                                             numberOfCorrectAnswers: ref.read(numberOfCorrectAnswersProvider.notifier).state
                                               )));
                                           ref.refresh(counterProvider.notifier).state;
@@ -132,7 +134,7 @@ class QuestionPage extends ConsumerWidget {
                                                       "説解説解説解説解説:"
                                                       "${snapshot.data!.docs[questionCounter].get("commentary")}",
                                                     style: TextStyle(fontSize: 22),)),
-                                            color: AppColors.mainGreen,
+                                            color: AppColors.subGreen,
                                           ),
                                         ),
                                       ],

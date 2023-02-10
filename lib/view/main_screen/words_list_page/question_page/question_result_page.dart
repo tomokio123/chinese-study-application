@@ -6,11 +6,11 @@ import 'package:chinese_study_applicaion/view/main_screen/school_page/school_pag
 import 'package:flutter/material.dart';
 
 class QuestionResultPage extends StatelessWidget {
-  final int numberOfQuestions;
+  final int questionLength;
   final int numberOfCorrectAnswers;
 
   const QuestionResultPage({Key? key,
-    required this.numberOfQuestions, required this.numberOfCorrectAnswers
+    required this.questionLength, required this.numberOfCorrectAnswers
   }) : super(key: key);
 
 
@@ -36,7 +36,7 @@ class QuestionResultPage extends StatelessWidget {
                             ),
                             SizedBox(height: 24),
                             Text(
-                                '$numberOfQuestions問中$numberOfCorrectAnswers問正解',
+                                '$questionLength問中$numberOfCorrectAnswers問正解',
                               style: TextStyle(fontSize: 28),
                             ),
                           ],

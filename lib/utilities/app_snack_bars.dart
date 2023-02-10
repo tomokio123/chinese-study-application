@@ -22,7 +22,7 @@ class AppSnackBar {
       content: const Text('FirebaseAuth登録成功しました。'),
       //TODO:FireBaseAuthの文言をよしなに変えておく。以下同じように。
       shape: snackBarShape,
-      backgroundColor: AppColors.mainGreen);
+      backgroundColor: AppColors.subGreen);
 
   static final registeringSignUpIsFailed = SnackBar(
       content: const Text('FirebaseAuth登録に失敗しました'),
@@ -31,7 +31,7 @@ class AppSnackBar {
 
   static final logInIsSuccessful = SnackBar(
     content: const Text('FirebaseAuthログインに成功しました'),
-    backgroundColor: AppColors.mainGreen,
+    backgroundColor: AppColors.subGreen,
     shape: snackBarShape,
   );
 
@@ -66,13 +66,13 @@ class AppSnackBar {
   static final sentVerificationEmail = SnackBar(
       content: const Text('認証メールをメールアドレス宛に送りました。メール内リンクをタップしてください'),
       shape: snackBarShape,
-      backgroundColor: AppColors.mainGreen);
+      backgroundColor: AppColors.subGreen);
 
   //プロフィール編集に成功時のSnackBar
   static final editingProfileIsSuccessful = SnackBar(
       content: const Text('プロフィール編集に成功しました'),
       shape: snackBarShape,
-      backgroundColor: AppColors.mainGreen);
+      backgroundColor: AppColors.subGreen);
 
   //プロフィール編集に失敗時のSnackBar
   static final editingProfileIsFailed = SnackBar(
@@ -84,7 +84,7 @@ class AppSnackBar {
   static final postingQuestionAndAnswerIsSuccessful = SnackBar(
       content: const Text('問題と答えの投稿に成功しました'),
       shape: snackBarShape,
-      backgroundColor: AppColors.mainGreen);
+      backgroundColor: AppColors.subGreen);
 
   //問題の投稿に失敗時のSnackBar
   static final postingQuestionIsFailed = SnackBar(
