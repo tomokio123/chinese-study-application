@@ -31,7 +31,8 @@ class QuestionPage extends ConsumerWidget {
         child: SafeArea(
           child: FutureBuilder<QuerySnapshot>(
             future: questionFuture,
-            builder: (context, snapshot) {
+            builder: (context, snapshot) {//このsnapShotには、もう整列して詰めておく。
+              //よってFutureで取得するときに整列、検索をすることが重要
               if(snapshot.hasData){//これ忘れると「null check Operator」の例外吐かれるので対策しておく
                 //titleを先に取得しておく
                 return Column(
@@ -66,56 +67,54 @@ class QuestionPage extends ConsumerWidget {
                               int questionLength = snapshot.data!.size;//問題のListの長さを先に取得する
                               return
                                 isAnswered == false ? //未解答状態の時
-                                Container(//選択肢を出す
-                                  child: GridView.count(
-                                    physics: const NeverScrollableScrollPhysics(),
-                                    //上記でスクロール固定
-                                    crossAxisCount: 2,
-                                    mainAxisSpacing: 24,
-                                    crossAxisSpacing: 24,
-                                    children: List.generate(4, (index) => GestureDetector(
-                                      onTap: () async{
-                                        print(questionLength);
-                                        //Tap時に先にやることは正誤判定を行うこと
-                                        if(index.toString() == snapshot.data!.docs[questionCounter].get("correct_answer_index_number")){
-                                          //正答時
-                                          ref.read(isCorrectProvider.notifier).state = true;
-                                          ref.read(numberOfCorrectAnswersProvider.notifier).state++;//正答数を+1
-                                        }
-                                        if(index.toString() != snapshot.data!.docs[questionCounter].get("correct_answer_index_number")){
-                                          //不正答時
-                                          ref.read(isCorrectProvider.notifier).state = false;
-                                        }
-                                        if(ref.read(counterProvider) < questionLength - 1){
-                                          ref.read(buttonProvider.notifier).state = true;
-                                          //解答状態(isAnswered)をfalse => trueにする処理。
-                                          ref.read(counterProvider.notifier).state++;
-                                        }
-                                        if(questionCounter == questionLength - 1){
-                                          Navigator.pushReplacement(context, MaterialPageRoute(
-                                              builder: (context)=> QuestionResultPage(
-                                            questionLength: questionCounter + 1,
-                                            numberOfCorrectAnswers: ref.read(numberOfCorrectAnswersProvider.notifier).state
-                                              )));
-                                          ref.refresh(counterProvider.notifier).state;
-                                        }
-                                        print("indexNumber:$index");
-                                        print('${questionCounter + 1}問目を回答した');
-                                        print("numberOfCorrectAnswers:${ref.read(numberOfCorrectAnswersProvider.notifier).state}");
-                                      },
-                                      child: Card(
-                                          shape: RoundedRectangleBorder(
-                                            borderRadius: BorderRadius.circular(10),
-                                          ),
-                                          color: AppColors.mainWhite,
-                                          elevation: 5,
-                                          child: Center(
-                                              child: Text('${snapshot.data!.docs[questionCounter].get("answer${index + 1}")}', style: AppTextStyles.textBold)
-                                          )
-                                      ),
-                                    ))
-                                ),
-                              ) :
+                                GridView.count(
+                                  physics: const NeverScrollableScrollPhysics(),
+                                  //上記でスクロール固定
+                                  crossAxisCount: 2,
+                                  mainAxisSpacing: 24,
+                                  crossAxisSpacing: 24,
+                                  children: List.generate(4, (index) => GestureDetector(
+                                    onTap: () async{
+                                      print(questionLength);
+                                      //Tap時に先にやることは正誤判定を行うこと
+                                      if(index.toString() == snapshot.data!.docs[questionCounter].get("correct_answer_index_number")){
+                                        //正答時
+                                        ref.read(isCorrectProvider.notifier).state = true;
+                                        ref.read(numberOfCorrectAnswersProvider.notifier).state++;//正答数を+1
+                                      }
+                                      if(index.toString() != snapshot.data!.docs[questionCounter].get("correct_answer_index_number")){
+                                        //不正答時
+                                        ref.read(isCorrectProvider.notifier).state = false;
+                                      }
+                                      if(ref.read(counterProvider) < questionLength - 1){
+                                        ref.read(buttonProvider.notifier).state = true;
+                                        //解答状態(isAnswered)をfalse => trueにする処理。
+                                        ref.read(counterProvider.notifier).state++;
+                                      }
+                                      if(questionCounter == questionLength - 1){
+                                        Navigator.pushReplacement(context, MaterialPageRoute(
+                                            builder: (context)=> QuestionResultPage(
+                                          questionLength: questionCounter + 1,
+                                          numberOfCorrectAnswers: ref.read(numberOfCorrectAnswersProvider.notifier).state
+                                            )));
+                                        ref.refresh(counterProvider.notifier).state;
+                                      }
+                                      print("indexNumber:$index");
+                                      print('${questionCounter + 1}問目を回答した');
+                                      print("numberOfCorrectAnswers:${ref.read(numberOfCorrectAnswersProvider.notifier).state}");
+                                    },
+                                    child: Card(
+                                        shape: RoundedRectangleBorder(
+                                          borderRadius: BorderRadius.circular(10),
+                                        ),
+                                        color: AppColors.mainWhite,
+                                        elevation: 5,
+                                        child: Center(
+                                            child: Text('${snapshot.data!.docs[questionCounter].get("answer${index + 1}")}', style: AppTextStyles.textBold)
+                                        )
+                                    ),
+                                  ))
+                                ) :
                               GestureDetector(//解答すると
                                 onTap: (){
                                   ref.read(buttonProvider.notifier).state = false;
@@ -129,11 +128,8 @@ class QuestionPage extends ConsumerWidget {
                                             padding: EdgeInsets.fromLTRB(20, 0, 20, 50),
                                               child: Center(
                                                   child: Text(
-                                                      "解説解説解説解説解説解説解説解説解説解説解説解説解説"
-                                                      "解説解説解説解説解説解説解説解説解説解説解説解説解説"
-                                                          "解説解説解説解説解説解説解説解説解説解説解"
-                                                      "説解説解説解説解説:"
-                                                      "${snapshot.data!.docs[questionCounter].get("commentary")}",
+                                                      "${snapshot.data!.docs[questionCounter - 1].get("commentary")}",
+                                                    //この処理より先にquestionCounterが++されてしまうので-1しておくことで帳尻合わせる。
                                                     style: TextStyle(fontSize: 22),)),
                                             color: AppColors.subGreen,
                                           ),
