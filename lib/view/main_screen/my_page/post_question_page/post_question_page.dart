@@ -45,7 +45,7 @@ class PostQuestionPage extends ConsumerWidget {
                 child: Center(
                   child: Column(
                     children: [
-                      SizedBox(height: 50),
+                      const SizedBox(height: 50),
                       Column(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
@@ -92,7 +92,7 @@ class PostQuestionPage extends ConsumerWidget {
                         ],
                       ),
                       Container(
-                        padding: EdgeInsets.symmetric(vertical: 20),
+                        padding: const EdgeInsets.symmetric(vertical: 20),
                         width: size.width * 0.85,
                         child: TextFormField(
                           autofillHints: const [AutofillHints.telephoneNumber],
@@ -101,7 +101,7 @@ class PostQuestionPage extends ConsumerWidget {
                             labelStyle: TextStyle(color: AppColors.mainBlue),
                             labelText: 'category_id',
                             enabledBorder: OutlineInputBorder(
-                              borderSide: const BorderSide(
+                              borderSide: BorderSide(
                                 width: 2,
                                 color: AppColors.mainBlue,
                               ),
@@ -119,7 +119,7 @@ class PostQuestionPage extends ConsumerWidget {
                         ),
                       ),
                       Container(
-                        padding: EdgeInsets.symmetric(vertical: 20),
+                        padding: const EdgeInsets.symmetric(vertical: 20),
                         width: size.width * 0.85,
                         child: TextFormField(
                           autofillHints: const [AutofillHints.telephoneNumber],
@@ -128,7 +128,7 @@ class PostQuestionPage extends ConsumerWidget {
                             labelStyle: TextStyle(color: AppColors.mainBlue),
                             labelText: 'category_title',
                             enabledBorder: OutlineInputBorder(
-                              borderSide: const BorderSide(
+                              borderSide: BorderSide(
                                 width: 2,
                                 color: AppColors.mainBlue,
                               ),
@@ -147,7 +147,7 @@ class PostQuestionPage extends ConsumerWidget {
                         ),
                       ),
                       Container(
-                        padding: EdgeInsets.symmetric(vertical: 20),
+                        padding: const EdgeInsets.symmetric(vertical: 20),
                         width: size.width * 0.85,
                         child: TextFormField(
                           autofocus: true,
@@ -158,7 +158,7 @@ class PostQuestionPage extends ConsumerWidget {
                             labelStyle: TextStyle(color: AppColors.mainBlue),
                             labelText: 'documentId',
                             enabledBorder: OutlineInputBorder(
-                              borderSide: const BorderSide(
+                              borderSide: BorderSide(
                                 width: 2,
                                 color: AppColors.mainBlue,
                               ),
@@ -177,7 +177,7 @@ class PostQuestionPage extends ConsumerWidget {
                         ),
                       ),
                       Container(
-                        padding: EdgeInsets.symmetric(vertical: 20),
+                        padding: const EdgeInsets.symmetric(vertical: 20),
                         width: size.width * 0.85,
                         child: TextFormField(
                           cursorColor: AppColors.mainBlue,
@@ -185,7 +185,7 @@ class PostQuestionPage extends ConsumerWidget {
                             labelStyle: TextStyle(color: AppColors.mainBlue),
                             labelText: 'answer_id',
                             enabledBorder: OutlineInputBorder(
-                              borderSide: const BorderSide(
+                              borderSide: BorderSide(
                                 width: 2,
                                 color: AppColors.mainBlue,
                               ),
@@ -204,7 +204,7 @@ class PostQuestionPage extends ConsumerWidget {
                         ),
                       ),
                       Container(
-                        padding: EdgeInsets.symmetric(vertical: 20),
+                        padding: const EdgeInsets.symmetric(vertical: 20),
                         width: size.width * 0.85,
                         child: TextFormField(
                           cursorColor: AppColors.mainBlue,
@@ -214,7 +214,7 @@ class PostQuestionPage extends ConsumerWidget {
                             labelStyle: TextStyle(color: AppColors.mainBlue),
                             labelText: 'title',
                               enabledBorder: OutlineInputBorder(
-                                borderSide: const BorderSide(
+                                borderSide: BorderSide(
                                   width: 2,
                                   color: AppColors.mainBlue,
                                 ),
@@ -233,7 +233,7 @@ class PostQuestionPage extends ConsumerWidget {
                         ),
                       ),
                       Container(
-                        padding: EdgeInsets.symmetric(vertical: 20),
+                        padding: const EdgeInsets.symmetric(vertical: 20),
                         width: size.width * 0.85,
                         child: TextFormField(
                           cursorColor: AppColors.mainBlue,
@@ -243,7 +243,7 @@ class PostQuestionPage extends ConsumerWidget {
                             labelStyle: TextStyle(color: AppColors.mainBlue),
                             labelText: 'answer1',
                             enabledBorder: OutlineInputBorder(
-                              borderSide: const BorderSide(
+                              borderSide: BorderSide(
                                 width: 2,
                                 color: AppColors.mainBlue,
                               ),
@@ -262,7 +262,7 @@ class PostQuestionPage extends ConsumerWidget {
                         ),
                       ),
                       Container(
-                        padding: EdgeInsets.symmetric(vertical: 20),
+                        padding: const EdgeInsets.symmetric(vertical: 20),
                         width: size.width * 0.85,
                         child: TextFormField(
                           cursorColor: AppColors.mainBlue,
@@ -272,7 +272,7 @@ class PostQuestionPage extends ConsumerWidget {
                             labelStyle: TextStyle(color: AppColors.mainBlue),
                             labelText: 'answer2',
                             enabledBorder: OutlineInputBorder(
-                              borderSide: const BorderSide(
+                              borderSide: BorderSide(
                                 width: 2,
                                 color: AppColors.mainBlue,
                               ),
@@ -291,7 +291,7 @@ class PostQuestionPage extends ConsumerWidget {
                         ),
                       ),
                       Container(
-                        padding: EdgeInsets.symmetric(vertical: 20),
+                        padding: const EdgeInsets.symmetric(vertical: 20),
                         width: size.width * 0.85,
                         child: TextFormField(
                           cursorColor: AppColors.mainBlue,
@@ -301,7 +301,7 @@ class PostQuestionPage extends ConsumerWidget {
                             labelStyle: TextStyle(color: AppColors.mainBlue),
                             labelText: 'answer3',
                             enabledBorder: OutlineInputBorder(
-                              borderSide: const BorderSide(
+                              borderSide: BorderSide(
                                 width: 2,
                                 color: AppColors.mainBlue,
                               ),
@@ -320,7 +320,7 @@ class PostQuestionPage extends ConsumerWidget {
                         ),
                       ),
                       Container(
-                        padding: EdgeInsets.symmetric(vertical: 20),
+                        padding: const EdgeInsets.symmetric(vertical: 20),
                         width: size.width * 0.85,
                         child: TextFormField(
                           cursorColor: AppColors.mainBlue,
@@ -330,7 +330,7 @@ class PostQuestionPage extends ConsumerWidget {
                             labelStyle: TextStyle(color: AppColors.mainBlue),
                             labelText: 'answer4',
                             enabledBorder: OutlineInputBorder(
-                              borderSide: const BorderSide(
+                              borderSide: BorderSide(
                                 width: 2,
                                 color: AppColors.mainBlue,
                               ),
@@ -349,7 +349,7 @@ class PostQuestionPage extends ConsumerWidget {
                         ),
                       ),
                       Container(
-                        padding: EdgeInsets.symmetric(vertical: 20),
+                        padding: const EdgeInsets.symmetric(vertical: 20),
                         width: size.width * 0.85,
                         child: TextFormField(
                           cursorColor: AppColors.mainBlue,
@@ -359,7 +359,7 @@ class PostQuestionPage extends ConsumerWidget {
                             labelStyle: TextStyle(color: AppColors.mainBlue),
                             labelText: 'correct_answer_id',
                             enabledBorder: OutlineInputBorder(
-                              borderSide: const BorderSide(
+                              borderSide: BorderSide(
                                 width: 2,
                                 color: AppColors.mainBlue,
                               ),
@@ -370,7 +370,7 @@ class PostQuestionPage extends ConsumerWidget {
                             ),
                             //enabledBorder: OutlineInputBorder(borderSide: BorderSide(color: AppColors.mainBlue)),
                             hintText: 'correct_answer_id',
-                            helperText: '※correct_answer_id',
+                            helperText: '※「indexナンバーで」正答番号を与える。',
                           ),
                           controller: correctAnswerIdController,
                           keyboardType: TextInputType.visiblePassword,
@@ -378,7 +378,7 @@ class PostQuestionPage extends ConsumerWidget {
                         ),
                       ),
                       Container(
-                        padding: EdgeInsets.symmetric(vertical: 20),
+                        padding: const EdgeInsets.symmetric(vertical: 20),
                         width: size.width * 0.85,
                         child: TextFormField(
                           cursorColor: AppColors.mainBlue,
@@ -388,7 +388,7 @@ class PostQuestionPage extends ConsumerWidget {
                             labelStyle: TextStyle(color: AppColors.mainBlue),
                             labelText: 'commentary',
                             enabledBorder: OutlineInputBorder(
-                              borderSide: const BorderSide(
+                              borderSide: BorderSide(
                                 width: 2,
                                 color: AppColors.mainBlue,
                               ),
@@ -399,7 +399,7 @@ class PostQuestionPage extends ConsumerWidget {
                             ),
                             //enabledBorder: OutlineInputBorder(borderSide: BorderSide(color: AppColors.mainBlue)),
                             hintText: 'commentary',
-                            helperText: '※commentary',
+                            helperText: '※問題の解説記入欄',
                           ),
                           controller: commentaryController,
                           keyboardType: TextInputType.visiblePassword,

@@ -10,7 +10,7 @@ import '../../../../utilities/app_text_styles.dart';
 
 class QuestionPage extends ConsumerWidget {
   final String categoryId;
-  const QuestionPage({Key? key,this.categoryId = ""}) : super(key: key);
+  const QuestionPage({Key? key,this.categoryId = "fruits"}) : super(key: key);
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
