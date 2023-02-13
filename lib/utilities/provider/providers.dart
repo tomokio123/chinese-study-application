@@ -23,12 +23,22 @@ final isCorrectProvider = StateProvider.autoDispose<bool>((ref) {
 });
 
 //TODO: 正解数を保持するProvider
-final numberOfCorrectAnswersProvider = StateProvider.autoDispose<int>((ref) {
-  return 0;
+final numberOfCorrectAnswersProvider = StateProvider<int>((ref) {
+  return 0;//AutoDispose　　にすると正答数をResult画面に送る前に正答数
+});
+
+//TODO:
+final currentQuestionIdProvider = StateProvider.autoDispose<String>((ref) {
+  return "";
 });
 
 //TODO: 数を保持するProvider
 final counterProvider = StateProvider((ref) => 0);
+
+//TODO: 数を保持するProvider
+final indexProvider = StateProvider((ref) {
+  return ;
+});
 
 // TODO:ユーザー情報の受け渡しを行うためのProvider
 final nameProvider = StateProvider.autoDispose((ref) {

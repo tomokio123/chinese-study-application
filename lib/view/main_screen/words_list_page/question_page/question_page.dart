@@ -1,3 +1,4 @@
+import 'package:chinese_study_applicaion/model/question.dart';
 import 'package:chinese_study_applicaion/utilities/firestore/answer_firestore.dart';
 import 'package:chinese_study_applicaion/utilities/firestore/question_firestore.dart';
 import 'package:chinese_study_applicaion/utilities/provider/providers.dart';
@@ -16,15 +17,19 @@ class QuestionPage extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final Size size = MediaQuery.of(context).size;
     int questionCounter = ref.watch(counterProvider);
-    final questionFuture = QuestionFireStore.questions.get();
-    //final questionFuture = QuestionFireStore.questions.where('category_id', isEqualTo: 'fruits').get();問題だけが検索されて取得してしまう
-    final answerFuture = AnswerFireStore.answers.get();
+    //final questionFuture = QuestionFireStore.questions.get();
+    final questionFuture = QuestionFireStore.questions.where('category_id', isEqualTo: "fruits").get();
+    //上記記述だけだと問題だけが検索されて取得してしまう
+    //AnswerFutureに回答を = [a,a,a,a,a,....]と格納したい
+    //final answerFuture = AnswerFireStore.answers.where('answer_id', isEqualTo: '').get();
 
     //解答提出したかどうか,default = false
     final bool isAnswered = ref.watch(buttonProvider);
     //正解かどうか,default = false
     final bool isCorrect = ref.watch(isCorrectProvider);
-    final int numberOfCorrectAnswers = ref.watch(numberOfCorrectAnswersProvider);
+    //final int numberOfCorrectAnswers = ref.watch(numberOfCorrectAnswersProvider);//使ってないっぽいから消してもいいかも
+    //試験的に設置、現在の渡ってきたquestion_idの番号＝answer_idとなるように渡ってきたquestion_idを管理するProvider
+    final String currentQuestionNumber  = ref.watch(currentQuestionIdProvider);
 
     return Scaffold(
       body: Center(
@@ -32,9 +37,21 @@ class QuestionPage extends ConsumerWidget {
           child: FutureBuilder<QuerySnapshot>(
             future: questionFuture,
             builder: (context, snapshot) {//このsnapShotには、もう整列して詰めておく。
+              //ref.read(currentQuestionIdProvider.notifier).state = snapshot.data!.docs[questionCounter].get("question_id");//"question_id"<String>
+              //final questionIdListByQuestionFuture = snapshot.data!.docs[questionCounter].get(ref.read(currentQuestionIdProvider));
+              //print(questionIdListByQuestionFuture);
+              //ドキュメントのquestionCounterばんめにある"question_id"フィールド値を取得。
               //よってFutureで取得するときに整列、検索をすることが重要
               if(snapshot.hasData){//これ忘れると「null check Operator」の例外吐かれるので対策しておく
-                //titleを先に取得しておく
+                //List questionNumberList = ["1","2","3","4","5","6","7","8","9","10"];的なListを作りたい
+                //List subQuestionNumberList = ["1","2","3","4","5","6","7","8","9","10"];
+                // var questionNumberList = snapshot.data!.docs;
+                List<String> questionNumberList = [];
+                for (var i =0; i < snapshot.data!.size; i++) {
+                  questionNumberList.add(snapshot.data!.docs[i].get("question_id"));
+                }
+                print(questionNumberList);
+                final answerFuture = AnswerFireStore.answers.where('answer_id', whereIn: questionNumberList).get();
                 return Column(
                   children: [
                     Container(
@@ -63,6 +80,7 @@ class QuestionPage extends ConsumerWidget {
                         child: FutureBuilder<QuerySnapshot>(
                           future: answerFuture,
                           builder: (context, snapshot) {
+                            print("answerFutureが${snapshot.hasData}");
                             if(snapshot.hasData) {
                               int questionLength = snapshot.data!.size;//問題のListの長さを先に取得する
                               return
@@ -75,7 +93,7 @@ class QuestionPage extends ConsumerWidget {
                                   crossAxisSpacing: 24,
                                   children: List.generate(4, (index) => GestureDetector(
                                     onTap: () async{
-                                      print(questionLength);
+                                      print(questionLength.toString());
                                       //Tap時に先にやることは正誤判定を行うこと
                                       if(index.toString() == snapshot.data!.docs[questionCounter].get("correct_answer_index_number")){
                                         //正答時
@@ -99,7 +117,6 @@ class QuestionPage extends ConsumerWidget {
                                             )));
                                         ref.refresh(counterProvider.notifier).state;
                                       }
-                                      print("indexNumber:$index");
                                       print('${questionCounter + 1}問目を回答した');
                                       print("numberOfCorrectAnswers:${ref.read(numberOfCorrectAnswersProvider.notifier).state}");
                                     },
@@ -138,7 +155,7 @@ class QuestionPage extends ConsumerWidget {
                                     )),
                               );
                             } else {
-                              return Container(child: Text("${snapshot.hasData}"));
+                              return Container(child: Text("answerFutureが${snapshot.hasData} = snapshot.hasdataが${snapshot.hasData}"));
                             }
                           }
                         ),
@@ -147,7 +164,7 @@ class QuestionPage extends ConsumerWidget {
                   ],
                 );
               } else {
-                return Container();
+                return Container(child: Text('questionFutureがfalse'),);
               }
             }
           ),

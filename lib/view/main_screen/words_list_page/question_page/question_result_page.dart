@@ -1,11 +1,13 @@
 import 'package:chinese_study_applicaion/Utilities/app_colors.dart';
+import 'package:chinese_study_applicaion/utilities/provider/providers.dart';
 import 'package:chinese_study_applicaion/view/common_widget/buttons/buttons.dart';
 import 'package:chinese_study_applicaion/view/common_widget/buttons/normal_button.dart';
 import 'package:chinese_study_applicaion/view/main_screen/main_screen.dart';
 import 'package:chinese_study_applicaion/view/main_screen/school_page/school_page.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class QuestionResultPage extends StatelessWidget {
+class QuestionResultPage extends ConsumerWidget {
   final int questionLength;
   final int numberOfCorrectAnswers;
 
@@ -15,7 +17,7 @@ class QuestionResultPage extends StatelessWidget {
 
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     final Size size = MediaQuery.of(context).size;
     return Scaffold(
       body: SafeArea(
@@ -51,6 +53,8 @@ class QuestionResultPage extends StatelessWidget {
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 0,vertical: 30),
                   child: NormalButton(buttonText: "戻る", onPressed: (){
+                    //問題成績見終わって戻るときに正答数Providerをrefreshする
+                    ref.refresh(numberOfCorrectAnswersProvider.notifier).state;
                     Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => MainScreen()));
                   }),
                 ),
