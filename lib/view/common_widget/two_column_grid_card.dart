@@ -18,7 +18,7 @@ class TwoColumnGridCard extends StatelessWidget {
               crossAxisSpacing: 12,
               children: List.generate(10, (index) => GestureDetector(
                 onTap: (){
-                  Navigator.push(context, MaterialPageRoute(builder: (context)=> QuestionPage()));
+                  Navigator.push(context, MaterialPageRoute(builder: (context)=> QuestionPage(categoryId: "fruits",)));
                 },
                 child: Card(
                     shape: RoundedRectangleBorder(

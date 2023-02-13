@@ -31,7 +31,7 @@ class WordsListPage extends StatelessWidget {
                     child: GestureDetector(
                       onTap: (){
                         Navigator.push(context, MaterialPageRoute(builder: (context) => QuestionPage(
-                          //categoryId: snapshot.data!.docs[index].id
+                          categoryId: snapshot.data!.docs[index].id
                         )));
                       },
                       child: Card(

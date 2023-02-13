@@ -11,14 +11,14 @@ import '../../../../utilities/app_text_styles.dart';
 
 class QuestionPage extends ConsumerWidget {
   final String categoryId;
-  const QuestionPage({Key? key,this.categoryId = "fruits"}) : super(key: key);
+  const QuestionPage({Key? key,required this.categoryId}) : super(key: key);
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final Size size = MediaQuery.of(context).size;
     int questionCounter = ref.watch(counterProvider);
     //final questionFuture = QuestionFireStore.questions.get();
-    final questionFuture = QuestionFireStore.questions.where('category_id', isEqualTo: "fruits").get();
+    final questionFuture = QuestionFireStore.questions.where('category_id', isEqualTo: categoryId).get();
     //上記記述だけだと問題だけが検索されて取得してしまう
     //AnswerFutureに回答を = [a,a,a,a,a,....]と格納したい
     //final answerFuture = AnswerFireStore.answers.where('answer_id', isEqualTo: '').get();
