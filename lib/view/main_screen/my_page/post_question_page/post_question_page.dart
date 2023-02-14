@@ -45,7 +45,7 @@ class PostQuestionPage extends ConsumerWidget {
                 child: Center(
                   child: Column(
                     children: [
-                      const SizedBox(height: 50),
+                      const SizedBox(height: 30),
                       Column(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
@@ -78,6 +78,14 @@ class PostQuestionPage extends ConsumerWidget {
                               DropdownMenuItem(
                                 value: 'countries',
                                 child: Text('国'),
+                              ),
+                              DropdownMenuItem(
+                                value: 'formosan',
+                                child: Text('台語'),
+                              ),
+                              DropdownMenuItem(
+                                value: 'verb',
+                                child: Text('動詞'),
                               ),
                             ],
                             value: isSelectedValue,
@@ -142,15 +150,15 @@ class PostQuestionPage extends ConsumerWidget {
                             helperText: '※カテゴリの日本語記入',
                           ),
                           controller: categoryTitleController,
+                          autofocus: true,
                           keyboardType: TextInputType.text,
-                          textInputAction: TextInputAction.done,
+                          textInputAction: TextInputAction.next,
                         ),
                       ),
                       Container(
                         padding: const EdgeInsets.symmetric(vertical: 20),
                         width: size.width * 0.85,
                         child: TextFormField(
-                          autofocus: true,
                           cursorColor: AppColors.mainBlue,
                           maxLines: 6,
                           minLines: 1,

@@ -1,9 +1,7 @@
 import 'package:chinese_study_applicaion/Utilities/app_colors.dart';
 import 'package:chinese_study_applicaion/utilities/provider/providers.dart';
-import 'package:chinese_study_applicaion/view/common_widget/buttons/buttons.dart';
 import 'package:chinese_study_applicaion/view/common_widget/buttons/normal_button.dart';
 import 'package:chinese_study_applicaion/view/main_screen/main_screen.dart';
-import 'package:chinese_study_applicaion/view/main_screen/school_page/school_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 

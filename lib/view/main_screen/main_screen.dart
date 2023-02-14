@@ -58,12 +58,12 @@ class _MainScreenState extends State<MainScreen> {
     return BottomNavigationBar(
       items: const <BottomNavigationBarItem>[
         BottomNavigationBarItem(
-          icon: Icon(Icons.school_outlined),
-          label: '単語帳',
-        ),
-        BottomNavigationBarItem(
           icon: Icon(Icons.checklist),
           label: '一問一答',
+        ),
+        BottomNavigationBarItem(
+          icon: Icon(Icons.school_outlined),
+          label: '単語帳',
         ),
         BottomNavigationBarItem(
           icon: Icon(Icons.quiz_outlined),

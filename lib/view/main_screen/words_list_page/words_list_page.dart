@@ -21,13 +21,13 @@ class WordsListPage extends StatelessWidget {
         builder: (context, snapshot) {
           if(snapshot.hasData){
             return ListView.builder(
-                padding: const EdgeInsets.all(8),
+                padding: const EdgeInsets.all(2),
                 itemCount: snapshot.data!.docs.length,
                 itemBuilder: (BuildContext context, int index) {
                   //category_titleを変数に格納
                   final String title = snapshot.data!.docs[index].get("category_title");
                   return Container(
-                    padding: EdgeInsets.all(7),
+                    padding: EdgeInsets.all(4),
                     child: GestureDetector(
                       onTap: (){
                         Navigator.push(context, MaterialPageRoute(builder: (context) => QuestionPage(
@@ -41,7 +41,7 @@ class WordsListPage extends StatelessWidget {
                         color: AppColors.mainWhite,
                         elevation: 3,
                         child: Container(
-                          height: 120,
+                          height: 90,
                           child: Center(child: Text(title,
                               style: AppTextStyles.textBoldNormal,
                               //maxLines: 1,

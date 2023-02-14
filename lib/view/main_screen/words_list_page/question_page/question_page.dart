@@ -21,15 +21,10 @@ class QuestionPage extends ConsumerWidget {
     final questionFuture = QuestionFireStore.questions.where('category_id', isEqualTo: categoryId).get();
     //上記記述だけだと問題だけが検索されて取得してしまう
     //AnswerFutureに回答を = [a,a,a,a,a,....]と格納したい
-    //final answerFuture = AnswerFireStore.answers.where('answer_id', isEqualTo: '').get();
-
-    //解答提出したかどうか,default = false
-    final bool isAnswered = ref.watch(buttonProvider);
-    //正解かどうか,default = false
-    final bool isCorrect = ref.watch(isCorrectProvider);
-    //final int numberOfCorrectAnswers = ref.watch(numberOfCorrectAnswersProvider);//使ってないっぽいから消してもいいかも
+    final bool isAnswered = ref.watch(buttonProvider);//回答したか
+    final bool isCorrect = ref.watch(isCorrectProvider);//正解or不正解
     //試験的に設置、現在の渡ってきたquestion_idの番号＝answer_idとなるように渡ってきたquestion_idを管理するProvider
-    final String currentQuestionNumber  = ref.watch(currentQuestionIdProvider);
+    //final String currentQuestionNumber  = ref.watch(currentQuestionIdProvider);
 
     return Scaffold(
       body: Center(
@@ -44,11 +39,11 @@ class QuestionPage extends ConsumerWidget {
               //よってFutureで取得するときに整列、検索をすることが重要
               if(snapshot.hasData){//これ忘れると「null check Operator」の例外吐かれるので対策しておく
                 //List questionNumberList = ["1","2","3","4","5","6","7","8","9","10"];的なListを作りたい
-                //List subQuestionNumberList = ["1","2","3","4","5","6","7","8","9","10"];
-                // var questionNumberList = snapshot.data!.docs;
-                List<String> questionNumberList = [];
-                for (var i =0; i < snapshot.data!.size; i++) {
+
+                List<String> questionNumberList = [];//問題番号に対応する回答を格納できるように配列を準備。
+                for (var i =0; i < snapshot.data!.size; i++) {//問題の数の分だけ回す。
                   questionNumberList.add(snapshot.data!.docs[i].get("question_id"));
+                  //用意していた配列にaddしていく処理
                 }
                 print(questionNumberList);
                 final answerFuture = AnswerFireStore.answers.where('answer_id', whereIn: questionNumberList).get();
@@ -105,11 +100,13 @@ class QuestionPage extends ConsumerWidget {
                                         ref.read(isCorrectProvider.notifier).state = false;
                                       }
                                       if(ref.read(counterProvider) < questionLength - 1){
+                                        //回答題が最後の問題ではない時→回答して次の問題へ
                                         ref.read(buttonProvider.notifier).state = true;
                                         //解答状態(isAnswered)をfalse => trueにする処理。
                                         ref.read(counterProvider.notifier).state++;
                                       }
                                       if(questionCounter == questionLength - 1){
+                                        //回答題が最後の問題の時→Result画面へ
                                         Navigator.pushReplacement(context, MaterialPageRoute(
                                             builder: (context)=> QuestionResultPage(
                                           questionLength: questionCounter + 1,
@@ -155,7 +152,7 @@ class QuestionPage extends ConsumerWidget {
                                     )),
                               );
                             } else {
-                              return Container(child: Text("answerFutureが${snapshot.hasData} = snapshot.hasdataが${snapshot.hasData}"));
+                              return Container();
                             }
                           }
                         ),
