@@ -1,3 +1,4 @@
+import 'package:chinese_study_applicaion/view/main_screen/school_page/one_on_one_page.dart';
 import 'package:flutter/material.dart';
 
 import '../../utilities/app_colors.dart';
@@ -17,7 +18,7 @@ class ThreeColumnGridCard extends StatelessWidget {
           crossAxisSpacing: 12,
           children: List.generate(10, (index) => GestureDetector(
             onTap: (){
-              Navigator.push(context, MaterialPageRoute(builder: (context)=> QuestionPage(categoryId: "fruits")));
+              Navigator.push(context, MaterialPageRoute(builder: (context)=> OneOnOnePage()));
             },
             child: Card(
                 shape: RoundedRectangleBorder(

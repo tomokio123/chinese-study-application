@@ -1,39 +1,50 @@
-import 'package:chinese_study_applicaion/utilities/app_text_styles.dart';
-import 'package:chinese_study_applicaion/view/common_widget/two_column_grid_card.dart';
-import 'package:chinese_study_applicaion/view/difficulty_screen/difficulty_screen.dart';
+import 'package:chinese_study_applicaion/utilities/firestore/favorite_question_firestore.dart';
+import 'package:chinese_study_applicaion/utilities/firestore/user_firestore.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-
 import '../../../utilities/app_colors.dart';
-import '../../../utilities/app_sized_boxes.dart';
-import '../../first_screen/first_screen.dart';
 
 class BookMarkPage extends StatelessWidget {
   const BookMarkPage({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    final String currentUserId = UserFireStore.currentUserId;//自分のユーザIDを取得したい
+    print(currentUserId);
+
     return Scaffold(
-        appBar: AppBar(title: const Text('ブックマーク'),automaticallyImplyLeading: false),
-        body: Container(
-          padding: EdgeInsets.fromLTRB(12,12,12,0),
-          child: GridView.count(
-              crossAxisCount: 2,
-              mainAxisSpacing: 12,
-              crossAxisSpacing: 12,
-              children: List.generate(10, (index) => GestureDetector(
-                onTap: (){
-                  Navigator.push(context, MaterialPageRoute(builder: (context)=> DifficultyScreen(
-                      categoryId: "categoryIdのモックです")
-                  ));
-                },
-                child: Card(
-                    color: AppColors.mainWhite,
-                    elevation: 5,
-                    child: Center(child: Text('${index + 1}', style: AppTextStyles.textBold))
-                ),
-              ))
-          ),
+      body: SafeArea(
+        child: FutureBuilder<QuerySnapshot>(
+            future: FavoriteQuestionFireStore.favoriteQuestions.where("user_id", isEqualTo: currentUserId).get(),
+            builder: (context, snapshot) {
+              if(snapshot.hasData){
+                return ListView.builder(
+                  itemCount: snapshot.data!.size,
+                  itemBuilder: (BuildContext context, int index) {
+                    return Center(
+                      child: Column(
+                        children: [
+                          Container(
+                              width: double.infinity,
+                              color: AppColors.mainPink,
+                              height: 50,
+                              child: Text("${snapshot.data!.size}")),
+                          Container(
+                              width: double.infinity,
+                              color: AppColors.mainPink,
+                              height: 50,
+                              child: Text("${snapshot.data!.docs[index].get("user_id")}　さんの、${snapshot.data!.docs[index].get("question_id")}です")),
+                        ],
+                      ),
+                    );
+                  },
+                );
+              } else {
+                return Center(child: Container(child: Text("${snapshot.hasData}がFalseですわ")));
+              }
+            }
         )
+      ),
     );
   }
 }

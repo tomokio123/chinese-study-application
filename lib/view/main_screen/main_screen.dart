@@ -41,13 +41,6 @@ class _MainScreenState extends State<MainScreen> {
               child: _widgetOptions.elementAt(_selectedIndex),
             )
           ),
-          /*Container(
-            height: 40,
-            color: Colors.yellow,
-            child: Center(
-              child: Text('MainScreen'),
-            )
-          )*/
         ],
       ),
       bottomNavigationBar: _BottomNavigationBar(_selectedIndex)
@@ -58,16 +51,16 @@ class _MainScreenState extends State<MainScreen> {
     return BottomNavigationBar(
       items: const <BottomNavigationBarItem>[
         BottomNavigationBarItem(
+          icon: Icon(Icons.quiz_outlined),
+          label: 'テスト',
+        ),
+        BottomNavigationBarItem(
           icon: Icon(Icons.checklist),
           label: '一問一答',
         ),
         BottomNavigationBarItem(
           icon: Icon(Icons.school_outlined),
           label: '単語帳',
-        ),
-        BottomNavigationBarItem(
-          icon: Icon(Icons.quiz_outlined),
-          label: 'テスト',
         ),
         BottomNavigationBarItem(
           icon: Icon(Icons.bookmark_border),

@@ -71,4 +71,19 @@ class UserFireStore {
   static Future<dynamic> deleteUser(String accountId) async{
     await users.doc(accountId).delete();//処理内容：ユーザを消す
   }
+
+  // //TODO:favoriteQuestionIdを保存する処理
+  // static Future<dynamic> setFavoriteQuestion(Account newAccount) async{//ユーザーをfirestoreに登録する処理
+  //   try{
+  //     await users.doc(newAccount.id).set({//データの追加は「set」メソッド
+  //       'favorite_question_id': newAccount.id,
+  //     })
+  //         .then((value) => print("FireStore新規ユーザー作成に成功"))
+  //         .catchError((error) => print("FireStore新規ユーザー作成に失敗: $error"));
+  //     return true;
+  //   } on FirebaseException catch(e){
+  //     print('新規ユーザー作成エラー $e');
+  //     return false;
+  //   }
+  // }
 }

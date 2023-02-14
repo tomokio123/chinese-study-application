@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import '../../utilities/app_colors.dart';
 import '../../utilities/app_text_styles.dart';
 import '../first_screen/first_screen.dart';
+import '../main_screen/school_page/one_on_one_page.dart';
 import '../main_screen/words_list_page/question_page/question_page.dart';
 
 class TwoColumnGridCard extends StatelessWidget {
@@ -18,7 +19,7 @@ class TwoColumnGridCard extends StatelessWidget {
               crossAxisSpacing: 12,
               children: List.generate(10, (index) => GestureDetector(
                 onTap: (){
-                  Navigator.push(context, MaterialPageRoute(builder: (context)=> QuestionPage(categoryId: "fruits",)));
+                  Navigator.push(context, MaterialPageRoute(builder: (context)=> OneOnOnePage()));
                 },
                 child: Card(
                     shape: RoundedRectangleBorder(
