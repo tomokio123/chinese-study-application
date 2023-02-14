@@ -1,9 +1,7 @@
-import 'package:chinese_study_applicaion/view/main_screen/school_page/one_on_one_page.dart';
 import 'package:flutter/material.dart';
-
 import '../../utilities/app_colors.dart';
 import '../../utilities/app_text_styles.dart';
-import '../main_screen/words_list_page/question_page/question_page.dart';
+import '../main_screen/one_on_one_list_page/one_on_one_page.dart';
 
 class ThreeColumnGridCard extends StatelessWidget {
   const ThreeColumnGridCard({Key? key}) : super(key: key);

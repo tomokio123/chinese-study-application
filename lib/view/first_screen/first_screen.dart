@@ -11,13 +11,13 @@ class FirstScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: AppColors.mainWhite,
-      body: GestureDetector(
-        onTap:  (){
-          Navigator.push(context, MaterialPageRoute(builder: (context) => const MainScreen()));
-        },
-        child: SafeArea(
+    return GestureDetector(
+      onTap:  (){
+        Navigator.push(context, MaterialPageRoute(builder: (context) => const MainScreen()));
+      },
+      child: Scaffold(
+        backgroundColor: AppColors.mainWhite,
+        body: SafeArea(
           child: Center(
             child: Column(
               children: [

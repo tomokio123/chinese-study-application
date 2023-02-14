@@ -1,10 +1,10 @@
+import 'package:chinese_study_applicaion/view/main_screen/vocabulary_list_page/vocabulary_categories.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
 import '../../utilities/app_colors.dart';
 import '../../utilities/app_text_styles.dart';
 import '../../utilities/firestore/difficulty_firestore.dart';
-import '../main_screen/words_list_page/vocabulary_book/vocabulary_book_page.dart';
 
 class DifficultyScreen extends StatelessWidget {
   final String categoryId;
@@ -34,8 +34,7 @@ class DifficultyScreen extends StatelessWidget {
                             padding: EdgeInsets.all(7),
                             child: GestureDetector(
                               onTap: (){
-                                Navigator.push(context, MaterialPageRoute(builder: (context) => VocabularyBookPage(
-                                    questionList: [],
+                                Navigator.push(context, MaterialPageRoute(builder: (context) => VocabularyCategoriesPage(
                                 )));
                               },
                               child: Card(

@@ -1,14 +1,13 @@
 import 'package:chinese_study_applicaion/utilities/app_colors.dart';
 import 'package:chinese_study_applicaion/utilities/firestore/category_firestore.dart';
 import 'package:chinese_study_applicaion/view/common_widget/Indicators/normal_circular_indicator.dart';
-import 'package:chinese_study_applicaion/view/difficulty_screen/difficulty_screen.dart';
-import 'package:chinese_study_applicaion/view/main_screen/words_list_page/question_page/question_page.dart';
+import 'package:chinese_study_applicaion/view/main_screen/test_list_page/question_page/question_page.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import '../../../utilities/app_text_styles.dart';
 
-class WordsListPage extends StatelessWidget {
-   WordsListPage({Key? key}) : super(key: key);
+class TestCategoriesPage extends StatelessWidget {
+   const TestCategoriesPage({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

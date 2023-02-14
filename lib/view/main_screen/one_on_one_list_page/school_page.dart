@@ -1,29 +1,23 @@
-import 'package:chinese_study_applicaion/view/main_screen/my_page/my_page.dart';
-import 'package:chinese_study_applicaion/view/main_screen/school_page/to_chinese_page/to_chinese_page.dart';
-import 'package:chinese_study_applicaion/view/main_screen/school_page/to_japanese_page/to_japanese_page.dart';
+import 'package:chinese_study_applicaion/view/main_screen/one_on_one_list_page/to_chinese_page/to_chinese_page.dart';
+import 'package:chinese_study_applicaion/view/main_screen/one_on_one_list_page/to_japanese_page/to_japanese_page.dart';
 import 'package:flutter/material.dart';
-import 'package:material_segmented_control/material_segmented_control.dart';
-
 import '../../../utilities/app_colors.dart';
-import '../../../utilities/app_text_styles.dart';
-import '../../first_screen/first_screen.dart';
-import '../book_mark_page/book_mark_page.dart';
 //School = 問題のジャンルを選ぶページ
-class SchoolPage extends StatefulWidget {
-  const SchoolPage({Key? key}) : super(key: key);
+class OneOnOneListPage extends StatefulWidget {
+  const OneOnOneListPage({Key? key}) : super(key: key);
 
   @override
-  State<SchoolPage> createState() => _SchoolPageState();
+  State<OneOnOneListPage> createState() => _OneOnOneListPageState();
 }
 
-class _SchoolPageState extends State<SchoolPage> {
+class _OneOnOneListPageState extends State<OneOnOneListPage> {
   int _currentPageIndex = 0;
   void _onItemTapped(int index) {
     setState(() {
       _currentPageIndex = index;
     });
   }
-  static const List<Widget> _widgetOptions = <Widget>[
+   List<Widget> _widgetOptions = <Widget>[
     ToJapanesePage(),
     ToChinesePage()
   ];

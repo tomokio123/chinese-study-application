@@ -1,8 +1,7 @@
-import 'package:chinese_study_applicaion/model/question.dart';
 import 'package:chinese_study_applicaion/utilities/firestore/answer_firestore.dart';
 import 'package:chinese_study_applicaion/utilities/firestore/question_firestore.dart';
 import 'package:chinese_study_applicaion/utilities/provider/providers.dart';
-import 'package:chinese_study_applicaion/view/main_screen/words_list_page/question_page/question_result_page.dart';
+import 'package:chinese_study_applicaion/view/main_screen/test_list_page/question_page/question_result_page.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -32,9 +31,6 @@ class QuestionPage extends ConsumerWidget {
           child: FutureBuilder<QuerySnapshot>(
             future: questionFuture,
             builder: (context, snapshot) {//このsnapShotには、もう整列して詰めておく。
-              //ref.read(currentQuestionIdProvider.notifier).state = snapshot.data!.docs[questionCounter].get("question_id");//"question_id"<String>
-              //final questionIdListByQuestionFuture = snapshot.data!.docs[questionCounter].get(ref.read(currentQuestionIdProvider));
-              //print(questionIdListByQuestionFuture);
               //ドキュメントのquestionCounterばんめにある"question_id"フィールド値を取得。
               //よってFutureで取得するときに整列、検索をすることが重要
               if(snapshot.hasData){//これ忘れると「null check Operator」の例外吐かれるので対策しておく
@@ -45,7 +41,6 @@ class QuestionPage extends ConsumerWidget {
                   questionNumberList.add(snapshot.data!.docs[i].get("question_id"));
                   //用意していた配列にaddしていく処理
                 }
-                print(questionNumberList);
                 final answerFuture = AnswerFireStore.answers.where('answer_id', whereIn: questionNumberList).get();
                 return Column(
                   children: [
@@ -75,7 +70,6 @@ class QuestionPage extends ConsumerWidget {
                         child: FutureBuilder<QuerySnapshot>(
                           future: answerFuture,
                           builder: (context, snapshot) {
-                            print("answerFutureが${snapshot.hasData}");
                             if(snapshot.hasData) {
                               int questionLength = snapshot.data!.size;//問題のListの長さを先に取得する
                               return
@@ -114,8 +108,8 @@ class QuestionPage extends ConsumerWidget {
                                             )));
                                         ref.refresh(counterProvider.notifier).state;
                                       }
-                                      print('${questionCounter + 1}問目を回答した');
-                                      print("numberOfCorrectAnswers:${ref.read(numberOfCorrectAnswersProvider.notifier).state}");
+                                      // print('${questionCounter + 1}問目を回答した');
+                                      // print("numberOfCorrectAnswers:${ref.read(numberOfCorrectAnswersProvider.notifier).state}");
                                     },
                                     child: Card(
                                         shape: RoundedRectangleBorder(

@@ -13,37 +13,40 @@ class BookMarkPage extends StatelessWidget {
     print(currentUserId);
 
     return Scaffold(
-      body: SafeArea(
-        child: FutureBuilder<QuerySnapshot>(
-            future: FavoriteQuestionFireStore.favoriteQuestions.where("user_id", isEqualTo: currentUserId).get(),
-            builder: (context, snapshot) {
-              if(snapshot.hasData){
-                return ListView.builder(
-                  itemCount: snapshot.data!.size,
-                  itemBuilder: (BuildContext context, int index) {
-                    return Center(
-                      child: Column(
-                        children: [
-                          Container(
-                              width: double.infinity,
-                              color: AppColors.mainPink,
-                              height: 50,
-                              child: Text("${snapshot.data!.size}")),
-                          Container(
-                              width: double.infinity,
-                              color: AppColors.mainPink,
-                              height: 50,
-                              child: Text("${snapshot.data!.docs[index].get("user_id")}　さんの、${snapshot.data!.docs[index].get("question_id")}です")),
-                        ],
-                      ),
-                    );
-                  },
-                );
-              } else {
-                return Center(child: Container(child: Text("${snapshot.hasData}がFalseですわ")));
+      body: Center(
+        child: SafeArea(
+          child: FutureBuilder<QuerySnapshot>(
+              future: FavoriteQuestionFireStore.favoriteQuestions.where("user_id", isEqualTo: currentUserId).get(),
+              builder: (context, snapshot) {
+                if(snapshot.hasData){
+                  return ListView.builder(
+                    itemCount: snapshot.data!.size,
+                    itemBuilder: (BuildContext context, int index) {
+                      return Center(
+                        child: Container(
+                          color: AppColors.mainBlue,
+                          child: Column(
+                            children: [
+                              SizedBox(
+                                  width: double.infinity,
+                                  height: 50,
+                                  child: Center(child: Text("${snapshot.data!.size}"))),
+                              SizedBox(
+                                  width: double.infinity,
+                                  height: 50,
+                                  child: Center(child: Text("${snapshot.data!.docs[index].get("user_id")}　さんの、${snapshot.data!.docs[index].get("question_id")}です"))),
+                            ],
+                          ),
+                        ),
+                      );
+                    },
+                  );
+                } else {
+                  return Center(child: Container(child: Text("${snapshot.hasData}がFalseですわ")));
+                }
               }
-            }
-        )
+          )
+        ),
       ),
     );
   }

@@ -1,20 +1,18 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-
 import '../../../utilities/app_colors.dart';
 import '../../../utilities/app_text_styles.dart';
 import '../../../utilities/firestore/category_firestore.dart';
 import '../../common_widget/Indicators/normal_circular_indicator.dart';
-import '../words_list_page/question_page/question_page.dart';
 
-class TestPage extends StatelessWidget {
-  const TestPage({Key? key}) : super(key: key);
+class VocabularyCategoriesPage extends StatelessWidget {
+  const VocabularyCategoriesPage({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     final Size size = MediaQuery.of(context).size;
     return Scaffold(
-      appBar: AppBar(title: Text("単語帳にしたい")),
+      appBar: AppBar(title: Text("単語帳ページ")),
       body: SafeArea(
           child: FutureBuilder<QuerySnapshot>(
               future: CategoryFireStore.categories.get(),

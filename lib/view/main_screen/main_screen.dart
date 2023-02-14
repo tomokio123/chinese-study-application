@@ -1,11 +1,10 @@
 import 'package:chinese_study_applicaion/utilities/app_colors.dart';
 import 'package:chinese_study_applicaion/view/main_screen/book_mark_page/book_mark_page.dart';
-import 'package:chinese_study_applicaion/view/main_screen/school_page/school_page.dart';
-import 'package:chinese_study_applicaion/view/main_screen/test_page/test_page.dart';
-import 'package:chinese_study_applicaion/view/main_screen/words_list_page/words_list_page.dart';
 import 'package:flutter/material.dart';
-
 import 'my_page/my_page.dart';
+import 'one_on_one_list_page/school_page.dart';
+import 'test_list_page/test_categories_page.dart';
+import 'vocabulary_list_page/vocabulary_categories.dart';
 
 class MainScreen extends StatefulWidget {
   const MainScreen({Key? key}) : super(key: key);
@@ -22,10 +21,10 @@ class _MainScreenState extends State<MainScreen> {
     });
   }
   static final List<Widget> _widgetOptions = <Widget>[
-    WordsListPage(),
-    const SchoolPage(),
-    TestPage(),
-    const BookMarkPage(),
+    TestCategoriesPage(),
+    OneOnOneListPage(),
+    VocabularyCategoriesPage(),
+    BookMarkPage(),
     MyPage(),
   ];
 
