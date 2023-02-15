@@ -82,7 +82,6 @@ class QuestionPage extends ConsumerWidget {
                                   crossAxisSpacing: 24,
                                   children: List.generate(4, (index) => GestureDetector(
                                     onTap: () async{
-                                      print(questionLength.toString());
                                       //Tap時に先にやることは正誤判定を行うこと
                                       if(index.toString() == snapshot.data!.docs[currentQuestionIndex].get("correct_answer_index_number")){
                                         //正答時

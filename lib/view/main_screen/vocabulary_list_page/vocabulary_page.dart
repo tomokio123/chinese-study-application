@@ -8,12 +8,13 @@ import '../../common_widget/Indicators/normal_circular_indicator.dart';
 
 class VocabularyPage extends StatelessWidget {
   const VocabularyPage({Key? key}) : super(key: key);
+  final bool isFavorite = false;
 
   @override
   Widget build(BuildContext context) {
     final Size size = MediaQuery.of(context).size;
     return Scaffold(
-      appBar: AppBar(title: Text("単語たち(vocabularyPage)"), iconTheme: IconThemeData(color: AppColors.mainBlue),),
+      appBar: AppBar(title: Text("単語たち/vocabularyPage"), iconTheme: IconThemeData(color: AppColors.mainBlue),),
       body: SafeArea(
           child: FutureBuilder<QuerySnapshot>(
               future: QuestionFireStore.questions.get(),
@@ -39,11 +40,34 @@ class VocabularyPage extends StatelessWidget {
                               elevation: 3,
                               child: Container(
                                 height: 90,
-                                child: Center(child: Text("question_idは$questionId",
-                                    style: AppTextStyles.textBoldNormal,
-                                    //maxLines: 1,
-                                    overflow: TextOverflow.ellipsis
-                                )),
+                                child: Center(
+                                  child: Container(
+                                    child: Stack(
+                                      alignment: Alignment.topLeft,
+                                      children: [
+                                        Center(child: Text("question_idは$questionId",
+                                            style: AppTextStyles.textBoldNormal,
+                                            overflow: TextOverflow.ellipsis
+                                        )),
+                                        Align(
+                                          alignment: Alignment.centerRight,
+                                          child: GestureDetector(
+                                            onTap: (){print("tapped");},
+                                            child: Container(
+                                              height: 50,
+                                              width: 50,
+                                              child: Center(
+                                                  child: isFavorite
+                                                  ? Icon(Icons.star_outline, size: 20)
+                                                  : Icon(Icons.star_rate_sharp, size: 20, color: AppColors.mainPink,)
+                                              ),
+                                            ),
+                                          ),
+                                        )
+                                      ],
+                                    ),
+                                  ),
+                                ),
                               ),
                             ),
                           ),

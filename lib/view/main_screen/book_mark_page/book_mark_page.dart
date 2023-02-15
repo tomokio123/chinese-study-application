@@ -42,7 +42,7 @@ class BookMarkPage extends StatelessWidget {
                     },
                   );
                 } else {
-                  return Center(child: Container(child: Text("${snapshot.hasData}がFalseですわ")));
+                  return Center(child: Container());
                 }
               }
           )

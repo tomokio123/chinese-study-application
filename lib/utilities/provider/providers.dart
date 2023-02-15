@@ -17,6 +17,12 @@ final currentUserProvider = StateProvider.autoDispose((ref) {
 final buttonProvider = StateProvider.autoDispose<bool>((ref) {
   return false;
 });
+
+//TODO: お気に入り登録しているかどうかを保持するProvider
+final isFavoriteProvider = StateProvider((ref){
+  return false;
+});
+
 //TODO: 正解かどうかを保持するProvider
 final isCorrectProvider = StateProvider.autoDispose<bool>((ref) {
   return false;
