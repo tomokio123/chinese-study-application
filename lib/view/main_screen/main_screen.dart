@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'my_page/my_page.dart';
 import 'one_on_one_list_page/school_page.dart';
 import 'test_list_page/test_categories_page.dart';
-import 'vocabulary_list_page/vocabulary_categories.dart';
+import 'vocabulary_list_page/vocabulary_categories_page.dart';
 
 class MainScreen extends StatefulWidget {
   const MainScreen({Key? key}) : super(key: key);

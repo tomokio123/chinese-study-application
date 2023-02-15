@@ -1,4 +1,4 @@
-import 'package:chinese_study_applicaion/view/main_screen/vocabulary_list_page/vocabulary_categories.dart';
+import 'package:chinese_study_applicaion/view/main_screen/vocabulary_list_page/vocabulary_categories_page.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 

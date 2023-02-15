@@ -1,3 +1,4 @@
+import 'package:chinese_study_applicaion/view/main_screen/vocabulary_list_page/vocabulary_page.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import '../../../utilities/app_colors.dart';
@@ -30,9 +31,8 @@ class VocabularyCategoriesPage extends StatelessWidget {
                           padding: EdgeInsets.all(4),
                           child: GestureDetector(
                             onTap: (){
-                              // Navigator.push(context, MaterialPageRoute(builder: (context) => QuestionPage(
-                              //     categoryId: snapshot.data!.docs[index].id
-                              // )));
+                              Navigator.push(context, MaterialPageRoute(builder: (context) => VocabularyPage())
+                              );
                             },
                             child: Card(
                               shape: RoundedRectangleBorder(

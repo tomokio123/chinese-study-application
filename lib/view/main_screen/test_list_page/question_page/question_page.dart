@@ -15,7 +15,7 @@ class QuestionPage extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final Size size = MediaQuery.of(context).size;
-    int questionCounter = ref.watch(counterProvider);
+    int currentQuestionIndex = ref.watch(currentQuestionIndexProvider);
     //final questionFuture = QuestionFireStore.questions.get();
     final questionFuture = QuestionFireStore.questions.where('category_id', isEqualTo: categoryId).get();
     //上記記述だけだと問題だけが検索されて取得してしまう
@@ -49,7 +49,7 @@ class QuestionPage extends ConsumerWidget {
                         //color: AppColors.mainPink,
                         padding: const EdgeInsets.only(top: 40),
                         child: Center(
-                            child: Text(isAnswered ? "" : "${questionCounter + 1} 問目",
+                            child: Text(isAnswered ? "" : "${currentQuestionIndex + 1} 問目",
                               style: const TextStyle(fontSize: 30),)
                         )),
                     Container(
@@ -60,7 +60,7 @@ class QuestionPage extends ConsumerWidget {
                             child: isAnswered
                                 ? Text(isCorrect ? "正解です" : "不正解です",
                                 style: TextStyle(fontSize: 26))
-                                : Text(snapshot.data!.docs[questionCounter].get("title"),
+                                : Text(snapshot.data!.docs[currentQuestionIndex].get("title"),
                                 style: TextStyle(fontSize: 26)),
                         )
                     ),
@@ -84,29 +84,29 @@ class QuestionPage extends ConsumerWidget {
                                     onTap: () async{
                                       print(questionLength.toString());
                                       //Tap時に先にやることは正誤判定を行うこと
-                                      if(index.toString() == snapshot.data!.docs[questionCounter].get("correct_answer_index_number")){
+                                      if(index.toString() == snapshot.data!.docs[currentQuestionIndex].get("correct_answer_index_number")){
                                         //正答時
                                         ref.read(isCorrectProvider.notifier).state = true;
                                         ref.read(numberOfCorrectAnswersProvider.notifier).state++;//正答数を+1
                                       }
-                                      if(index.toString() != snapshot.data!.docs[questionCounter].get("correct_answer_index_number")){
+                                      if(index.toString() != snapshot.data!.docs[currentQuestionIndex].get("correct_answer_index_number")){
                                         //不正答時
                                         ref.read(isCorrectProvider.notifier).state = false;
                                       }
-                                      if(ref.read(counterProvider) < questionLength - 1){
+                                      if(ref.read(currentQuestionIndexProvider) < questionLength - 1){
                                         //回答題が最後の問題ではない時→回答して次の問題へ
                                         ref.read(buttonProvider.notifier).state = true;
                                         //解答状態(isAnswered)をfalse => trueにする処理。
-                                        ref.read(counterProvider.notifier).state++;
+                                        ref.read(currentQuestionIndexProvider.notifier).state++;
                                       }
-                                      if(questionCounter == questionLength - 1){
+                                      if(currentQuestionIndex == questionLength - 1){
                                         //回答題が最後の問題の時→Result画面へ
                                         Navigator.pushReplacement(context, MaterialPageRoute(
                                             builder: (context)=> QuestionResultPage(
-                                          questionLength: questionCounter + 1,
+                                          questionLength: currentQuestionIndex + 1,
                                           numberOfCorrectAnswers: ref.read(numberOfCorrectAnswersProvider.notifier).state
                                             )));
-                                        ref.refresh(counterProvider.notifier).state;
+                                        ref.refresh(currentQuestionIndexProvider.notifier).state;
                                       }
                                       // print('${questionCounter + 1}問目を回答した');
                                       // print("numberOfCorrectAnswers:${ref.read(numberOfCorrectAnswersProvider.notifier).state}");
@@ -118,7 +118,7 @@ class QuestionPage extends ConsumerWidget {
                                         color: AppColors.mainWhite,
                                         elevation: 5,
                                         child: Center(
-                                            child: Text('${snapshot.data!.docs[questionCounter].get("answer${index + 1}")}', style: AppTextStyles.textBold)
+                                            child: Text('${snapshot.data!.docs[currentQuestionIndex].get("answer${index + 1}")}', style: AppTextStyles.textBold)
                                         )
                                     ),
                                   ))
@@ -136,7 +136,7 @@ class QuestionPage extends ConsumerWidget {
                                             padding: EdgeInsets.fromLTRB(20, 0, 20, 50),
                                               child: Center(
                                                   child: Text(
-                                                      "${snapshot.data!.docs[questionCounter - 1].get("commentary")}",
+                                                      "${snapshot.data!.docs[currentQuestionIndex - 1].get("commentary")}",
                                                     //この処理より先にquestionCounterが++されてしまうので-1しておくことで帳尻合わせる。
                                                     style: TextStyle(fontSize: 22),)),
                                             color: AppColors.subGreen,

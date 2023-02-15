@@ -27,18 +27,12 @@ final numberOfCorrectAnswersProvider = StateProvider<int>((ref) {
   return 0;//AutoDispose　　にすると正答数をResult画面に送る前に正答数
 });
 
-//TODO:
-final currentQuestionIdProvider = StateProvider.autoDispose<String>((ref) {
-  return "";
+//TODO:現在の単語帳ナンバーのindexを保持するProvider
+final currentVocabularyIndexProvider = StateProvider.autoDispose<int>((ref) {
+  return 0;
 });
-
-//TODO: 数を保持するProvider
-final counterProvider = StateProvider((ref) => 0);
-
-//TODO: 数を保持するProvider
-final indexProvider = StateProvider((ref) {
-  return ;
-});
+//TODO:現在のquestion_idのindexを保持するProvider
+final currentQuestionIndexProvider = StateProvider((ref) => 0);
 
 // TODO:ユーザー情報の受け渡しを行うためのProvider
 final nameProvider = StateProvider.autoDispose((ref) {
