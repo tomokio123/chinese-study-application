@@ -154,7 +154,7 @@ class QuestionPage extends ConsumerWidget {
                   ],
                 );
               } else {
-                return Container(child: Text('questionFutureがfalse'),);
+                return Container();
               }
             }
           ),

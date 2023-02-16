@@ -31,8 +31,9 @@ class VocabularyCategoriesPage extends StatelessWidget {
                           padding: EdgeInsets.all(4),
                           child: GestureDetector(
                             onTap: (){
-                              Navigator.push(context, MaterialPageRoute(builder: (context) => VocabularyPage())
-                              );
+                              Navigator.push(context, MaterialPageRoute(builder: (context) => VocabularyPage(
+                                  categoryId: snapshot.data!.docs[index].get("category_id")
+                              )));
                             },
                             child: Card(
                               shape: RoundedRectangleBorder(

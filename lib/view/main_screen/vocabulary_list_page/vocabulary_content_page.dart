@@ -29,6 +29,8 @@ class VocabularyContentPage extends ConsumerWidget {
                     return Column(
                       children: [
                         Container(child: Text('${snapshot.data!.docs[currentVocabularyIndex].get("title")}')),
+                        Container(child: Text('${snapshot.data!.docs[currentVocabularyIndex].get("question_id")}')),
+                        Container(child: Text('${snapshot.data!.docs[currentVocabularyIndex].get("category_id")}')),
                       ],
                     );
                   } else {

@@ -7,17 +7,21 @@ import '../../../utilities/app_text_styles.dart';
 import '../../common_widget/Indicators/normal_circular_indicator.dart';
 
 class VocabularyPage extends StatelessWidget {
-  const VocabularyPage({Key? key}) : super(key: key);
+  final String categoryId;
+  const VocabularyPage({Key? key, required this.categoryId}) : super(key: key);
+
   final bool isFavorite = false;
 
   @override
   Widget build(BuildContext context) {
     final Size size = MediaQuery.of(context).size;
+    final questionFuture = QuestionFireStore.questions.where('category_id', isEqualTo: categoryId).get();
+
     return Scaffold(
-      appBar: AppBar(title: Text("単語たち/vocabularyPage"), iconTheme: IconThemeData(color: AppColors.mainBlue),),
+      appBar: AppBar(title: Text("vocabularyPage"), iconTheme: IconThemeData(color: AppColors.mainBlue),),
       body: SafeArea(
           child: FutureBuilder<QuerySnapshot>(
-              future: QuestionFireStore.questions.get(),
+              future: questionFuture,
               builder: (context, snapshot) {
                 if(snapshot.hasData){
                   return ListView.builder(
@@ -25,7 +29,7 @@ class VocabularyPage extends StatelessWidget {
                       itemCount: snapshot.data!.docs.length,
                       itemBuilder: (BuildContext context, int index) {
                         //category_titleを変数に格納
-                        final String questionId = snapshot.data!.docs[index].get("question_id");
+                        final String questionTitle = snapshot.data!.docs[index].get("title");
                         return Container(
                           padding: EdgeInsets.all(4),
                           child: GestureDetector(
@@ -45,7 +49,7 @@ class VocabularyPage extends StatelessWidget {
                                     child: Stack(
                                       alignment: Alignment.topLeft,
                                       children: [
-                                        Center(child: Text("question_idは$questionId",
+                                        Center(child: Text("title:$questionTitle",
                                             style: AppTextStyles.textBoldNormal,
                                             overflow: TextOverflow.ellipsis
                                         )),

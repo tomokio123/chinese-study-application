@@ -72,8 +72,7 @@ class TestCategoriesPage extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Center(child: Text("抜き打ち", style: TextStyle(fontWeight: FontWeight.bold))),
-              Center(child: Text('test!', style: TextStyle(fontWeight: FontWeight.bold)))
-              //const Icon(Icons.trending_up),
+              Center(child: Text('Test!', style: TextStyle(fontWeight: FontWeight.bold)))
             ],
           ),
         ),
