@@ -9,37 +9,39 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../../utilities/app_colors.dart';
 import '../../../../utilities/app_text_styles.dart';
+import '../../common_widget/Indicators/normal_circular_indicator.dart';
+
+//TODO:UnannouncedTestPageのクラスで以下のメソッドを呼び出すのは無理なので
 
 class UnannouncedTestPage extends StatelessWidget {
   final String categoryId;
-  const UnannouncedTestPage({Key? key,required this.categoryId}) : super(key: key);
+  UnannouncedTestPage({Key? key,required this.categoryId}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    List <String> randomNumberList = [];// ランダムな"question_id"を格納する配列
-    for (var i =0; i < 18; i++) {
-      //問題の数の分だけ回す。今回のページは10問なので10回回す
-      randomNumberList.add("$i");
-      randomNumberList.shuffle();
-      //用意していた配列にaddしていく処理
-    }
-    var newRandomNumberList = randomNumberList.take(10);
-    List<String> nextRandomNumberList = newRandomNumberList.toList();
-    //TODO:いったん取ってきた全ての問題snapShotをシャッフルする処理
-    nextRandomNumberList.shuffle();
-    print(nextRandomNumberList);
+    final Size size = MediaQuery.of(context).size;
 
-    final questionFuture = QuestionFireStore.questions.where("question_id", whereIn: nextRandomNumberList).get();
+    final List <String> randomNumberList = [];// ランダムな"question_id"を格納する配列
+    for (var i = 1; i < 20; i++) {//-1個が
+      //問題の数の分だけ回す。今回のページは10問なので10回回す
+      randomNumberList.add("$i");//用意していた配列にaddしていく処理
+    }
+    print(randomNumberList);
+    randomNumberList.shuffle();
+    final List<String> gotRandomNumberList = randomNumberList.take(10).toList();
+    //TODO:いったん取ってきた全ての問題snapShotをシャッフルする処理
+    print("gotRandomNumberList:$gotRandomNumberList");
+    print("長さ：${gotRandomNumberList.length}");
 
     return Scaffold(
       body: Consumer(builder: (context, ref, child){
+        final questionFuture = QuestionFireStore.questions.where("question_id", whereIn: gotRandomNumberList).get();
         return Center(
           child: SafeArea(
             child: FutureBuilder<QuerySnapshot>(
                 future: questionFuture,
                 builder: (context, snapshot) {//このsnapShotには、もう整列して詰めておく。
-                  final Size size = MediaQuery.of(context).size;
-                  int currentQuestionIndex = ref.watch(currentQuestionIndexProvider);
+                  final int currentQuestionIndex = ref.watch(currentQuestionIndexProvider);
                   //AnswerFutureに回答を = [a,a,a,a,a,....]と格納したい
                   final bool isAnswered = ref.watch(buttonProvider);//回答したか
                   final bool isCorrect = ref.watch(isCorrectProvider);//正解or不正解
@@ -51,7 +53,7 @@ class UnannouncedTestPage extends StatelessWidget {
                     print(currentQuestionIndex);
                     //List questionNumberList = ["1","2","3","4","5","6","7","8","9","10"];的なListを作りたい
 
-                    final answerFuture = AnswerFireStore.answers.where('answer_id', whereIn: nextRandomNumberList).get();
+                    final answerFuture = AnswerFireStore.answers.where('answer_id', whereIn: gotRandomNumberList).get();
                     return Column(
                       children: [
                         Container(
@@ -82,6 +84,7 @@ class UnannouncedTestPage extends StatelessWidget {
                                 builder: (context, snapshot) {
                                   if(snapshot.hasData) {
                                     int questionLength = snapshot.data!.size;//問題のListの長さを先に取得する
+                                    print("questionLength:$questionLength");
                                     return
                                       isAnswered == false ? //未解答状態の時
                                       GridView.count(
@@ -113,10 +116,12 @@ class UnannouncedTestPage extends StatelessWidget {
                                                 Navigator.pushReplacement(context, MaterialPageRoute(
                                                     builder: (context)=> QuestionResultPage(
                                                         questionLength: currentQuestionIndex + 1,
-                                                        numberOfCorrectAnswers: ref.read(numberOfCorrectAnswersProvider.notifier).state
-                                                    )));
+                                                        numberOfCorrectAnswers: ref.read(numberOfCorrectAnswersProvider)
+                                                    ))
+                                                );
                                                 ref.refresh(currentQuestionIndexProvider.notifier).state;
                                               }
+                                              print(ref.read(numberOfCorrectAnswersProvider));
                                             },
                                             child: Card(
                                                 shape: RoundedRectangleBorder(
@@ -162,7 +167,7 @@ class UnannouncedTestPage extends StatelessWidget {
                       ],
                     );
                   } else {
-                    return Container();
+                    return const NormalCircularIndicator();
                   }
                 }
             ),
