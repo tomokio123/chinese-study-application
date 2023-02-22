@@ -53,15 +53,18 @@ class AnnouncementListPage extends StatelessWidget {
                                       Container(
                                         height: 70,
                                         child: Center(child: Text(title,
-                                            style: AppTextStyles.textBoldNormal,
+                                            style: AppTextStyles.textBoldNormalSmaller,
                                             //maxLines: 1,
                                             overflow: TextOverflow.ellipsis
                                         )),
                                       ),
                                       Container(
-                                        height: 50,
+                                        //height: 30,
                                         child: Center(
-                                            child: Text(DateFormat('M/d/yy').format(createdAt.toDate()))
+                                            child: Text(
+                                                DateFormat('yyyy年MM月dd日-H時m分').format(createdAt.toDate()),
+                                                style: AppTextStyles.textMini
+                                            )
                                         ),
                                       ),
                                       // SizedBox(height: 20)

@@ -17,9 +17,19 @@ class AppTextStyles{
     fontSize: 20,
     color: AppColors.mainBlue,
   );
+  static const textBoldNormalSmaller = TextStyle(
+    fontWeight: FontWeight.bold,
+    fontSize: 18,
+    color: AppColors.mainBlue,
+  );
   static const textNormal = TextStyle(
     fontWeight: FontWeight.normal,
     fontSize: 20,
+    color: AppColors.mainBlue,
+  );
+  static const textNormalSmaller = TextStyle(
+    fontWeight: FontWeight.normal,
+    fontSize: 16,
     color: AppColors.mainBlue,
   );
   static const textMini = TextStyle(
