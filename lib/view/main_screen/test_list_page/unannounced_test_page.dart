@@ -15,7 +15,7 @@ import '../../common_widget/Indicators/normal_circular_indicator.dart';
 
 class UnannouncedTestPage extends StatelessWidget {
   final String categoryId;
-  UnannouncedTestPage({Key? key,required this.categoryId}) : super(key: key);
+  const UnannouncedTestPage({Key? key,required this.categoryId}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
