@@ -1,5 +1,6 @@
 import 'package:chinese_study_applicaion/Utilities/app_colors.dart';
 import 'package:chinese_study_applicaion/utilities/firestore/announcement_firestore.dart';
+import 'package:chinese_study_applicaion/view/main_screen/my_page/other_setting_page/announcement_page.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
@@ -15,7 +16,7 @@ class AnnouncementListPage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
           iconTheme: const IconThemeData(color: AppColors.mainBlue),
-          title: const Text('AnnouncementPage',style: TextStyle(color: AppColors.mainBlue)),
+          title: const Text('お知らせ',style: TextStyle(color: AppColors.mainBlue)),
           backgroundColor: AppColors.mainWhite),
         body: SafeArea(
             child: Center(
@@ -35,9 +36,8 @@ class AnnouncementListPage extends StatelessWidget {
                             padding: EdgeInsets.all(4),
                             child: GestureDetector(
                               onTap: (){
-                                // Navigator.push(context, MaterialPageRoute(builder: (context) => VocabularyPage(
-                                //     categoryId: snapshot.data!.docs[index].get("category_id")
-                                // )));
+                                Navigator.push(context, MaterialPageRoute(builder: (context) => AnnouncementPage()
+                                ));
                               },
                               child: Card(
                                 shape: RoundedRectangleBorder(
