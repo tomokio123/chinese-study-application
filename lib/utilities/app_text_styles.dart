@@ -22,4 +22,9 @@ class AppTextStyles{
     fontSize: 20,
     color: AppColors.mainBlue,
   );
+  static const textMini = TextStyle(
+    fontWeight: FontWeight.normal,
+    fontSize: 10,
+    color: AppColors.mainBlue,
+  );
 }

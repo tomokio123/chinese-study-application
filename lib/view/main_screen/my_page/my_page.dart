@@ -1,7 +1,7 @@
 import 'package:chinese_study_applicaion/utilities/app_colors.dart';
 import 'package:chinese_study_applicaion/view/login_screen/login_screen.dart';
 import 'package:chinese_study_applicaion/view/main_screen/my_page/account_page/edit_account_page/edit_account_page.dart';
-import 'package:chinese_study_applicaion/view/main_screen/my_page/other_setting_page/announcement_page.dart';
+import 'package:chinese_study_applicaion/view/main_screen/my_page/other_setting_page/announcement_list_page.dart';
 import 'package:chinese_study_applicaion/view/main_screen/my_page/other_setting_page/tutorial_page.dart';
 import 'package:chinese_study_applicaion/view/main_screen/my_page/post_question_page/post_question_page.dart';
 import 'package:chinese_study_applicaion/view/main_screen/my_page/user_info_page/user_info_page.dart';
@@ -73,7 +73,7 @@ class MyPage extends ConsumerWidget {
                 ),
                 SettingsTile.navigation(
                   onPressed: (value){
-                    Navigator.push(context, MaterialPageRoute(builder: (context)=> AnnouncementPage()));
+                    Navigator.push(context, MaterialPageRoute(builder: (context)=> AnnouncementListPage()));
                   },
                   leading: Icon(Icons.language),
                   title: Text('お知らせ'),

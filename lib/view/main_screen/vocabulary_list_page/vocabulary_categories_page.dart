@@ -11,7 +11,7 @@ class VocabularyCategoriesPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final Size size = MediaQuery.of(context).size;
+    //final Size size = MediaQuery.of(context).size;
     return Scaffold(
       appBar: AppBar(title: Text("単語帳ページ")),
       body: SafeArea(
