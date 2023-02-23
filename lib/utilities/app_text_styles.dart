@@ -7,6 +7,11 @@ class AppTextStyles{
     fontSize: 20,
     color: AppColors.mainBlue,
   );
+  static const textBoldBig = TextStyle(
+    fontWeight: FontWeight.normal,
+    fontSize: 34,
+    color: AppColors.mainBlue,
+  );
   static const textBold = TextStyle(
     fontWeight: FontWeight.normal,
     fontSize: 24,

@@ -22,7 +22,6 @@ final buttonProvider = StateProvider.autoDispose<bool>((ref) {
 final isFavoriteProvider = StateProvider((ref){
   return false;
 });
-
 //TODO: 正解かどうかを保持するProvider
 final isCorrectProvider = StateProvider.autoDispose<bool>((ref) {
   return false;

@@ -21,8 +21,10 @@ class UnannouncedTestPage extends StatelessWidget {
   Widget build(BuildContext context) {
     final Size size = MediaQuery.of(context).size;
 
+    //TODO:以下の処理は元々、画面再構築外で「一回だけ」randomNumberList.addをしたかったからだが、forの要素数をどうしても実装できない。
+    // TODO:Consumerの位置をもう少し下へ下げることでFutureBuilderよりも下に、Consumerよりも上の位置にこの処理を描けるようにしたい
     final List <String> randomNumberList = [];// ランダムな"question_id"を格納する配列
-    for (var i = 1; i < 20; i++) {//-1個が
+    for (var i = 1; i < 21; i++) {//-1個が
       //問題の数の分だけ回す。今回のページは10問なので10回回す
       randomNumberList.add("$i");//用意していた配列にaddしていく処理
     }
