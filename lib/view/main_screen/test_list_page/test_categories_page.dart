@@ -63,7 +63,7 @@ class TestCategoriesPage extends StatelessWidget {
       ),
       floatingActionButton: FloatingActionButton.large(
         onPressed: (){
-          Navigator.push(context, MaterialPageRoute(builder: (context) => UnannouncedTestPage(categoryId: "fruits")));
+          Navigator.push(context, MaterialPageRoute(builder: (context) => UnannouncedTestPage()));
         },
           backgroundColor: AppColors.mainBlue,
         child: Padding(

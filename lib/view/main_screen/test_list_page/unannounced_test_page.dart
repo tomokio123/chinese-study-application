@@ -14,17 +14,16 @@ import '../../common_widget/Indicators/normal_circular_indicator.dart';
 //TODO:UnannouncedTestPageのクラスで以下のメソッドを呼び出すのは無理なので
 
 class UnannouncedTestPage extends StatelessWidget {
-  final String categoryId;
-  const UnannouncedTestPage({Key? key,required this.categoryId}) : super(key: key);
+  const UnannouncedTestPage({Key? key}) : super(key: key);
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context) {//[question_id:1]がなんかまずいっぽい？
     final Size size = MediaQuery.of(context).size;
 
     //TODO:以下の処理は元々、画面再構築外で「一回だけ」randomNumberList.addをしたかったからだが、forの要素数をどうしても実装できない。
     // TODO:Consumerの位置をもう少し下へ下げることでFutureBuilderよりも下に、Consumerよりも上の位置にこの処理を描けるようにしたい
     final List <String> randomNumberList = [];// ランダムな"question_id"を格納する配列
-    for (var i = 1; i < 21; i++) {//-1個が
+    for (var i = 1; i < 21; i++) {//iはそう問題数　−１個分
       //問題の数の分だけ回す。今回のページは10問なので10回回す
       randomNumberList.add("$i");//用意していた配列にaddしていく処理
     }
@@ -33,11 +32,13 @@ class UnannouncedTestPage extends StatelessWidget {
     final List<String> gotRandomNumberList = randomNumberList.take(10).toList();
     //TODO:いったん取ってきた全ての問題snapShotをシャッフルする処理
     print("gotRandomNumberList:$gotRandomNumberList");
-    print("長さ：${gotRandomNumberList.length}");
+    print("gotRandomNumberListの長さ：${gotRandomNumberList.length}");
+
+    final questionFuture = QuestionFireStore.questions.where("question_id", whereIn: gotRandomNumberList).get();
+    final answerFuture = AnswerFireStore.answers.where('answer_id', whereIn: gotRandomNumberList).get();
 
     return Scaffold(
       body: Consumer(builder: (context, ref, child){
-        final questionFuture = QuestionFireStore.questions.where("question_id", whereIn: gotRandomNumberList).get();
         return Center(
           child: SafeArea(
             child: FutureBuilder<QuerySnapshot>(
@@ -50,12 +51,11 @@ class UnannouncedTestPage extends StatelessWidget {
                   //ドキュメントのquestionCounterばんめにある"question_id"フィールド値を取得。
                   //よってFutureで取得するときに整列、検索をすることが重要
                   if(snapshot.hasData){//これ忘れると「null check Operator」の例外吐かれるので対策しておく
-                    var random = math.Random();
-                    print(snapshot.data!.docs[currentQuestionIndex].get("question_id"));
-                    print(currentQuestionIndex);
+                    int questionLength = snapshot.data!.size;//問題のListの長さを先に取得する
+                    print("questionLength:$questionLength");
+                    print("question_id:${snapshot.data!.docs[currentQuestionIndex].get("question_id")}");
+                    print("currentQuestionIndex:$currentQuestionIndex");
                     //List questionNumberList = ["1","2","3","4","5","6","7","8","9","10"];的なListを作りたい
-
-                    final answerFuture = AnswerFireStore.answers.where('answer_id', whereIn: gotRandomNumberList).get();
                     return Column(
                       children: [
                         Container(
@@ -85,8 +85,6 @@ class UnannouncedTestPage extends StatelessWidget {
                                 future: answerFuture,
                                 builder: (context, snapshot) {
                                   if(snapshot.hasData) {
-                                    int questionLength = snapshot.data!.size;//問題のListの長さを先に取得する
-                                    print("questionLength:$questionLength");
                                     return
                                       isAnswered == false ? //未解答状態の時
                                       GridView.count(
