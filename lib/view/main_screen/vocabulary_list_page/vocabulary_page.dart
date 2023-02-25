@@ -30,11 +30,14 @@ class VocabularyPage extends StatelessWidget {
                       itemBuilder: (BuildContext context, int index) {
                         //category_titleを変数に格納
                         final String questionTitle = snapshot.data!.docs[index].get("title");
+                        final String questionId = snapshot.data!.docs[index].get("question_id");
                         return Container(
                           padding: EdgeInsets.all(4),
                           child: GestureDetector(
                             onTap: (){
-                              Navigator.push(context, MaterialPageRoute(builder: (context) => VocabularyContentPage()));
+                              Navigator.push(context, MaterialPageRoute(builder: (context) => VocabularyContentPage(
+                                questionId: questionId,
+                              )));
                             },
                             child: Card(
                               shape: RoundedRectangleBorder(

@@ -8,7 +8,8 @@ import '../../../../utilities/app_colors.dart';
 import '../../../utilities/firestore/answer_firestore.dart';
 
 class VocabularyContentPage extends ConsumerWidget {
-  const VocabularyContentPage({Key? key}) : super(key: key);
+  final String questionId;
+  const VocabularyContentPage({Key? key, required this.questionId}) : super(key: key);
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -27,32 +28,45 @@ class VocabularyContentPage extends ConsumerWidget {
                 future: QuestionFireStore.questions.get(),
                 builder: (context, snapshot) {
                   if(snapshot.hasData){
-                    List<String> questionNumberList = [];//問題番号に対応する回答を格納できるように配列を準備。
-                    for (var i =0; i < snapshot.data!.size; i++) {
-                      //問題の数の分だけ回す。iは[index]を表しているので0から始める。データサイズの1つ手前で止めるのがミソ！
-                      questionNumberList.add(snapshot.data!.docs[i].get("question_id"));
-                      //用意していた配列にaddしていく処理
-                    }
-                    final answerFuture = AnswerFireStore.answers.where('answer_id', whereIn: questionNumberList).get();
                     return Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         Container(
-                            child: Text('${snapshot.data!.docs[currentVocabularyIndex].get("question_id")}',
+                            height: 30,
+                            child: Text('question_id:${snapshot.data!.docs[currentVocabularyIndex].get("question_id")}',
                                 style: AppTextStyles.textBold)),
                         Container(
-                            height: 100,
+                            height: 30,
                             child: Text(
-                              '${snapshot.data!.docs[currentVocabularyIndex].get("title")}',
-                              style: AppTextStyles.textBoldBig
+                              'title:${snapshot.data!.docs[currentVocabularyIndex].get("title")}',
+                              style: AppTextStyles.textBold
                               ,)),
                         Container(
                           child: FutureBuilder<QuerySnapshot>(
-                            future: answerFuture,
+                            //answer_idがquestion_idと等しいクエリを取得して表示する
+                            future: AnswerFireStore.answers.where("answer_id", isEqualTo: questionId).get(),
                             builder: (context, snapshot) {
-                              return Container();
+                              if(snapshot.hasData){
+                                return Column(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    Container(
+                                        height: 30,
+                                        child: Text('answer_id:${snapshot.data!.docs[currentVocabularyIndex].get("answer_id")}',
+                                            style: AppTextStyles.textBold)),
+                                    Container(
+                                        height: 30,
+                                        child: Text(
+                                          'commentary:${snapshot.data!.docs[currentVocabularyIndex].get("commentary")}',
+                                          style: AppTextStyles.textBold
+                                          ,))
+                                  ],
+                                );
+                              } else {
+                                return Container();
+                              }
                             }
-                          ),)
+                            ))
                       ],
                     );
                   } else {

@@ -47,19 +47,15 @@ class UnannouncedTestPage extends StatelessWidget {
                   final int currentQuestionIndex = ref.watch(currentQuestionIndexProvider);
                   final bool isAnswered = ref.watch(buttonProvider);//回答したか
                   final bool isCorrect = ref.watch(isCorrectProvider);//正解or不正解
-                  //ドキュメントのquestionCounterばんめにある"question_id"フィールド値を取得。
-                  //よってFutureで取得するときに整列、検索をすることが重要
                   if(snapshot.hasData){//これ忘れると「null check Operator」の例外吐かれるので対策しておく
                     int questionLength = snapshot.data!.size;//問題のListの長さを先に取得する
                     print("questionLength:$questionLength");
                     print("question_id:${snapshot.data!.docs[currentQuestionIndex].get("question_id")}");
                     print("currentQuestionIndex:$currentQuestionIndex");
-                    //List questionNumberList = ["1","2","3","4","5","6","7","8","9","10"];的なListを作りたい
                     return Column(
                       children: [
                         Container(
                             width: double.infinity,
-                            //color: AppColors.mainPink,
                             padding: const EdgeInsets.only(top: 40),
                             child: Center(
                                 child: Text(isAnswered ? "" : "${currentQuestionIndex + 1} 問目",
