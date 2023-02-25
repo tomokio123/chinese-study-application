@@ -20,21 +20,16 @@ class QuestionFireStore {
       print('新規問題投稿エラー：$e');
     }
   }
-
-  static Future<dynamic> getQuestion(String questionId) async{
+  //TODO:questionテーブルの総数を求めて返す処理を描きたい
+  static Future<dynamic> getQuestionNumber() async{
     try{
-      DocumentSnapshot documentSnapshot = await questions.doc(questionId).get();
-      Map<String, dynamic> data = documentSnapshot.data() as Map<String, dynamic>;
-      Question question = Question(
-        questionId: data[questionId],
-        title: data['title'],
-        answerId: data['answer_id'],
-        categoryId: data['category_id']
-      );
-      print('ユーザー取得完了');
-      return question;
+      QuerySnapshot querySnapshot = await questions.get();
+      final int totalNumberOfQuestion = querySnapshot.size;
+      print('全問題の総数:$totalNumberOfQuestion');
+      print('全問題の総数取得完了');
+      return totalNumberOfQuestion;
     } on FirebaseException catch(e){
-      print('ユーザー取得完了エラー: $e');
+      print('全問題の総数取得完了エラー: $e');
       return false;
     }
   }

@@ -14,18 +14,17 @@ import '../../common_widget/Indicators/normal_circular_indicator.dart';
 //TODO:UnannouncedTestPageのクラスで以下のメソッドを呼び出すのは無理なので
 
 class UnannouncedTestPage extends StatelessWidget {
-  const UnannouncedTestPage({Key? key}) : super(key: key);
+  final int totalNumberOfQuestions;//questionsテーブルの全問題数を取得
+  const UnannouncedTestPage({Key? key, required this.totalNumberOfQuestions})
+      : super(key: key);
 
   @override
-  Widget build(BuildContext context) {//[question_id:1]がなんかまずいっぽい？
+  Widget build(BuildContext context) {
     final Size size = MediaQuery.of(context).size;
-
-    //TODO:以下の処理は元々、画面再構築外で「一回だけ」randomNumberList.addをしたかったからだが、forの要素数をどうしても実装できない。
-    // TODO:Consumerの位置をもう少し下へ下げることでFutureBuilderよりも下に、Consumerよりも上の位置にこの処理を描けるようにしたい
     final List <String> randomNumberList = [];// ランダムな"question_id"を格納する配列
-    for (var i = 1; i < 21; i++) {//iはそう問題数　−１個分
-      //問題の数の分だけ回す。今回のページは10問なので10回回す
-      randomNumberList.add("$i");//用意していた配列にaddしていく処理
+    for (var i = 1; i < totalNumberOfQuestions + 1; i++) {
+      //iは総問題数(totalNumberOfQuestions)個分。
+      randomNumberList.add("$i");
     }
     print(randomNumberList);
     randomNumberList.shuffle();
@@ -43,9 +42,9 @@ class UnannouncedTestPage extends StatelessWidget {
           child: SafeArea(
             child: FutureBuilder<QuerySnapshot>(
                 future: questionFuture,
-                builder: (context, snapshot) {//このsnapShotには、もう整列して詰めておく。
+                builder: (context, snapshot) {
+                  //現在の問題のIndexを管理。問題の番数はこれ+1。
                   final int currentQuestionIndex = ref.watch(currentQuestionIndexProvider);
-                  //AnswerFutureに回答を = [a,a,a,a,a,....]と格納したい
                   final bool isAnswered = ref.watch(buttonProvider);//回答したか
                   final bool isCorrect = ref.watch(isCorrectProvider);//正解or不正解
                   //ドキュメントのquestionCounterばんめにある"question_id"フィールド値を取得。

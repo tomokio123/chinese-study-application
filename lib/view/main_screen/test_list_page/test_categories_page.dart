@@ -6,6 +6,7 @@ import 'package:chinese_study_applicaion/view/main_screen/test_list_page/unannou
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import '../../../utilities/app_text_styles.dart';
+import '../../../utilities/firestore/question_firestore.dart';
 
 class TestCategoriesPage extends StatelessWidget {
    const TestCategoriesPage({Key? key}) : super(key: key);
@@ -62,8 +63,16 @@ class TestCategoriesPage extends StatelessWidget {
         )
       ),
       floatingActionButton: FloatingActionButton.large(
-        onPressed: (){
-          Navigator.push(context, MaterialPageRoute(builder: (context) => UnannouncedTestPage()));
+        onPressed: () async{
+          var totalNumberOfQuestion = await QuestionFireStore.getQuestionNumber();
+          if(totalNumberOfQuestion is int){//int型が帰ってきた時だけ遷移できるようにする
+            Navigator.push(context, MaterialPageRoute(builder: (context) => UnannouncedTestPage(
+              totalNumberOfQuestions: totalNumberOfQuestion,
+            )));
+            print("totalNumberOfQuestion:$totalNumberOfQuestion");
+          } else {
+            print("questionNumberResultがFalse");
+          }
         },
           backgroundColor: AppColors.mainBlue,
         child: Padding(
