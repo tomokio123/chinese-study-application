@@ -23,24 +23,29 @@ class VocabularyContentPage extends ConsumerWidget {
       body: Center(
         child: SafeArea(
           child: Container(
+            padding: EdgeInsets.all(15),
             width: double.infinity,//目一杯広げる
             child: FutureBuilder<QuerySnapshot>(
-                future: QuestionFireStore.questions.get(),
+                future: QuestionFireStore.questions.where("question_id", isEqualTo: questionId).get(),
+                //貰ってきたフィールド変数「questionId」と等しいものをquestion_idコレクションから取ってくる。
                 builder: (context, snapshot) {
                   if(snapshot.hasData){
                     return Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
+                        SizedBox(height: 30),
                         Container(
                             height: 30,
                             child: Text('question_id:${snapshot.data!.docs[currentVocabularyIndex].get("question_id")}',
                                 style: AppTextStyles.textBold)),
+                        SizedBox(height: 10),
                         Container(
                             height: 30,
                             child: Text(
                               'title:${snapshot.data!.docs[currentVocabularyIndex].get("title")}',
                               style: AppTextStyles.textBold
                               ,)),
+                        SizedBox(height: 10),
                         Container(
                           child: FutureBuilder<QuerySnapshot>(
                             //answer_idがquestion_idと等しいクエリを取得して表示する
@@ -54,11 +59,12 @@ class VocabularyContentPage extends ConsumerWidget {
                                         height: 30,
                                         child: Text('answer_id:${snapshot.data!.docs[currentVocabularyIndex].get("answer_id")}',
                                             style: AppTextStyles.textBold)),
+                                    SizedBox(height: 10),
                                     Container(
-                                        height: 30,
+                                        height: 130,
                                         child: Text(
                                           'commentary:${snapshot.data!.docs[currentVocabularyIndex].get("commentary")}',
-                                          style: AppTextStyles.textBold
+                                          style: AppTextStyles.textBoldNormal
                                           ,))
                                   ],
                                 );
@@ -70,7 +76,7 @@ class VocabularyContentPage extends ConsumerWidget {
                       ],
                     );
                   } else {
-                    return Container(child: Text('questionFutureがfalse'),);
+                    return Container();
                   }
                 }
             ),

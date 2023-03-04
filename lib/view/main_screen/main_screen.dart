@@ -22,7 +22,7 @@ class _MainScreenState extends State<MainScreen> {
   }
   static final List<Widget> _widgetOptions = <Widget>[
     TestCategoriesPage(),
-    OneOnOneListPage(),
+    //OneOnOneListPage(),
     VocabularyCategoriesPage(),
     BookMarkPage(),
     MyPage(),
@@ -53,10 +53,10 @@ class _MainScreenState extends State<MainScreen> {
           icon: Icon(Icons.quiz_outlined),
           label: 'テスト',
         ),
-        BottomNavigationBarItem(
-          icon: Icon(Icons.checklist),
-          label: '一問一答',
-        ),
+        // BottomNavigationBarItem(
+        //   icon: Icon(Icons.checklist),
+        //   label: '一問一答',
+        // ),
         BottomNavigationBarItem(
           icon: Icon(Icons.school_outlined),
           label: '単語帳',

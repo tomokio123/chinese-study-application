@@ -67,8 +67,13 @@ class UnannouncedTestPage extends StatelessWidget {
                             child: Center(
                               //questionのタイトル
                               child: isAnswered
-                                  ? Text(isCorrect ? "正解です" : "不正解です",
-                                  style: TextStyle(fontSize: 26))
+                                  ? Container(height: 150,
+                                  child: Image.asset(
+                                    //TODO:正解と不正解のImageを作って貼り付ける。一旦はpngで作る
+                                      isCorrect ?
+                                      'images/main_image.png':
+                                      'images/main_image.png'
+                                  ))
                                   : Text(snapshot.data!.docs[currentQuestionIndex].get("title"),
                                   style: TextStyle(fontSize: 26)),
                             )

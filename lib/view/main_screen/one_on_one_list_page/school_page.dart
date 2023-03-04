@@ -2,7 +2,6 @@ import 'package:chinese_study_applicaion/view/main_screen/one_on_one_list_page/t
 import 'package:chinese_study_applicaion/view/main_screen/one_on_one_list_page/to_japanese_page/to_japanese_page.dart';
 import 'package:flutter/material.dart';
 import '../../../utilities/app_colors.dart';
-//School = 問題のジャンルを選ぶページ
 class OneOnOneListPage extends StatefulWidget {
   const OneOnOneListPage({Key? key}) : super(key: key);
 
