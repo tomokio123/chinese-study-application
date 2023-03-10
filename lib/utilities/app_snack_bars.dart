@@ -98,6 +98,18 @@ class AppSnackBar {
       shape: snackBarShape,
       backgroundColor: AppColors.mainPink);
 
+  //お気に入り問題登録成功時のSnackBar
+  static final settingFavoriteQuestionIsSuccessful = SnackBar(
+      content: const Text('お気に入り問題の登録に成功しました'),
+      shape: snackBarShape,
+      backgroundColor: AppColors.mainGreen);
+
+  //お気に入り問題登録失敗時のSnackBar
+  static final settingFavoriteQuestionIsFailed = SnackBar(
+      content: const Text('お気に入り問題の登録に失敗しました'),
+      shape: snackBarShape,
+      backgroundColor: AppColors.mainPink);
+
 
 
 

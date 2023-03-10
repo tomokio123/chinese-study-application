@@ -5,28 +5,29 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import '../../model/favorite_questions.dart';
 class FavoriteQuestionFireStore {
   static final _fireStoreInstance = FirebaseFirestore.instance;
-  static final CollectionReference questions = _fireStoreInstance.collection('questions');
+  //static final CollectionReference questions = _fireStoreInstance.collection('questions');
   static final CollectionReference favoriteQuestions = _fireStoreInstance.collection('favorite_questions');
   //FireStoreをUsersっていうコレクション名にしたのはやらかした。。。。。以後リファクタリングする
-  static Future<dynamic> setFavoriteQuestion(Account account, Question question) async{
+  static Future<dynamic> setFavoriteQuestion({required String accountId, required String questionId}) async{
     //FavoriteQuestionをfireStoreに登録する処理
     try{
-      //TODO:今回は[docID]=>[自動ID]とし、それに一致するfavorite_questionを取得できるようにしたい
+      //TODO:今回は[docID]=>[自動ID]とする
       //「favoriteQuestions」コレクションの、任意のドキュメントIdを自動生成してフィールドに値を登録。
       await favoriteQuestions.add({//今回は自分のユーザID(account.id)を入れる
         // 1.「set」メソッド => docIdを任意の文字列にしてデータ登録
         // 2.「add」メソッド => decIdを自動にしてデータ登録
-        'favorite_question_id': question.questionId,//favorite_question_idには取ってきたquestionのidを入れ、
-        'account_id': account.id //account_idには
+        'favorite_question_id': questionId,//favorite_question_idフィールドには取ってきたquestionのidを入れ、
+        'user_id': accountId //user_idフィールドにはQuestionテーブルのquestionIdを入れる
       })
-          .then((value) => print("FireStore新規カテゴリ投稿に成功"));
+          .then((value) => print("お気に入り問題保存に成功"));
       return true;
       //.catchError((error) => print("FireStore新規問題投稿に失敗: $error"));
     } on Exception catch(e){
-      print('新規カテゴリ投稿エラー：$e');
+      print('お気に入り問題保存エラー：$e');
     }
   }
   static Future<dynamic> getFavoriteQuestionIdList(String userId) async{
+    //今のところ使ってない
     try{
       //user_idに一致する
       DocumentSnapshot documentSnapshot = await favoriteQuestions.doc(userId).get();
