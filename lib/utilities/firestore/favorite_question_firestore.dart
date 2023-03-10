@@ -11,7 +11,7 @@ class FavoriteQuestionFireStore {
   static Future<dynamic> setFavoriteQuestion(Account account, Question question) async{
     //FavoriteQuestionをfireStoreに登録する処理
     try{
-      //TODO:今回は[docID]=>[自分のユーザID]とし、それに一致するfavorite_questionを取得できるようにしたい
+      //TODO:今回は[docID]=>[自動ID]とし、それに一致するfavorite_questionを取得できるようにしたい
       //「favoriteQuestions」コレクションの、任意のドキュメントIdを自動生成してフィールドに値を登録。
       await favoriteQuestions.add({//今回は自分のユーザID(account.id)を入れる
         // 1.「set」メソッド => docIdを任意の文字列にしてデータ登録

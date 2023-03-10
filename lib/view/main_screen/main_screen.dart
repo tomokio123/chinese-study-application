@@ -29,7 +29,7 @@ class _MainScreenState extends State<MainScreen> {
     TestCategoriesPage(),
     //OneOnOneListPage(),
     VocabularyCategoriesPage(),
-    BookMarkPage(favoriteQuestionIdList: ["1", "2"]),
+    BookMarkPage(currentUserId: currentUserId),
     MyPage(),
   ];
 
