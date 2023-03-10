@@ -1,21 +1,23 @@
 import 'package:chinese_study_applicaion/utilities/firestore/question_firestore.dart';
+import 'package:chinese_study_applicaion/utilities/provider/providers.dart';
 import 'package:chinese_study_applicaion/view/main_screen/vocabulary_list_page/vocabulary_content_page.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../utilities/app_colors.dart';
 import '../../../utilities/app_text_styles.dart';
 import '../../common_widget/Indicators/normal_circular_indicator.dart';
 
-class VocabularyPage extends StatelessWidget {
+class VocabularyPage extends ConsumerWidget {
   final String categoryId;
   const VocabularyPage({Key? key, required this.categoryId}) : super(key: key);
 
-  final bool isFavorite = false;
-
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     final Size size = MediaQuery.of(context).size;
     final questionFuture = QuestionFireStore.questions.where('category_id', isEqualTo: categoryId).get();
+
+    final bool isFavorite = ref.watch(isFavoriteProvider);
 
     return Scaffold(
       appBar: AppBar(title: Text("vocabularyPage"), iconTheme: IconThemeData(color: AppColors.mainBlue),),
@@ -59,7 +61,12 @@ class VocabularyPage extends StatelessWidget {
                                         Align(
                                           alignment: Alignment.centerRight,
                                           child: GestureDetector(
-                                            onTap: (){print("tapped");},
+                                            onTap: (){
+                                              print("tapped");
+                                              if(isFavorite == false){
+
+                                              }
+                                              },
                                             child: Container(
                                               height: 50,
                                               width: 50,

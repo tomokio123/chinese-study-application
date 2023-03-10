@@ -3,20 +3,27 @@ import 'package:chinese_study_applicaion/utilities/firestore/user_firestore.dart
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import '../../../utilities/app_colors.dart';
+import '../../../utilities/firestore/question_firestore.dart';
 
 class BookMarkPage extends StatelessWidget {
-  const BookMarkPage({Key? key}) : super(key: key);
+  //TODO:お気に入りページに移った時に「お気に入り登録されているquestion_id(favoriteQuestionテーブルのquestion_idフィールド)のリスト」を取得する
+  // final String currentUserId;
+  //TODO;このページに移った時に取得したquestion_idを元に、favorite_questionテーブルのquestion_idをwhereIndで検索して取り出す
+  final List<String> favoriteQuestionIdList;
+  const BookMarkPage({Key? key, required this.favoriteQuestionIdList}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    final String currentUserId = UserFireStore.currentUserId;//自分のユーザIDを取得したい
-    print(currentUserId);
+    final List<String> favoriteQuestionIdList = ["1", "2"];
+    final favoriteQuestionIdFuture = QuestionFireStore.questions.where("question_id", whereIn: favoriteQuestionIdList).get();
 
     return Scaffold(
       body: Center(
         child: SafeArea(
           child: FutureBuilder<QuerySnapshot>(
-              future: FavoriteQuestionFireStore.favoriteQuestions.where("user_id", isEqualTo: currentUserId).get(),
+              future: favoriteQuestionIdFuture,
+              // TODO:favoriteQuestionsコレクションの中でuser_idが一致するquestion_idを取り出し、
+              // TODO:そのquestion_idと一致するquestionをquestionコレクションから取ってきて表示
               builder: (context, snapshot) {
                 if(snapshot.hasData){
                   return ListView.builder(
@@ -30,11 +37,11 @@ class BookMarkPage extends StatelessWidget {
                               SizedBox(
                                   width: double.infinity,
                                   height: 50,
-                                  child: Center(child: Text("${snapshot.data!.size}"))),
+                                  child: Center(child: Text("data length:${snapshot.data!.size}"))),
                               SizedBox(
                                   width: double.infinity,
                                   height: 50,
-                                  child: Center(child: Text("${snapshot.data!.docs[index].get("user_id")}　さんの、${snapshot.data!.docs[index].get("question_id")}です"))),
+                                  child: Center(child: Text("question_id:${snapshot.data!.docs[index].get("question_id")}です"))),
                             ],
                           ),
                         ),

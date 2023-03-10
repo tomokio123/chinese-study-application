@@ -1,6 +1,8 @@
 import 'package:chinese_study_applicaion/utilities/app_colors.dart';
 import 'package:chinese_study_applicaion/view/main_screen/book_mark_page/book_mark_page.dart';
 import 'package:flutter/material.dart';
+import '../../utilities/firestore/favorite_question_firestore.dart';
+import '../../utilities/firestore/user_firestore.dart';
 import 'my_page/my_page.dart';
 import 'one_on_one_list_page/school_page.dart';
 import 'test_list_page/test_categories_page.dart';
@@ -15,16 +17,19 @@ class MainScreen extends StatefulWidget {
 
 class _MainScreenState extends State<MainScreen> {
   int _selectedIndex = 0;
-  void _onItemTapped(int index) {
+  void _onItemTapped(int index) async{
+     var favoriteQuestionIdList = await FavoriteQuestionFireStore.favoriteQuestions.get();
     setState(() {
       _selectedIndex = index;
     });
   }
+  static final String currentUserId = UserFireStore.currentUserId;//自分のユーザIDを取得したい
+
   static final List<Widget> _widgetOptions = <Widget>[
     TestCategoriesPage(),
     //OneOnOneListPage(),
     VocabularyCategoriesPage(),
-    BookMarkPage(),
+    BookMarkPage(favoriteQuestionIdList: ["1", "2"]),
     MyPage(),
   ];
 

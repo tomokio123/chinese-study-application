@@ -26,18 +26,19 @@ class FavoriteQuestionFireStore {
       print('新規カテゴリ投稿エラー：$e');
     }
   }
-  static Future<dynamic> getFavoriteQuestion(String documentId) async{
+  static Future<dynamic> getFavoriteQuestionIdList(String userId) async{
     try{
-      DocumentSnapshot documentSnapshot = await favoriteQuestions.doc(documentId).get();
+      //user_idに一致する
+      DocumentSnapshot documentSnapshot = await favoriteQuestions.doc(userId).get();
       //ドキュメントIdに対応するドキュメントを取ってくる
       Map<String, dynamic> data = documentSnapshot.data() as Map<String, dynamic>;
-      FavoriteQuestion favoriteQuestion = FavoriteQuestion(
-        favoriteQuestionId: documentId,
+      FavoriteQuestion favoriteQuestionIdList = FavoriteQuestion(
+        //favoriteQuestionIdはFireStoreの自動ID,
         questionId: data['question_id'],
         accountId: data['user_id']
       );
       print('ユーザー取得完了');
-      return favoriteQuestion;
+      return favoriteQuestionIdList;
     } on FirebaseException catch(e){
       print('ユーザー取得完了エラー: $e');
       return false;
