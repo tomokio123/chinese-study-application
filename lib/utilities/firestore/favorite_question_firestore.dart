@@ -16,7 +16,7 @@ class FavoriteQuestionFireStore {
       await favoriteQuestions.add({//今回は自分のユーザID(account.id)を入れる
         // 1.「set」メソッド => docIdを任意の文字列にしてデータ登録
         // 2.「add」メソッド => decIdを自動にしてデータ登録
-        'favorite_question_id': questionId,//favorite_question_idフィールドには取ってきたquestionのidを入れ、
+        'question_id': questionId,//favorite_question_idフィールドには取ってきたquestionのidを入れ、
         'user_id': accountId //user_idフィールドにはQuestionテーブルのquestionIdを入れる
       })
           .then((value) => print("お気に入り問題保存に成功"));
@@ -26,22 +26,26 @@ class FavoriteQuestionFireStore {
       print('お気に入り問題保存エラー：$e');
     }
   }
-  static Future<dynamic> getFavoriteQuestionIdList(String userId) async{
+  static Future<dynamic> getFavoriteQuestion(String userId, String questionId) async{
+    //TODO:user_idに一致するものを取ってくる
     //今のところ使ってない
     try{
-      //user_idに一致する
-      DocumentSnapshot documentSnapshot = await favoriteQuestions.doc(userId).get();
-      //ドキュメントIdに対応するドキュメントを取ってくる
+      DocumentSnapshot documentSnapshot = await favoriteQuestions.doc().get();//doc()に何か具体的な値を持たせないと'Null' is not a subtype 、、てなる
       Map<String, dynamic> data = documentSnapshot.data() as Map<String, dynamic>;
-      FavoriteQuestion favoriteQuestionIdList = FavoriteQuestion(
+      FavoriteQuestion favoriteQuestion = FavoriteQuestion(
         //favoriteQuestionIdはFireStoreの自動ID,
         questionId: data['question_id'],
         accountId: data['user_id']
       );
-      print('ユーザー取得完了');
-      return favoriteQuestionIdList;
+      if(favoriteQuestion.questionId == questionId && favoriteQuestion.accountId == userId){
+        //fireStoreから取ってきたquestionId,accountIdが引数で渡したものと完全一致したら
+        print('お気に入り問題取得完了');
+        return favoriteQuestion;
+      } else {
+        return false;//すでにお気に入り登録されている
+      }
     } on FirebaseException catch(e){
-      print('ユーザー取得完了エラー: $e');
+      print('お気に入り問題取得エラー: $e');
       return false;
     }
   }

@@ -22,10 +22,8 @@ class VocabularyPage extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final Size size = MediaQuery.of(context).size;
     final questionFuture = QuestionFireStore.questions.where('category_id', isEqualTo: categoryId).get();
-
     final bool isFavorite = ref.watch(isFavoriteProvider);//isFavoriteProviderのデフォはFalse。
     //お気に入りに登録されているかの判定状況を持たせる
-
     final String currentUserId = UserFireStore.currentUserId;
 
     //TODO:uidとquestionIdを渡して保存
@@ -42,6 +40,13 @@ class VocabularyPage extends ConsumerWidget {
       );
       //引数を{}で囲んでrequiredにすることで名前付きで尚且つ、必須パラメータ(必須引数)とすることもできる。試してみた。
       return _result;
+    }
+
+    Future<dynamic> returnIsFavorite(String currentUserId, String questionId) async{
+      //TODO:currentUserId,questionIdを渡し、そのフィールドを持つドキュメントを取ってくる。
+      //TODO:あればお気に入り登録されていることになるし、なければお気に入り未登録という解釈である
+      var result = FavoriteQuestionFireStore.getFavoriteQuestion(currentUserId, questionId);
+      return result;
     }
 
     return Scaffold(
@@ -88,11 +93,11 @@ class VocabularyPage extends ConsumerWidget {
                                           child: GestureDetector(
                                             //TODO:押して保存。保存されている場合は保存解除
                                             onTap: () async{
-                                              print("tapped");
                                               if(isFavorite == false){
                                                 //TODO:お気に入り登録されていないとき
                                                 var result = await createFavoriteQuestion(currentUserId, questionId);//お気に入り保存処理
                                                 if(result == true){//保存処理の成功で、trueが返ってきた時は
+                                                  ref.read(isFavoriteProvider.notifier).state = true;//まずお気に入り登録をtrueにする
                                                   print("createFavoriteQuestionの結果がtrue");
                                                   ScaffoldMessenger.of(context).showSnackBar(AppSnackBar.settingFavoriteQuestionIsSuccessful);
                                                 } else {
@@ -101,6 +106,15 @@ class VocabularyPage extends ConsumerWidget {
                                               } else {
                                                 //TODO:すでにお気に入り登録されていた時の処理
                                               }
+                                              print("tapped");
+                                              // var resultOfIsFavorite = await returnIsFavorite(currentUserId, questionId);
+                                              // if(resultOfIsFavorite == null){
+                                              //   print("resultOfIsFavorite is null");
+                                              // } else if(resultOfIsFavorite == false){
+                                              //   print("resultOfIsFavorite is false");//すでにお気にり登録されている
+                                              // } else if(resultOfIsFavorite is FavoriteQuestion) {//FavoriteQuestion型が帰ってきたら
+                                              //   print("resultOfIsFavorite is FavoriteQuestion");
+                                              // }
                                               },
                                             child: Container(
                                               height: 50,
