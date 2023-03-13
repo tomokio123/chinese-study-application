@@ -11,4 +11,5 @@ class AppColors{
   static const subGreen = Color.fromRGBO(129, 214, 116, 1);
   static const mainRed = Color.fromRGBO(244, 67, 54, 1);
   static const mainPink = Color.fromRGBO(201, 60, 110, 1);
+  static const mainGray = Color.fromRGBO(170, 170, 170, 1);
 }

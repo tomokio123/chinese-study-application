@@ -5,8 +5,12 @@ import 'package:chinese_study_applicaion/utilities/firestore/favorite_question_f
 import 'package:chinese_study_applicaion/utilities/firestore/question_firestore.dart';
 import 'package:chinese_study_applicaion/utilities/firestore/user_firestore.dart';
 import 'package:chinese_study_applicaion/utilities/provider/providers.dart';
+import 'package:chinese_study_applicaion/view/main_screen/main_screen.dart';
+import 'package:chinese_study_applicaion/view/main_screen/my_page/my_page.dart';
+import 'package:chinese_study_applicaion/view/main_screen/vocabulary_list_page/vocabulary_categories_page.dart';
 import 'package:chinese_study_applicaion/view/main_screen/vocabulary_list_page/vocabulary_content_page.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../utilities/app_colors.dart';
@@ -26,6 +30,41 @@ class VocabularyPage extends ConsumerWidget {
     //お気に入りに登録されているかの判定状況を持たせる
     final String currentUserId = UserFireStore.currentUserId;
 
+    //TODO:Favorite登録を消す、解除する
+    Future<void> _deleteFavoriteDialogBuilder(BuildContext context, WidgetRef ref, String favoriteQuestionId) {
+      return showDialog<void>(
+        context: context,
+        builder: (BuildContext context) {
+          return CupertinoAlertDialog(
+            title: const Text('お気に入り解除'),
+            content: const Text('既にお気に入り登録されています。解除してよろしいでしょうか？'),
+            actions: <Widget>[
+              TextButton(
+                style: TextButton.styleFrom(
+                  textStyle: Theme.of(context).textTheme.labelLarge,
+                ),
+                child: Text('戻る'),
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+              ),
+              TextButton(
+                style: TextButton.styleFrom(
+                  textStyle: Theme.of(context).textTheme.labelLarge,
+                ),
+                child: const Text('解除'),
+                onPressed: () async{
+                  await FavoriteQuestionFireStore.deleteFavoriteQuestion(favoriteQuestionId);
+                  ref.read(isFavoriteProvider.notifier).state = false;//TODO:お気に入り解除
+                  Navigator.pop(context);
+                },
+              ),
+            ],
+          );
+        },
+      );
+    }
+
     //TODO:uidとquestionIdを渡して保存
     Future<dynamic> createFavoriteQuestion(String uid, String questionId) async{//FireStoreに送るデータ
       //!でnull回避 await をつけておく一応
@@ -42,12 +81,12 @@ class VocabularyPage extends ConsumerWidget {
       return _result;
     }
 
-    Future<dynamic> returnIsFavorite(String currentUserId, String questionId) async{
-      //TODO:currentUserId,questionIdを渡し、そのフィールドを持つドキュメントを取ってくる。
-      //TODO:あればお気に入り登録されていることになるし、なければお気に入り未登録という解釈である
-      var result = FavoriteQuestionFireStore.getFavoriteQuestion(currentUserId, questionId);
-      return result;
-    }
+    // Future<dynamic> returnIsFavorite(String currentUserId, String questionId) async{
+    //   //TODO:currentUserId,questionIdを渡し、そのフィールドを持つドキュメントを取ってくる。
+    //   //TODO:あればお気に入り登録されていることになるし、なければお気に入り未登録という解釈である
+    //   var result = FavoriteQuestionFireStore.getFavoriteQuestion(currentUserId, questionId);
+    //   return result;
+    // }
 
     return Scaffold(
       appBar: AppBar(title: Text("vocabularyPage"), iconTheme: IconThemeData(color: AppColors.mainBlue),),
@@ -93,8 +132,15 @@ class VocabularyPage extends ConsumerWidget {
                                           child: GestureDetector(
                                             //TODO:押して保存。保存されている場合は保存解除
                                             onTap: () async{
-                                              if(isFavorite == false){
-                                                //TODO:お気に入り登録されていないとき
+                                              print("tapped");
+                                              //TODO:該当するQuestionが既にFireStoreに存在するかどうか確認する処理。
+                                              var _result = await FavoriteQuestionFireStore.getFavoriteQuestion(currentUserId, questionId);
+                                              if(_result is String){//正常(FireStoreに値があり、既にお気に入りとなっていた時は)
+                                                //TODO:お気に入りを削除
+                                                await _deleteFavoriteDialogBuilder(context, ref, _result);
+                                                print("_result が　String");
+                                                print("_result:$_result");
+                                              } else {//お気に入り未登録の時→お気に入り登録処理
                                                 var result = await createFavoriteQuestion(currentUserId, questionId);//お気に入り保存処理
                                                 if(result == true){//保存処理の成功で、trueが返ってきた時は
                                                   ref.read(isFavoriteProvider.notifier).state = true;//まずお気に入り登録をtrueにする
@@ -103,10 +149,9 @@ class VocabularyPage extends ConsumerWidget {
                                                 } else {
                                                   ScaffoldMessenger.of(context).showSnackBar(AppSnackBar.settingFavoriteQuestionIsFailed);
                                                 }
-                                              } else {
-                                                //TODO:すでにお気に入り登録されていた時の処理
+                                                print("_result:$_result");
                                               }
-                                              print("tapped");
+
                                               // var resultOfIsFavorite = await returnIsFavorite(currentUserId, questionId);
                                               // if(resultOfIsFavorite == null){
                                               //   print("resultOfIsFavorite is null");
@@ -117,12 +162,13 @@ class VocabularyPage extends ConsumerWidget {
                                               // }
                                               },
                                             child: Container(
-                                              height: 50,
-                                              width: 50,
+                                              height: 90,
+                                              width: 70,
                                               child: Center(
                                                   child: isFavorite
-                                                  ? Icon(Icons.star_outline, size: 20)
-                                                  : Icon(Icons.star_rate_sharp, size: 20, color: AppColors.mainPink,)
+                                                  ? Icon(Icons.add, size: 26, color: AppColors.mainGray)
+                                                  : Icon(Icons.add, size: 26, color: AppColors.mainGray)
+                                                      //Icon(Icons.star_rate_sharp, size: 30, color: AppColors.mainPink,)
                                               ),
                                             ),
                                           ),
