@@ -81,13 +81,6 @@ class VocabularyPage extends ConsumerWidget {
       return _result;
     }
 
-    // Future<dynamic> returnIsFavorite(String currentUserId, String questionId) async{
-    //   //TODO:currentUserId,questionIdを渡し、そのフィールドを持つドキュメントを取ってくる。
-    //   //TODO:あればお気に入り登録されていることになるし、なければお気に入り未登録という解釈である
-    //   var result = FavoriteQuestionFireStore.getFavoriteQuestion(currentUserId, questionId);
-    //   return result;
-    // }
-
     return Scaffold(
       appBar: AppBar(title: Text("vocabularyPage"), iconTheme: IconThemeData(color: AppColors.mainBlue),),
       body: SafeArea(
@@ -138,6 +131,7 @@ class VocabularyPage extends ConsumerWidget {
                                               if(_result is String){//正常(FireStoreに値があり、既にお気に入りとなっていた時は)
                                                 //TODO:お気に入りを削除
                                                 await _deleteFavoriteDialogBuilder(context, ref, _result);
+                                                ScaffoldMessenger.of(context).showSnackBar(AppSnackBar.deletingFavoriteQuestionIsSuccessful);
                                                 print("_result が　String");
                                                 print("_result:$_result");
                                               } else {//お気に入り未登録の時→お気に入り登録処理
@@ -151,15 +145,6 @@ class VocabularyPage extends ConsumerWidget {
                                                 }
                                                 print("_result:$_result");
                                               }
-
-                                              // var resultOfIsFavorite = await returnIsFavorite(currentUserId, questionId);
-                                              // if(resultOfIsFavorite == null){
-                                              //   print("resultOfIsFavorite is null");
-                                              // } else if(resultOfIsFavorite == false){
-                                              //   print("resultOfIsFavorite is false");//すでにお気にり登録されている
-                                              // } else if(resultOfIsFavorite is FavoriteQuestion) {//FavoriteQuestion型が帰ってきたら
-                                              //   print("resultOfIsFavorite is FavoriteQuestion");
-                                              // }
                                               },
                                             child: Container(
                                               height: 90,
@@ -168,6 +153,7 @@ class VocabularyPage extends ConsumerWidget {
                                                   child: isFavorite
                                                   ? Icon(Icons.add, size: 26, color: AppColors.mainGray)
                                                   : Icon(Icons.add, size: 26, color: AppColors.mainGray)
+                                                      //TODO:今のところisFavoriteは意味をなさない設計
                                                       //Icon(Icons.star_rate_sharp, size: 30, color: AppColors.mainPink,)
                                               ),
                                             ),

@@ -110,6 +110,18 @@ class AppSnackBar {
       shape: snackBarShape,
       backgroundColor: AppColors.mainPink);
 
+  //お気に入り問題削除成功時のSnackBar
+  static final deletingFavoriteQuestionIsSuccessful = SnackBar(
+      content: const Text('お気に入り問題の削除に成功しました'),
+      shape: snackBarShape,
+      backgroundColor: AppColors.subGreen);
+
+  //お気に入り問題削除失敗時のSnackBar
+  static final deletingFavoriteQuestionIsFailed = SnackBar(
+      content: const Text('お気に入り問題の削除に失敗しました'),
+      shape: snackBarShape,
+      backgroundColor: AppColors.mainPink);
+
 
 
 
