@@ -27,7 +27,7 @@ class MyPage extends ConsumerWidget {
     print('MyPage:$currentUserEmail');
 
     return Scaffold(
-        appBar: AppBar(title: Text('マイページ')),
+        appBar: AppBar(title: Text('マイページ'),automaticallyImplyLeading: false,),
         body: SettingsList(
           sections: [
             SettingsSection(

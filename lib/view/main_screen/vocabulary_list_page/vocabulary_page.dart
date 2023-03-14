@@ -114,7 +114,7 @@ class VocabularyPage extends ConsumerWidget {
                                 child: Center(
                                   child: Container(
                                     child: Stack(
-                                      alignment: Alignment.topLeft,
+                                      alignment: Alignment.centerLeft,
                                       children: [
                                         Center(child: Text("title:$questionTitle",
                                             style: AppTextStyles.textBoldNormal,

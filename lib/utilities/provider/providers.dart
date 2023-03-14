@@ -7,6 +7,10 @@ import '../../model/account.dart';
 import '../authentication/authentication.dart';
 
 
+//TODO: mainScreenのselectedIndex情報を持たせるProvider
+final mainScreenCurrentSelectedIndexProvider = StateProvider.autoDispose((ref) {
+  return 0;
+});
 
 //TODO: currentUser情報を持たせるProvider
 final currentUserProvider = StateProvider.autoDispose((ref) {
