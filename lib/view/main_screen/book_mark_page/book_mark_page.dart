@@ -33,7 +33,9 @@ class BookMarkPage extends ConsumerWidget with ChangeNotifier {
                       }
                     }
                     return FutureBuilder<QuerySnapshot>(
-                        future: QuestionFireStore.questions.where("question_id", whereIn: favoriteQuestionIdList).get(),
+                        future: favoriteQuestionIdList.isNotEmpty
+                            ? QuestionFireStore.questions.where("question_id", whereIn: favoriteQuestionIdList).get()
+                            : null,
                         // TODO:favoriteQuestionsコレクションの中でuser_idが一致するquestion_idを取り出し、
                         // TODO:そのquestion_idと一致するquestionをquestionコレクションから取ってきて表示
                         builder: (context, snapshot) {
@@ -100,7 +102,7 @@ class BookMarkPage extends ConsumerWidget with ChangeNotifier {
                           } else if(snapshot.hasError){
                             return Container();
                           } else {
-                            return Center(child: Container());
+                            return Center(child: Text("やり直しはありません",style: TextStyle(color: AppColors.mainBlue)));
                           }
                         }
                     );
