@@ -1,4 +1,5 @@
 import 'package:chinese_study_applicaion/utilities/firestore/user_firestore.dart';
+import 'package:chinese_study_applicaion/view/main_screen/book_mark_page/book_mark_page.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -10,6 +11,10 @@ import '../authentication/authentication.dart';
 //TODO: mainScreenのselectedIndex情報を持たせるProvider
 final mainScreenCurrentSelectedIndexProvider = StateProvider.autoDispose((ref) {
   return 0;
+});
+
+final bookMarkPageProvider = StateProvider((ref) {
+  return BookMarkPage(currentUserId: UserFireStore.currentUserId);
 });
 
 //TODO: currentUser情報を持たせるProvider

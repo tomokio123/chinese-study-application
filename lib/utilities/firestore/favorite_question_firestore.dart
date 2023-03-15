@@ -73,7 +73,7 @@ class FavoriteQuestionFireStore {
 
   static Future<void> deleteFavoriteQuestion(String favoriteQuestionId) async{//TODO:次はお気に入り解除してデータを消すところまでやる
     try{
-      await FavoriteQuestionFireStore.favoriteQuestions.doc(favoriteQuestionId).delete();
+      await FavoriteQuestionFireStore.favoriteQuestions.doc(favoriteQuestionId).delete();//favoriteQuestionデーブルの中からfavoriteQuestionIdを消す
     } on FirebaseException catch(e){
       print('お気に入り問題取得エラー: $e');
     }
