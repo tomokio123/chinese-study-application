@@ -104,8 +104,10 @@ class BookMarkPage extends ConsumerWidget with ChangeNotifier {
                             );
                           } else if(snapshot.hasError){
                             return Container();
-                          } else {
+                          } else if(snapshot.hasData == false) {
                             return Center(child: Text("やり直しはありません",style: TextStyle(color: AppColors.mainBlue)));
+                          } else {
+                            return Container();
                           }
                         }
                     );
