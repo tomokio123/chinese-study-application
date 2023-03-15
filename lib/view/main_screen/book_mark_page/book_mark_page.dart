@@ -15,20 +15,22 @@ class BookMarkPage extends ConsumerWidget with ChangeNotifier {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    //TODO:snapshotがゼロになった時にエラー発生して画面赤くなるがその時はContainer()を出して問題なく表示したい。次にやる。
+    final bookMarkPageFuture = FavoriteQuestionFireStore.favoriteQuestions.where("user_id", isEqualTo: currentUserId).get();
     //TODO:同期的に削除に伴ってsnapshotを削除したい。これもやる
     return Scaffold(
-      appBar: AppBar(title: Text("やり直し"),automaticallyImplyLeading: false,),
+      appBar: AppBar(title: Text("やり直し"),automaticallyImplyLeading: false),
       body: Center(
         child: SafeArea(
           child: Consumer(builder: (context, ref, child) {
             return FutureBuilder<QuerySnapshot>(
-                future: FavoriteQuestionFireStore.favoriteQuestions.where("user_id", isEqualTo: currentUserId).get(),
+                //future: FavoriteQuestionFireStore.favoriteQuestions.where("user_id", isEqualTo: currentUserId).get(),
+                future: bookMarkPageFuture,
                 builder: (context, snapshot) {
                   if(snapshot.hasData){
                     final List<dynamic> favoriteQuestionIdList = [];
-                    if(snapshot.data!.size != 0){
-                      for (var i = 0; i < snapshot.data!.size; i++) {
+                    final dataSize = snapshot.data!.size;
+                    if(dataSize != 0){
+                      for (var i = 0; i < dataSize; i++) {
                         favoriteQuestionIdList.add(snapshot.data!.docs[i].get("question_id"));
                       }
                     }
@@ -78,6 +80,7 @@ class BookMarkPage extends ConsumerWidget with ChangeNotifier {
                                                     //TODO:お気に入りを削除
                                                     await FavoriteQuestionFireStore.deleteFavoriteQuestion(_favoriteQuestionId);
                                                     print("削除");
+                                                    ref.watch(bookMarkPageProvider.notifier).state = FavoriteQuestionFireStore.favoriteQuestions.where("user_id", isEqualTo: currentUserId).get();
                                                   }
                                                 },
                                                 child: Container(
@@ -106,7 +109,6 @@ class BookMarkPage extends ConsumerWidget with ChangeNotifier {
                           }
                         }
                     );
-
                   } else if(snapshot.hasError) {
                     return Container();
                   } else {

@@ -6,7 +6,10 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../model/account.dart';
 import '../authentication/authentication.dart';
+import '../firestore/favorite_question_firestore.dart';
 
+
+final String currentUserId = UserFireStore.currentUserId;
 
 //TODO: mainScreenのselectedIndex情報を持たせるProvider
 final mainScreenCurrentSelectedIndexProvider = StateProvider.autoDispose((ref) {
@@ -14,7 +17,7 @@ final mainScreenCurrentSelectedIndexProvider = StateProvider.autoDispose((ref) {
 });
 
 final bookMarkPageProvider = StateProvider((ref) {
-  return BookMarkPage(currentUserId: UserFireStore.currentUserId);
+  return FavoriteQuestionFireStore.favoriteQuestions.where("user_id", isEqualTo: currentUserId).get();
 });
 
 //TODO: currentUser情報を持たせるProvider
