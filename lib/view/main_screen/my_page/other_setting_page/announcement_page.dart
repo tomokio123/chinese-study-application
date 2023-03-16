@@ -13,7 +13,7 @@ class AnnouncementPage extends StatelessWidget {
           backgroundColor: AppColors.mainWhite),
       body: SafeArea(
         child: Container(
-          child: Text('TutorialPage'),
+          child: Text('AnnouncementPage'),
         ),
       ),
     );
