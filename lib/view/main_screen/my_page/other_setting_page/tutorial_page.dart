@@ -31,26 +31,26 @@ class TutorialPage extends StatelessWidget {
     PageModel(
         color: AppColors.subBlue,
         imageAssetPath: 'images/main_image.png',
-        title: '左右のスワイプ',
-        body: 'NEXTを押さなくても左右にスワイプすることで画面の切替が出来ます',
+        title: '「テスト」',
+        body: 'テストで自分の現在の状況を確認しよう！',
         doAnimateImage: true),
     PageModel(
         color: AppColors.mainBlue,
-        imageAssetPath: 'images/main_image.png',
-        title: '文字を表示できます',
-        body: '細かい説明をbodyに指定して書くことが出来ます',
+        imageAssetPath: 'images/batu2.png',
+        title: '「単語帳」',
+        body: 'ジャンル別に単語をおさらいでき、やり直し保存も可能！',
         doAnimateImage: true),
     PageModel(
         color: AppColors.mainMainBlue,
-        imageAssetPath: 'images/main_image.png',
-        title: '左右のスワイプ',
-        body: 'NEXTを押さなくても左右にスワイプすることで画面の切替が出来ます',
+        imageAssetPath: 'images/maru2.png',
+        title: '「やり直し」',
+        body: '保存した気になる単語はここで見直そう！',
         doAnimateImage: true),
     PageModel.withChild(
         child: Padding(
             padding: EdgeInsets.only(bottom: 25.0),
             child: Text(
-              "さあ、始めましょう",
+              "さあ、始めよう！",
               style: TextStyle(
                 color: Colors.white,
                 fontSize: 32,
