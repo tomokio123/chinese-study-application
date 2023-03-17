@@ -15,14 +15,12 @@ class QuestionPage extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final Size size = MediaQuery.of(context).size;
+
     int currentQuestionIndex = ref.watch(currentQuestionIndexProvider);
-    //final questionFuture = QuestionFireStore.questions.get();
     final questionFuture = QuestionFireStore.questions.where('category_id', isEqualTo: categoryId).get();
-    //上記記述だけだと問題だけが検索されて取得してしまう
-    //AnswerFutureに回答を = [a,a,a,a,a,....]と格納したい
+
     final bool isAnswered = ref.watch(buttonProvider);//回答したか
     final bool isCorrect = ref.watch(isCorrectProvider);//正解or不正解
-    //試験的に設置、現在の渡ってきたquestion_idの番号＝answer_idとなるように渡ってきたquestion_idを管理するProvider
     //final String currentQuestionNumber  = ref.watch(currentQuestionIdProvider);
 
     return Scaffold(
@@ -58,8 +56,13 @@ class QuestionPage extends ConsumerWidget {
                         child: Center(
                           //questionのタイトル
                             child: isAnswered
-                                ? Text(isCorrect ? "正解です" : "不正解です",
-                                style: TextStyle(fontSize: 26))
+                                ? Container(height: 150,
+                                child: Image.asset(
+                                  //TODO:正解と不正解のImageを作って貼り付ける。一旦はpngで作る
+                                    isCorrect ?
+                                    'images/maru2.png':
+                                    'images/batu2.png'
+                                ))
                                 : Text(snapshot.data!.docs[currentQuestionIndex].get("title"),
                                 style: TextStyle(fontSize: 26)),
                         )
