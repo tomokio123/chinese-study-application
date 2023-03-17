@@ -48,26 +48,47 @@ class UnannouncedTestPage extends StatelessWidget {
                     print("currentQuestionIndex:$currentQuestionIndex");
                     return Column(
                       children: [
-                        Container(
+                        isAnswered ? Container()
+                            : Container(
                             width: double.infinity,
-                            padding: const EdgeInsets.only(top: 40),
+                            //color: AppColors.mainPink,
+                            padding: const EdgeInsets.only(top: 30),
                             child: Center(
-                                child: Text(isAnswered ? "" : "${currentQuestionIndex + 1} 問目",
-                                  style: const TextStyle(fontSize: 30),)
-                            )),
+                                child: Text("${currentQuestionIndex + 1} 問目",
+                                  style: const TextStyle(fontSize: 20, decoration: TextDecoration.underline, color: AppColors.mainBlue),)
+                            )
+                        ),
                         Container(
-                            color: AppColors.mainBlue,
-                            width: double.infinity, height: size.height * 0.28,
+                          // color: AppColors.mainBlue,
+                            width: double.infinity,
+                            height: isAnswered ? size.height * 0.45 : size.height * 0.32,
                             child: Center(
                               //questionのタイトル
                               child: isAnswered
-                                  ? Container(height: 150,
-                                  child: Image.asset(
-                                    //TODO:正解と不正解のImageを作って貼り付ける。一旦はpngで作る
-                                      isCorrect ?
-                                      'images/maru2.png':
-                                      'images/batu2.png'
-                                  ))
+                                  ? Column(
+                                children: [
+                                  Container(
+                                    height: 300,
+                                    child: Image.asset(
+                                      //TODO:正解と不正解のImageを作って貼り付ける。一旦はpngで作る
+                                        isCorrect ?
+                                        'images/maru2.png':
+                                        'images/batu2.png'
+                                    ),
+                                  ),
+                                  Container(
+                                    height: 50,
+                                    child: Center(
+                                        child: Text(
+                                            isCorrect ? "正解!" : "不正解",
+                                            style: TextStyle(
+                                                color:isCorrect ? AppColors.mainRed : AppColors.mainBlue,
+                                                fontSize: 40
+                                            ))
+                                    ),
+                                  )
+                                ],
+                              )
                                   : Text(snapshot.data!.docs[currentQuestionIndex].get("title"),
                                   style: TextStyle(fontSize: 26)),
                             )
@@ -139,13 +160,16 @@ class UnannouncedTestPage extends StatelessWidget {
                                               children: [
                                                 Expanded(
                                                   child: Container(
+                                                    decoration: BoxDecoration(
+                                                      border: Border.all(color: AppColors.mainBlue, width: 4),
+                                                      borderRadius: BorderRadius.circular(20),
+                                                    ),
                                                     padding: EdgeInsets.fromLTRB(20, 0, 20, 50),
                                                     child: Center(
                                                         child: Text(
                                                           "${snapshot.data!.docs[currentQuestionIndex - 1].get("commentary")}",
                                                           //この処理より先にquestionCounterが++されてしまうので-1しておくことで帳尻合わせる。
                                                           style: TextStyle(fontSize: 22),)),
-                                                    color: AppColors.subGreen,
                                                   ),
                                                 ),
                                               ],
