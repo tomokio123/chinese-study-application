@@ -9,8 +9,6 @@ import '../../../../utilities/app_colors.dart';
 import '../../../../utilities/app_text_styles.dart';
 import '../../common_widget/Indicators/normal_circular_indicator.dart';
 
-//TODO:UnannouncedTestPageのクラスで以下のメソッドを呼び出すのは無理なので
-
 class UnannouncedTestPage extends StatelessWidget {
   final int totalNumberOfQuestions;//questionsテーブルの全問題数を取得
   const UnannouncedTestPage({Key? key, required this.totalNumberOfQuestions})
@@ -25,11 +23,9 @@ class UnannouncedTestPage extends StatelessWidget {
       randomNumberList.add("$i");
     }
     print(randomNumberList);
-    randomNumberList.shuffle();
+    randomNumberList.shuffle();//TODO:いったん取ってきた全ての問題snapShotをシャッフルする処理
     final List<String> gotRandomNumberList = randomNumberList.take(10).toList();
-    //TODO:いったん取ってきた全ての問題snapShotをシャッフルする処理
-    print("gotRandomNumberList:$gotRandomNumberList");
-    print("gotRandomNumberListの長さ：${gotRandomNumberList.length}");
+    //TODO:その問題から10題取ってくる処理(["2", "4", "8", "10", "14"...]的なノリ)
 
     final questionFuture = QuestionFireStore.questions.where("question_id", whereIn: gotRandomNumberList).get();
     final answerFuture = AnswerFireStore.answers.where('answer_id', whereIn: gotRandomNumberList).get();
@@ -69,8 +65,8 @@ class UnannouncedTestPage extends StatelessWidget {
                                   child: Image.asset(
                                     //TODO:正解と不正解のImageを作って貼り付ける。一旦はpngで作る
                                       isCorrect ?
-                                      'images/main_image.png':
-                                      'images/main_image.png'
+                                      'images/maru2.png':
+                                      'images/batu2.png'
                                   ))
                                   : Text(snapshot.data!.docs[currentQuestionIndex].get("title"),
                                   style: TextStyle(fontSize: 26)),
