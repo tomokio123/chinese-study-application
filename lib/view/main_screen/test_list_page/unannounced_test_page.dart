@@ -8,6 +8,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../../utilities/app_colors.dart';
 import '../../../../utilities/app_text_styles.dart';
+import '../../../utilities/view_model/question_page_view_model.dart';
 import '../../common_widget/Indicators/normal_circular_indicator.dart';
 
 class UnannouncedTestPage extends StatelessWidget {
@@ -104,28 +105,7 @@ class UnannouncedTestPage extends StatelessWidget {
                                           crossAxisSpacing: 24,
                                           children: List.generate(4, (index) => GestureDetector(
                                             onTap: () async{
-                                              //Tap時に先にやることは正誤判定を行うこと
-                                              if(index.toString() == snapshot.data!.docs[currentQuestionIndex].get("correct_answer_index_number")){
-                                                //正答時
-                                                ref.read(isCorrectProvider.notifier).state = true;
-                                                ref.read(numberOfCorrectAnswersProvider.notifier).state++;//正答数を+1
-                                              }
-                                              if(index.toString() != snapshot.data!.docs[currentQuestionIndex].get("correct_answer_index_number")){
-                                                //不正答時
-                                                ref.read(isCorrectProvider.notifier).state = false;
-                                              }
-                                              // if(ref.read(currentQuestionIndexProvider) < questionLength - 1){
-                                              //   //回答題が最後の問題ではない時→回答して次の問題へ
-                                              //   ref.read(currentQuestionIndexProvider.notifier).state++;
-                                              // }
-                                              // if(currentQuestionIndex == questionLength - 1 && ref.read(buttonProvider.notifier).state == true){
-                                              //   //最終問題＆＆その問題に回答した時isAnswered = true とする
-                                              //   ref.read(buttonProvider.notifier).state = true;
-                                              //   //回答題が最後の問題の時→Result画面へ
-                                              // }
-                                              print(ref.read(numberOfCorrectAnswersProvider));
-                                              //TODO:解答状態(isAnswered)をfalse => trueにする処理。
-                                              ref.read(buttonProvider.notifier).state = true;
+                                              QuestionPageViewModel.onTapFunctionInFourGridView(context, ref, currentQuestionIndex, index, snapshot);
                                             },
                                             child: Card(
                                                 shape: RoundedRectangleBorder(
@@ -140,23 +120,8 @@ class UnannouncedTestPage extends StatelessWidget {
                                           ))
                                       ) :
                                       GestureDetector(//解答すると
-                                        onTap: (){
-                                          if(currentQuestionIndex == questionLength - 1){
-                                            //TODO:最終問題 && 回答状況がtrue「回答して答えと解説を見ていますよ」って状況のなかではTapすると次の画面へ
-                                            Navigator.pushReplacement(context, MaterialPageRoute(
-                                                builder: (context)=> QuestionResultPage(
-                                                    questionLength: currentQuestionIndex + 1,
-                                                    numberOfCorrectAnswers: ref.read(numberOfCorrectAnswersProvider)
-                                                ))
-                                            );
-                                            ref.refresh(currentQuestionIndexProvider.notifier).state;//Providerのリセット。
-                                          } else {
-                                            //基本はこっちが作動する
-                                            //TODO:このタイミングで問題番号を+1するので176行目は[currentQuestionIndex]で番号の帳尻が合う設計。
-                                            ref.read(currentQuestionIndexProvider.notifier).state++;
-                                            ref.read(buttonProvider.notifier).state = false;
-                                            //TODO:回答状況(isAnsweredにfalseを入れて、「未回答状態」とする)
-                                          }
+                                        onTap: () async{
+                                          QuestionPageViewModel.onTapFunctionInCommentaryState(context, ref, currentQuestionIndex, questionLength);
                                         },
                                         child: Center(
                                             child: Column(
