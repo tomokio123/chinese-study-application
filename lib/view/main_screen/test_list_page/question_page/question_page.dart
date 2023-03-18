@@ -46,43 +46,10 @@ class QuestionPage extends ConsumerWidget {
                   children: [
                     isAnswered ? Container()
                     : CurrentQuestionIndexContainer(currentQuestionIndex: currentQuestionIndex),
-                    Container(
-                        margin: EdgeInsets.all(20),
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(20),
-                        ),
-                        width: double.infinity,
-                        height: isAnswered ? size.height * 0.45 : size.height * 0.32,
-                        child: Center(
-                          //questionのタイトル
-                            child: isAnswered
-                                ? Column(
-                                  children: [
-                                    Container(
-                                      height: 300,
-                                      child: Image.asset(
-                                        //TODO:正解と不正解のImageを作って貼り付ける。一旦はpngで作る
-                                          isCorrect ?
-                                          'images/maru2.png':
-                                          'images/batu2.png'
-                                      ),
-                                    ),
-                                    Container(
-                                      height: 50,
-                                      child: Center(
-                                          child: Text(
-                                              isCorrect ? "正解!" : "不正解",
-                                              style: TextStyle(
-                                                  color:isCorrect ? AppColors.mainRed : AppColors.mainBlue,
-                                                  fontSize: 40
-                                              ))
-                                      ),
-                                    )
-                                  ],
-                                )
-                                : Text(snapshot.data!.docs[currentQuestionIndex].get("title"),
-                                style: TextStyle(fontSize: 26)),
-                        )
+                    TitleAndAnswerResultContainer(
+                        isAnswered: isAnswered, size: size,
+                        currentQuestionIndex: currentQuestionIndex,
+                        isCorrect: isCorrect, snapshot: snapshot
                     ),
                     Expanded(
                       child: Container(
@@ -125,26 +92,7 @@ class QuestionPage extends ConsumerWidget {
                                       questionLength: questionLength
                                   );
                                 },
-                                child: Center(
-                                    child: Column(
-                                      mainAxisAlignment: MainAxisAlignment.start,
-                                      children: [
-                                        Expanded(
-                                          child: Container(
-                                            decoration: BoxDecoration(
-                                              border: Border.all(color: AppColors.mainBlue, width: 4),
-                                              borderRadius: BorderRadius.circular(20),
-                                            ),
-                                            padding: EdgeInsets.fromLTRB(20, 0, 20, 50),
-                                            child: Center(
-                                                child: Text(
-                                                  "${snapshot.data!.docs[currentQuestionIndex].get("commentary")}",
-                                                  //docs[currentQuestionIndex]でOK!
-                                                  style: TextStyle(fontSize: 22),)),
-                                          ),
-                                        ),
-                                      ],
-                                    )),
+                                child: CenteredCommentaryContainer(currentQuestionIndex: currentQuestionIndex, snapshot: snapshot),
                               );
                             } else {
                               return Container();
