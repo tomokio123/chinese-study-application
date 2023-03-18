@@ -3,6 +3,7 @@ import 'package:flutter/cupertino.dart';
 import '../../../utilities/app_colors.dart';
 
 class CurrentQuestionIndexContainer extends Container{
+  //何問目？とかを表示するための共通Container。
   final int currentQuestionIndex;
   CurrentQuestionIndexContainer({required this.currentQuestionIndex});
 
