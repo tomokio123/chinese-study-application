@@ -48,7 +48,7 @@ class QuestionResultPage extends ConsumerWidget {
                   width: double.infinity,
                   padding: const EdgeInsets.all(5.0),
                   decoration: BoxDecoration(
-                    border: Border.all(color: AppColors.mainBlue),
+                    border: Border.all(color: AppColors.mainBlue, width: 4),
                     borderRadius: BorderRadius.circular(20),
                   ),
                   child: Center(

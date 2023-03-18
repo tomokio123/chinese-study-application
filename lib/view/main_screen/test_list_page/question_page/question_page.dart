@@ -111,23 +111,18 @@ class QuestionPage extends ConsumerWidget {
                                         //不正答時
                                         ref.read(isCorrectProvider.notifier).state = false;
                                       }
-                                      if(ref.read(currentQuestionIndexProvider) < questionLength - 1){
-                                        //回答題が最後の問題ではない時→回答して次の問題へ
-                                        ref.read(buttonProvider.notifier).state = true;
-                                        //解答状態(isAnswered)をfalse => trueにする処理。
-                                        ref.read(currentQuestionIndexProvider.notifier).state++;
-                                      }
-                                      if(currentQuestionIndex == questionLength - 1){
-                                        //回答題が最後の問題の時→Result画面へ
-                                        Navigator.pushReplacement(context, MaterialPageRoute(
-                                            builder: (context)=> QuestionResultPage(
-                                          questionLength: currentQuestionIndex + 1,
-                                          numberOfCorrectAnswers: ref.read(numberOfCorrectAnswersProvider.notifier).state
-                                            )));
-                                        ref.refresh(currentQuestionIndexProvider.notifier).state;
-                                      }
-                                      // print('${questionCounter + 1}問目を回答した');
-                                      // print("numberOfCorrectAnswers:${ref.read(numberOfCorrectAnswersProvider.notifier).state}");
+                                      // if(ref.read(currentQuestionIndexProvider) < questionLength - 1){
+                                      //   //回答題が最後の問題ではない時→回答して次の問題へ
+                                      //   ref.read(currentQuestionIndexProvider.notifier).state++;
+                                      // }
+                                      // if(currentQuestionIndex == questionLength - 1 && ref.read(buttonProvider.notifier).state == true){
+                                      //   //最終問題＆＆その問題に回答した時isAnswered = true とする
+                                      //   ref.read(buttonProvider.notifier).state = true;
+                                      //   //回答題が最後の問題の時→Result画面へ
+                                      // }
+                                      print(ref.read(numberOfCorrectAnswersProvider));
+                                      //TODO:解答状態(isAnswered)をfalse => trueにする処理。
+                                      ref.read(buttonProvider.notifier).state = true;
                                     },
                                     child: Card(
                                         shape: RoundedRectangleBorder(
@@ -143,7 +138,22 @@ class QuestionPage extends ConsumerWidget {
                                 ) :
                               GestureDetector(//解答すると
                                 onTap: (){
-                                  ref.read(buttonProvider.notifier).state = false;
+                                  if(currentQuestionIndex == questionLength - 1){
+                                    //TODO:最終問題 && 回答状況がtrue「回答して答えと解説を見ていますよ」って状況のなかではTapすると次の画面へ
+                                    Navigator.pushReplacement(context, MaterialPageRoute(
+                                        builder: (context)=> QuestionResultPage(
+                                            questionLength: currentQuestionIndex + 1,
+                                            numberOfCorrectAnswers: ref.read(numberOfCorrectAnswersProvider)
+                                        ))
+                                    );
+                                    ref.refresh(currentQuestionIndexProvider.notifier).state;//Providerのリセット。
+                                  } else {
+                                    //基本はこっちが作動する
+                                    //TODO:このタイミングで問題番号を+1するので176行目は[currentQuestionIndex]で番号の帳尻が合う設計。
+                                    ref.read(currentQuestionIndexProvider.notifier).state++;
+                                    ref.read(buttonProvider.notifier).state = false;
+                                    //TODO:回答状況(isAnsweredにfalseを入れて、「未回答状態」とする)
+                                  }
                                 },
                                 child: Center(
                                     child: Column(
@@ -156,11 +166,11 @@ class QuestionPage extends ConsumerWidget {
                                               borderRadius: BorderRadius.circular(20),
                                             ),
                                             padding: EdgeInsets.fromLTRB(20, 0, 20, 50),
-                                              child: Center(
-                                                  child: Text(
-                                                      "${snapshot.data!.docs[currentQuestionIndex - 1].get("commentary")}",
-                                                    //この処理より先にquestionCounterが++されてしまうので-1しておくことで帳尻合わせる。
-                                                    style: TextStyle(fontSize: 22),)),
+                                            child: Center(
+                                                child: Text(
+                                                  "${snapshot.data!.docs[currentQuestionIndex].get("commentary")}",
+                                                  //docs[currentQuestionIndex]でOK!
+                                                  style: TextStyle(fontSize: 22),)),
                                           ),
                                         ),
                                       ],
