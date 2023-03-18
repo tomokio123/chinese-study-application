@@ -1,6 +1,7 @@
 import 'package:chinese_study_applicaion/utilities/firestore/answer_firestore.dart';
 import 'package:chinese_study_applicaion/utilities/firestore/question_firestore.dart';
 import 'package:chinese_study_applicaion/utilities/provider/providers.dart';
+import 'package:chinese_study_applicaion/view/common_widget/containers/containers.dart';
 import 'package:chinese_study_applicaion/view/main_screen/test_list_page/question_page/question_result_page.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
@@ -43,15 +44,7 @@ class QuestionPage extends ConsumerWidget {
                 return Column(
                   children: [
                     isAnswered ? Container()
-                    : Container(
-                        width: double.infinity,
-                        //color: AppColors.mainPink,
-                        padding: const EdgeInsets.only(top: 30),
-                        child: Center(
-                            child: Text("${currentQuestionIndex + 1} 問目",
-                              style: const TextStyle(fontSize: 20, decoration: TextDecoration.underline, color: AppColors.mainBlue),)
-                        )
-                    ),
+                    : CurrentQuestionIndexContainer(currentQuestionIndex: currentQuestionIndex),
                     Container(
                         margin: EdgeInsets.all(20),
                         decoration: BoxDecoration(
