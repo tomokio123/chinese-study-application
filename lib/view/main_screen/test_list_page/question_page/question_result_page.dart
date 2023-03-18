@@ -18,7 +18,7 @@ class QuestionResultPage extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     //TODO:正答数によって出てくる感想を変える処理
     String returnComment() {
-      String resultComment = "";
+      final String resultComment;
       if(numberOfCorrectAnswers == 0){
         return resultComment = "幹你娘！！";
       } else if (numberOfCorrectAnswers > 0 && numberOfCorrectAnswers <= 3){
@@ -41,22 +41,29 @@ class QuestionResultPage extends ConsumerWidget {
           child: Center(
             child: Column(
               children: [
+                SizedBox(height: 20),
                 Container(
+                  margin: EdgeInsets.all(20),
                   height: size.height * 0.35,
                   width: double.infinity,
-                  color: AppColors.mainBlue,
+                  padding: const EdgeInsets.all(5.0),
+                  decoration: BoxDecoration(
+                    border: Border.all(color: AppColors.mainBlue),
+                    borderRadius: BorderRadius.circular(20),
+                  ),
                   child: Center(
                       child: Center(
                         child: Column(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                             Text(
-                                'ここにresult'
+                                '$questionLength問中',// option + ¥ でバックスラッシュ(\)がうてる
+                              style: TextStyle(fontSize: 22),
                             ),
-                            SizedBox(height: 24),
+                            SizedBox(height: size.height * 0.04),
                             Text(
-                                '$questionLength問中$numberOfCorrectAnswers問正解',
-                              style: TextStyle(fontSize: 28),
+                              '$numberOfCorrectAnswers問正解！',
+                              style: TextStyle(fontSize: 48),
                             ),
                           ],
                         ),
@@ -64,7 +71,7 @@ class QuestionResultPage extends ConsumerWidget {
                 ),
                 Container(
                     child: Center(child: Text(comment, style: AppTextStyles.textBoldBig,)),
-                    height: size.height * 0.35
+                    height: size.height * 0.30
                 ),
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 0,vertical: 30),
