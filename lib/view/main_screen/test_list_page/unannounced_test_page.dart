@@ -1,7 +1,7 @@
 import 'package:chinese_study_applicaion/utilities/firestore/answer_firestore.dart';
 import 'package:chinese_study_applicaion/utilities/firestore/question_firestore.dart';
 import 'package:chinese_study_applicaion/utilities/provider/providers.dart';
-import 'package:chinese_study_applicaion/view/common_widget/containers/common_containers.dart';
+import 'package:chinese_study_applicaion/view/common_widget/common_containers/common_containers.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
