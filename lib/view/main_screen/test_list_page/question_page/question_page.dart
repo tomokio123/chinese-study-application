@@ -2,7 +2,7 @@ import 'package:chinese_study_applicaion/utilities/firestore/answer_firestore.da
 import 'package:chinese_study_applicaion/utilities/firestore/question_firestore.dart';
 import 'package:chinese_study_applicaion/utilities/provider/providers.dart';
 import 'package:chinese_study_applicaion/utilities/view_model/question_page_view_model.dart';
-import 'package:chinese_study_applicaion/view/common_widget/containers/containers.dart';
+import 'package:chinese_study_applicaion/view/common_widget/containers/common_containers.dart';
 import 'package:chinese_study_applicaion/view/main_screen/test_list_page/question_page/question_result_page.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
@@ -44,8 +44,7 @@ class QuestionPage extends ConsumerWidget {
                 final answerFuture = AnswerFireStore.answers.where('answer_id', whereIn: questionNumberList).get();
                 return Column(
                   children: [
-                    isAnswered ? Container()
-                    : CurrentQuestionIndexContainer(currentQuestionIndex: currentQuestionIndex),
+                    isAnswered ? Container() : CurrentQuestionIndexContainer(currentQuestionIndex: currentQuestionIndex),
                     TitleAndAnswerResultContainer(
                         isAnswered: isAnswered, size: size,
                         currentQuestionIndex: currentQuestionIndex,
@@ -60,40 +59,23 @@ class QuestionPage extends ConsumerWidget {
                             if(snapshot.hasData) {
                               int questionLength = snapshot.data!.size;//問題のListの長さを先に取得する
                               return
-                                isAnswered == false ? //未解答状態の時
-                                GridView.count(
-                                  physics: const NeverScrollableScrollPhysics(),
-                                  //上記でスクロール固定
-                                  crossAxisCount: 2,
-                                  mainAxisSpacing: 24,
-                                  crossAxisSpacing: 24,
-                                  children: List.generate(4, (index) => GestureDetector(
-                                    onTap: () async{
-                                      QuestionPageViewModel.onTapFunctionInFourGridView(context, ref, currentQuestionIndex, index, snapshot);
-                                    },
-                                    child: Card(
-                                        shape: RoundedRectangleBorder(
-                                          borderRadius: BorderRadius.circular(10),
-                                        ),
-                                        color: AppColors.mainWhite,
-                                        elevation: 5,
-                                        child: Center(
-                                            child: Text('${snapshot.data!.docs[currentQuestionIndex].get("answer${index + 1}")}', style: AppTextStyles.textBold)
-                                        )
-                                    ),
-                                  ))
+                                isAnswered == false ?
+                                ContainerInFourGridView( //未解答状態の時
+                                    context: context, ref: ref,
+                                    currentQuestionIndex: currentQuestionIndex,
+                                    snapshot: snapshot
                                 ) :
-                              GestureDetector(//解答すると
-                                onTap: () async{
-                                  QuestionPageViewModel.onTapFunctionInCommentaryState(
+                                GestureDetector(//解答すると
+                                  onTap: () async{
+                                    QuestionPageViewModel.onTapFunctionInCommentaryState(
                                       context: context,
                                       ref: ref,
                                       currentQuestionIndex: currentQuestionIndex,
                                       questionLength: questionLength
-                                  );
-                                },
-                                child: CenteredCommentaryContainer(currentQuestionIndex: currentQuestionIndex, snapshot: snapshot),
-                              );
+                                    );
+                                    },
+                                  child: CenteredCommentaryContainer(currentQuestionIndex: currentQuestionIndex, snapshot: snapshot),
+                                );
                             } else {
                               return Container();
                             }

@@ -1,8 +1,7 @@
 import 'package:chinese_study_applicaion/utilities/firestore/answer_firestore.dart';
 import 'package:chinese_study_applicaion/utilities/firestore/question_firestore.dart';
 import 'package:chinese_study_applicaion/utilities/provider/providers.dart';
-import 'package:chinese_study_applicaion/view/common_widget/containers/containers.dart';
-import 'package:chinese_study_applicaion/view/main_screen/test_list_page/question_page/question_result_page.dart';
+import 'package:chinese_study_applicaion/view/common_widget/containers/common_containers.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -50,8 +49,7 @@ class UnannouncedTestPage extends StatelessWidget {
                     print("currentQuestionIndex:$currentQuestionIndex");
                     return Column(
                       children: [
-                        isAnswered ? Container()
-                            : CurrentQuestionIndexContainer(currentQuestionIndex: currentQuestionIndex),
+                        isAnswered ? Container() : CurrentQuestionIndexContainer(currentQuestionIndex: currentQuestionIndex),
                         TitleAndAnswerResultContainer(
                             isAnswered: isAnswered, size: size,
                             currentQuestionIndex: currentQuestionIndex,
@@ -67,28 +65,11 @@ class UnannouncedTestPage extends StatelessWidget {
                                     return
                                       isAnswered == false ? //未解答状態の時　
                                       // isAnsweredを管理するbuttonProviderのデフォルトは「false」なので注意
-                                      GridView.count(
-                                          physics: const NeverScrollableScrollPhysics(),
-                                          //上記でスクロール固定
-                                          crossAxisCount: 2,
-                                          mainAxisSpacing: 24,
-                                          crossAxisSpacing: 24,
-                                          children: List.generate(4, (index) => GestureDetector(
-                                            onTap: () async{
-                                              QuestionPageViewModel.onTapFunctionInFourGridView(context, ref, currentQuestionIndex, index, snapshot);
-                                            },
-                                            child: Card(
-                                                shape: RoundedRectangleBorder(
-                                                  borderRadius: BorderRadius.circular(10),
-                                                ),
-                                                color: AppColors.mainWhite,
-                                                elevation: 5,
-                                                child: Center(
-                                                    child: Text('${snapshot.data!.docs[currentQuestionIndex].get("answer${index + 1}")}', style: AppTextStyles.textBold)
-                                                )
-                                            ),
-                                          ))
-                                      ) :
+                                      ContainerInFourGridView( //未解答状態の時
+                                          context: context, ref: ref,
+                                          currentQuestionIndex: currentQuestionIndex,
+                                          snapshot: snapshot
+                                      )  :
                                       GestureDetector(//解答すると
                                         onTap: () async{
                                           QuestionPageViewModel.onTapFunctionInCommentaryState(

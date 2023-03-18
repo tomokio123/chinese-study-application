@@ -1,7 +1,11 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../utilities/app_colors.dart';
+import '../../../utilities/app_text_styles.dart';
+import '../../../utilities/view_model/question_page_view_model.dart';
 
 class CurrentQuestionIndexContainer extends Container{
   //何問目？とかを表示するための共通Container。
@@ -101,5 +105,41 @@ class TitleAndAnswerResultContainer extends Container{
             : Text(snapshot.data!.docs[currentQuestionIndex].get("title"),
             style: TextStyle(fontSize: 26)),
       )
+  );
+}
+
+class ContainerInFourGridView extends Container{
+  //何問目？とかを表示するための共通Container。
+  final BuildContext context;
+  final WidgetRef ref;
+  final int currentQuestionIndex;
+  final AsyncSnapshot<QuerySnapshot<Object?>> snapshot;
+
+  ContainerInFourGridView({super.key, required this.context, required this.ref,
+    required this.currentQuestionIndex, required this.snapshot});
+
+  @override
+  // TODO: implement child
+  Widget get child => GridView.count(
+      physics: const NeverScrollableScrollPhysics(),
+      //上記でスクロール固定
+      crossAxisCount: 2,
+      mainAxisSpacing: 24,
+      crossAxisSpacing: 24,
+      children: List.generate(4, (index) => GestureDetector(
+        onTap: () async{
+          QuestionPageViewModel.onTapFunctionInFourGridView(context, ref, currentQuestionIndex, index, snapshot);
+        },
+        child: Card(
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(10),
+            ),
+            color: AppColors.mainWhite,
+            elevation: 5,
+            child: Center(
+                child: Text('${snapshot.data!.docs[currentQuestionIndex].get("answer${index + 1}")}', style: AppTextStyles.textBold)
+            )
+        ),
+      ))
   );
 }
