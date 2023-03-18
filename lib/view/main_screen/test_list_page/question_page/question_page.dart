@@ -53,7 +53,10 @@ class QuestionPage extends ConsumerWidget {
                         )
                     ),
                     Container(
-                        // color: AppColors.mainBlue,
+                        margin: EdgeInsets.all(20),
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(20),
+                        ),
                         width: double.infinity,
                         height: isAnswered ? size.height * 0.45 : size.height * 0.32,
                         child: Center(
