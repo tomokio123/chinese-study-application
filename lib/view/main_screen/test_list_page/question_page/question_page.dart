@@ -118,7 +118,12 @@ class QuestionPage extends ConsumerWidget {
                                 ) :
                               GestureDetector(//解答すると
                                 onTap: () async{
-                                  QuestionPageViewModel.onTapFunctionInCommentaryState(context, ref, currentQuestionIndex, questionLength);
+                                  QuestionPageViewModel.onTapFunctionInCommentaryState(
+                                      context: context,
+                                      ref: ref,
+                                      currentQuestionIndex: currentQuestionIndex,
+                                      questionLength: questionLength
+                                  );
                                 },
                                 child: Center(
                                     child: Column(

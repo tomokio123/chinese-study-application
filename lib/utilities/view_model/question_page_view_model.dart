@@ -7,8 +7,12 @@ import '../provider/providers.dart';
 
 class QuestionPageViewModel {//TODO:question_page.dart/unannounced_test_page.dart の共通ロジックに名前をつけてここにまとめる、ことにする。
 
-  static void onTapFunctionInCommentaryState(BuildContext context, WidgetRef ref,
-      int currentQuestionIndex, int questionLength) {//TODO:解説を表示している時のonTap処理
+  static void onTapFunctionInCommentaryState(
+      //TODO:解説を表示している時のonTap処理、引数で名前を明示する時としない時の違いがわからない→引数が多い時はこうやって名前付きの方が見やすいと思った
+      {required BuildContext context,
+      required WidgetRef ref,
+      required int currentQuestionIndex,
+      required int questionLength}) {
     if(currentQuestionIndex == questionLength - 1){
       //TODO:最終問題 && 回答状況がtrue「回答して答えと解説を見ていますよ」って状況のなかではTapすると次の画面へ
       Navigator.pushReplacement(context, MaterialPageRoute(
