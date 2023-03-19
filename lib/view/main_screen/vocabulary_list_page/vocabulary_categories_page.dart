@@ -5,6 +5,7 @@ import '../../../utilities/app_colors.dart';
 import '../../../utilities/app_text_styles.dart';
 import '../../../utilities/firestore/category_firestore.dart';
 import '../../common_widget/Indicators/normal_circular_indicator.dart';
+import '../../common_widget/common_containers/common_containers.dart';
 
 class VocabularyCategoriesPage extends StatelessWidget {
   const VocabularyCategoriesPage({Key? key}) : super(key: key);
@@ -20,38 +21,13 @@ class VocabularyCategoriesPage extends StatelessWidget {
               //で直接書いた方なんか動きがいい。調べる。
               builder: (context, snapshot) {
                 if(snapshot.hasData){
-                  return ListView.builder(
-                      padding: const EdgeInsets.all(2),
-                      itemCount: snapshot.data!.docs.length,
-                      itemBuilder: (BuildContext context, int index) {
-                        //category_titleを変数に格納
-                        final String title = snapshot.data!.docs[index].get("category_title");
-                        return Container(
-                          padding: EdgeInsets.all(4),
-                          child: GestureDetector(
-                            onTap: (){
-                              Navigator.push(context, MaterialPageRoute(builder: (context) => VocabularyPage(
-                                  categoryId: snapshot.data!.docs[index].get("category_id")
-                              )));
-                            },
-                            child: Card(
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(20),
-                              ),
-                              color: AppColors.mainWhite,
-                              elevation: 3,
-                              child: Container(
-                                height: 90,
-                                child: Center(child: Text(title,
-                                    style: AppTextStyles.textBoldNormal,
-                                    //maxLines: 1,
-                                    overflow: TextOverflow.ellipsis
-                                )),
-                              ),
-                            ),
-                          ),
-                        );
-                      }
+                  // Navigator.push(context, MaterialPageRoute(builder: (context) => QuestionPage(
+                  //     categoryId: snapshot.data!.docs[index].id
+                  // )));
+                  return ListViewBuilderContainer(
+                      context: context,
+                      snapshot: snapshot, destinationPageName: 'VocabularyPage',//PageNameをしっかりかけ
+                    // TODO:ここ改善案考えろ
                   );
                 } else {
                   return const NormalCircularIndicator();

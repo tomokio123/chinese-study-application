@@ -8,6 +8,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../../utilities/app_colors.dart';
 import '../../../../utilities/app_text_styles.dart';
+import '../../../common_widget/Indicators/normal_circular_indicator.dart';
 import '../../../common_widget/common_containers/common_containers.dart';
 
 class QuestionPage extends ConsumerWidget {
@@ -86,7 +87,7 @@ class QuestionPage extends ConsumerWidget {
                   ],
                 );
               } else {
-                return Container();
+                return const NormalCircularIndicator();
               }
             }
           ),

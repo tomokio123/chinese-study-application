@@ -6,6 +6,8 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../utilities/app_colors.dart';
 import '../../../utilities/app_text_styles.dart';
 import '../../../utilities/view_model/question_page_view_model.dart';
+import '../../main_screen/test_list_page/question_page/question_page.dart';
+import '../../main_screen/vocabulary_list_page/vocabulary_page.dart';
 
 class CurrentQuestionIndexContainer extends Container{
   //何問目？とかを表示するための共通Container。
@@ -141,5 +143,56 @@ class ContainerInFourGridView extends Container{
             )
         ),
       ))
+  );
+}
+
+class ListViewBuilderContainer extends Container{
+  //何問目？とかを表示するための共通Container。
+  final BuildContext context;
+  final AsyncSnapshot<QuerySnapshot<Object?>> snapshot;
+  final String destinationPageName;//navigatingのメソッドを渡してもらう
+
+  ListViewBuilderContainer({super.key, required this.context, required this.snapshot,required this.destinationPageName});
+
+  @override
+  // TODO: implement child
+  Widget get child => ListView.builder(
+      padding: const EdgeInsets.all(2),
+      itemCount: snapshot.data!.docs.length,
+      itemBuilder: (BuildContext context, int index) {
+        //category_titleを変数に格納
+        final String title = snapshot.data!.docs[index].get("category_title");
+        return Container(
+          padding: EdgeInsets.all(4),
+          child: GestureDetector(
+            onTap: () async{
+              final String _categoryId = snapshot.data!.docs[index].id;
+              if(destinationPageName == "QuestionPage")
+              Navigator.push(context, MaterialPageRoute(builder: (context) => QuestionPage(
+                  categoryId: _categoryId
+              )));
+              if(destinationPageName == "VocabularyPage")
+                Navigator.push(context, MaterialPageRoute(builder: (context) => VocabularyPage(
+                    categoryId: _categoryId
+                )));
+            },
+            child: Card(
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(20),
+              ),
+              color: AppColors.mainWhite,
+              elevation: 3,
+              child: Container(
+                height: 90,
+                child: Center(child: Text(title,
+                    style: AppTextStyles.textBoldNormal,
+                    //maxLines: 1,
+                    overflow: TextOverflow.ellipsis
+                )),
+              ),
+            ),
+          ),
+        );
+      }
   );
 }
