@@ -5,7 +5,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../utilities/app_colors.dart';
 import '../../../utilities/provider/providers.dart';
 
-class Buttons {
+class Buttons {//TODO:このクラスは使われていないが一応残している
   static Widget normalOutlineButton(BuildContext context, WidgetRef ref){
     bool buttonState = ref.watch(buttonProvider);
 

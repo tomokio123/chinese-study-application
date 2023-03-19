@@ -12,9 +12,9 @@ class TutorialPage extends StatelessWidget {
       body: OverBoard(
         pages: pages,
         showBullets: true,
-        skipText: "スキップ",
+        skipText: "戻る",
         nextText: "次へ",
-        finishText: "了解！",
+        finishText: "了解",
         skipCallback: () {
           // when user select SKIP
           Navigator.pop(context);
