@@ -2,6 +2,11 @@ import 'package:chinese_study_applicaion/utilities/app_colors.dart';
 import 'package:flutter/cupertino.dart';
 
 class AppTextStyles{
+  static const appBarTitleMini = TextStyle(
+    fontWeight: FontWeight.w500,
+    fontSize: 17,
+    color: AppColors.mainBlue,
+  );
   static const appBarTitle = TextStyle(
     fontWeight: FontWeight.w500,
     fontSize: 20,

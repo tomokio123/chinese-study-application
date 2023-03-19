@@ -1,10 +1,10 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 
-class Announcements {
-  String announcementsId;
-  String announcementsTitle;
+class Announcement {
+  String announcementId;
+  String announcementTitle;
   String announcementContent;
   Timestamp? createdAt;
 
-  Announcements({this.announcementsId = '',this.announcementsTitle = '' , this.announcementContent = ''});
+  Announcement({this.announcementId = '',this.announcementTitle = '' , this.announcementContent = ''});
 }

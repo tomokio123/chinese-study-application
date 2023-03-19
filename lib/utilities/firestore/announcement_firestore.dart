@@ -4,18 +4,21 @@ class AnnouncementFireStore {
   static final _fireStoreInstance = FirebaseFirestore.instance;
   static final CollectionReference announcements = _fireStoreInstance.collection('announcements');
 
-  // static Future<dynamic> getAnnouncement() async {
-  //   try {
-  //     DocumentSnapshot documentSnapshot = await announcements.orderBy('created_at',descending: true).snapshots();
+  // static Future<dynamic> getUser(String uid) async{
+  //   try{
+  //     DocumentSnapshot documentSnapshot = await announcements.doc(uid).get();
   //     Map<String, dynamic> data = documentSnapshot.data() as Map<String, dynamic>;
-  //     Difficulty difficulty = Difficulty(
-  //         difficultyId: data["difficulty_id"],
-  //         difficultyTitle: data["difficulty_title"]
+  //     Account myAccount = Account(
+  //         id: uid,
+  //         name: data['name'],
+  //         email: data['email'],
+  //         password: data['password']
   //     );
-  //     print('難易度取得完了');
-  //     return difficulty;
-  //   } on FirebaseException catch (e) {
-  //     print('難易度取得完了エラー: $e');
+  //     Authentication.myAccount = myAccount;
+  //     print('ユーザー取得完了');
+  //     return true;
+  //   } on FirebaseException catch(e){
+  //     print('ユーザー取得完了エラー: $e');
   //     return false;
   //   }
   // }
