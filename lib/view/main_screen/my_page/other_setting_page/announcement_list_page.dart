@@ -34,7 +34,7 @@ class AnnouncementListPage extends StatelessWidget {
                           final String announcementTitle = snapshot.data!.docs[index].get("announcements_title");
                           final String announcementContent = snapshot.data!.docs[index].get("announcements_content");
                           final Timestamp createdAt = snapshot.data!.docs[index].get("created_at");
-                          final String announcementId = snapshot.data!.docs[index].get("announcements_id");
+                          //final String announcementId = snapshot.data!.docs[index].get("announcements_id");
                           return Container(
                             padding: EdgeInsets.all(4),
                             child: GestureDetector(
@@ -53,15 +53,34 @@ class AnnouncementListPage extends StatelessWidget {
                                 child: Padding(
                                   padding: const EdgeInsets.all(8.0),
                                   child: Column(
-                                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                                    mainAxisAlignment: MainAxisAlignment.center,
                                     children: [
-                                      Container(
-                                        height: 70,
-                                        child: Center(child: Text(announcementTitle,
-                                            style: AppTextStyles.textBoldNormalSmaller,
-                                            //maxLines: 1,
-                                            overflow: TextOverflow.ellipsis
-                                        )),
+                                      Stack(
+                                        //alignment: Alignment.center,
+                                        children: [
+                                          // Align(
+                                          //   alignment: Alignment(-1,-1),
+                                          //   child: Container(
+                                          //     width: 50,
+                                          //     height: 70,
+                                          //     child: Center(
+                                          //         child: Container(
+                                          //           child: Icon(Icons.circle,color: AppColors.subBlue,size: 10),
+                                          //         )
+                                          //     ),
+                                          //   ),
+                                          // ),
+                                          Center(
+                                            child: Container(
+                                              height: 70,
+                                              child: Center(child: Text(announcementTitle,textAlign: TextAlign.start,
+                                                  style: AppTextStyles.textBoldNormalSmaller,
+                                                  //maxLines: 1,
+                                                  overflow: TextOverflow.ellipsis
+                                              )),
+                                            ),
+                                          ),
+                                        ],
                                       ),
                                       Container(
                                         //height: 30,

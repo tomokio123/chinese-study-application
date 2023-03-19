@@ -62,9 +62,8 @@ class BookMarkPage extends ConsumerWidget with ChangeNotifier {
                                       child: SizedBox(
                                         height: 90,
                                         child: Stack(
-                                          alignment: Alignment.centerLeft,
                                           children: [
-                                            Center(child: Text("title:$questionTitle",
+                                            Center(child: Text(questionTitle,
                                                 style: AppTextStyles.textBoldNormal,
                                                 overflow: TextOverflow.ellipsis
                                             )),
@@ -85,9 +84,9 @@ class BookMarkPage extends ConsumerWidget with ChangeNotifier {
                                                 },
                                                 child: Container(
                                                   height: 90,
-                                                  width: 70,
+                                                  width: 50,
                                                   child: Center(
-                                                      child: Icon(Icons.cancel_outlined, size: 22,color: AppColors.mainGray,)
+                                                      child: Icon(Icons.cancel_outlined, size: 20,color: AppColors.mainGray,)
                                                     //TODO:今のところisFavoriteは意味をなさない設計
                                                     //Icon(Icons.star_rate_sharp, size: 30, color: AppColors.mainPink,)
                                                   ),
