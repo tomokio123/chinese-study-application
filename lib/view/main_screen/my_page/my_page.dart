@@ -62,14 +62,13 @@ class MyPage extends ConsumerWidget {
                 SettingsTile.switchTile(
                   enabled: true,
                   activeSwitchColor: AppColors.mainBlue,
-                  initialValue: true,
-                  //initialValue: checkedCurrentValue,
+                  initialValue: false,
                   //onPressed: (value){ref.read(myPageViewModelProvider.notifier).checking(value);},
                   onToggle: (value) {
-                    ref.read(myPageViewModelProvider);
+                    ref.watch(myPageViewModelProvider.notifier).state = value;
                   },
                   leading: Icon(Icons.format_paint),
-                  title: Text('音声読み上げ'),
+                  title: Text('音声読み上げ(現在利用不可)'),
                 ),
                 SettingsTile.navigation(
                   onPressed: (value){
