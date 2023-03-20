@@ -10,6 +10,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:settings_ui/settings_ui.dart';
+import '../../../utilities/app_snack_bars.dart';
 import '../../../utilities/authentication/authentication.dart';
 import '../../../utilities/firestore/user_firestore.dart';
 import '../../../utilities/provider/providers.dart';
@@ -106,7 +107,7 @@ class MyPage extends ConsumerWidget {
             if(_isSignIn == true)SettingsSection(
               tiles: <SettingsTile>[
                 SettingsTile.navigation(
-                  onPressed: (value) => _logOutDialogBuilder(context),
+                  onPressed: (value) => _signOutDialogBuilder(context),
                   title: Text('サインアウト',style: TextStyle(color: AppColors.mainRed)),
                 ),
               ],
@@ -124,7 +125,7 @@ class MyPage extends ConsumerWidget {
     );
   }
 
-  Future<void> _logOutDialogBuilder(BuildContext context) {
+  Future<void> _signOutDialogBuilder(BuildContext context) {
     return showDialog<void>(
       context: context,
       builder: (BuildContext context) {
@@ -196,12 +197,15 @@ class MyPage extends ConsumerWidget {
                 // Authentication.deleteAuth()以外にもsignOut()も同時に処理しないといけない
                 await UserFireStore.deleteUser(userId);//成功
                 await FavoriteQuestionFireStore.deleteAllFavoriteQuestion();// 成功
-                await Authentication.deleteAuth();
-                await Authentication.signOut();
+                await Authentication.signOut()//成功
+                    .onError((error, stackTrace) => ScaffoldMessenger.of(context).showSnackBar(AppSnackBar.signOutAccountIsFailed));
+                await Authentication.deleteAuth()//TODO:これできてないっぽい。FireBaseのAuthenticationのアカウントが消えていない。
+                    .onError((error, stackTrace) => ScaffoldMessenger.of(context).showSnackBar(AppSnackBar.deletingAccountIsFailed));
                 // while(Navigator.canPop(context)){//Navigator.canPop(context)＝「popできる状態だったら」
                 //   Navigator.pop(context);
                 // }
-                //popできないような状態になったらpushreplacement　＝　その画面を破棄して新しいルートに遷移する
+                //popできないような状態になったらpushReplacement　＝　その画面を破棄して新しいルートに遷移する
+                ScaffoldMessenger.of(context).showSnackBar(AppSnackBar.deletingAccountIsSuccessful);
                 Navigator.pushReplacement(context, MaterialPageRoute(
                     builder: (context) => LoginScreen()
                 ));

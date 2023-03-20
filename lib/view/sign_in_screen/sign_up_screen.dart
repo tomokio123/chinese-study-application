@@ -1,5 +1,6 @@
 import 'package:chinese_study_applicaion/utilities/app_snack_bars.dart';
 import 'package:chinese_study_applicaion/utilities/firestore/user_firestore.dart';
+import 'package:chinese_study_applicaion/view/common_widget/buttons/normal_button.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import '../../model/account.dart';
@@ -18,6 +19,50 @@ class SignUpScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+
+    Future<void> registerUser() async{
+      if(emailController.text.isNotEmpty &&
+          passwordController.text.isNotEmpty &&
+          reInputtedPasswordController.text.isNotEmpty
+      ){
+        if(passwordController.text == reInputtedPasswordController.text){
+          var result = await Authentication.signUp(
+              email: emailController.text, password: passwordController.text
+          );
+          if(result is UserCredential) {//resultにちゃんとした値が入ってきた時,つまり
+            //　「resultに入ってる値の型がUserCredential型なら」って意味
+            //Auth登録成功SnackBar
+            ScaffoldMessenger.of(context).showSnackBar(AppSnackBar.registeringSignUpIsSuccessful);
+            var _result = await createAccount(result.user!.uid);
+            //resultに入っているuidを_resultに格納
+            if (_result == true) {
+              result.user!.sendEmailVerification();//Emailアドレスにメールを送る処理
+              ScaffoldMessenger.of(context).showSnackBar(AppSnackBar.sentVerificationEmail);
+              // uploadが成功し終わってから元の画面に戻るってしたいので
+              Navigator.push(context, MaterialPageRoute(builder: (context) => LoginScreen()));
+              print('Go LoginScreen');
+            }
+          }
+          if(result is FirebaseAuthException){//resultにfirebase系のエラーが入ってきた時
+            if(result.code == 'email-already-in-use'){
+              ScaffoldMessenger.of(context).showSnackBar(AppSnackBar.emailAddressAlreadyInUse);
+            }
+            if(result.code == 'invalid-email')
+              ScaffoldMessenger.of(context).showSnackBar(AppSnackBar.invalidEmailAddress);
+
+          }
+        }
+        else {
+          ScaffoldMessenger.of(context).showSnackBar(AppSnackBar.passwordSnackBar);
+          print('パスワードが一致しません');
+        }
+      } else {
+        ScaffoldMessenger.of(context).showSnackBar(AppSnackBar.blankIsNotFilled);
+        print('全部の空欄を埋めてください');
+      }
+    }
+
+
     return GestureDetector(
       onTap: () => primaryFocus?.unfocus(),
       child: Scaffold(
@@ -36,8 +81,10 @@ class SignUpScreen extends StatelessWidget {
                     Container(
                       padding: const EdgeInsets.symmetric(vertical: 20),
                       width: 300,
-                      child: TextField(
+                      child: TextFormField(
+                        cursorColor: AppColors.mainBlue,
                         decoration: const InputDecoration(
+                          focusedBorder: UnderlineInputBorder(borderSide: BorderSide(color: AppColors.mainBlue, width: 2)),
                           helperText: '※有効なメールアドレスを使用してください',
                           hintText: 'メールアドレス',
                         ),
@@ -50,7 +97,9 @@ class SignUpScreen extends StatelessWidget {
                     SizedBox(
                       width: 300,
                       child: TextFormField(
+                        cursorColor: AppColors.mainBlue,
                         decoration: const InputDecoration(
+                            focusedBorder: UnderlineInputBorder(borderSide: BorderSide(color: AppColors.mainBlue, width: 2)),
                             hintText: 'パスワード',
                             helperText: '※パスワードは6文字以上必要です'
                         ),
@@ -62,7 +111,9 @@ class SignUpScreen extends StatelessWidget {
                     SizedBox(
                       width: 300,
                       child: TextFormField(
+                        cursorColor: AppColors.mainBlue,
                         decoration: const InputDecoration(
+                            focusedBorder: UnderlineInputBorder(borderSide: BorderSide(color: AppColors.mainBlue, width: 2)),
                             hintText: 'パスワード(再入力)',
                             helperText: '※念の為再入力してください'
                         ),
@@ -72,55 +123,18 @@ class SignUpScreen extends StatelessWidget {
                       ),
                     ),
                     const SizedBox(height: 20),
-                    ElevatedButton(
-                        onPressed: () async{
-                          if(emailController.text.isNotEmpty &&
-                          passwordController.text.isNotEmpty &&
-                          reInputtedPasswordController.text.isNotEmpty
-                          ){
-                            if(passwordController.text == reInputtedPasswordController.text){
-                              var result = await Authentication.signUp(
-                                  email: emailController.text, password: passwordController.text
-                              );
-                              if(result is UserCredential) {//resultにちゃんとした値が入ってきた時,つまり
-                                //　「resultに入ってる値の型がUserCredential型なら」って意味
-                                //Auth登録成功SnackBar
-                                ScaffoldMessenger.of(context).showSnackBar(AppSnackBar.registeringSignUpIsSuccessful);
-                                var _result = await createAccount(result.user!.uid);
-                                //resultに入っているuidを_resultに格納
-                                if (_result == true) {
-                                  result.user!.sendEmailVerification();//Emailアドレスにメールを送る処理
-                                  ScaffoldMessenger.of(context).showSnackBar(AppSnackBar.sentVerificationEmail);
-                                  // uploadが成功し終わってから元の画面に戻るってしたいので
-                                  Navigator.push(context, MaterialPageRoute(builder: (context) => LoginScreen()));
-                                  print('Go LoginScreen');
-                                }
-                              }
-                              if(result is FirebaseAuthException){//resultにfirebase系のエラーが入ってきた時
-                                if(result.code == 'email-already-in-use'){
-                                  ScaffoldMessenger.of(context).showSnackBar(AppSnackBar.emailAddressAlreadyInUse);
-                                }
-                                if(result.code == 'invalid-email')
-                                  ScaffoldMessenger.of(context).showSnackBar(AppSnackBar.invalidEmailAddress);
-
-                              }
-                            }
-                            else {
-                              ScaffoldMessenger.of(context).showSnackBar(AppSnackBar.passwordSnackBar);
-                              print('パスワードが一致しません');
-                            }
-                          } else {
-                            ScaffoldMessenger.of(context).showSnackBar(AppSnackBar.blankIsNotFilled);
-                            print('全部の空欄を埋めてください');
-                          }
-                        },
-                        child: Text('Button')
-                    ),
-                    SizedBox(height: 50),
+                    // ElevatedButton(
+                    //     onPressed: () async{
+                    //     },
+                    //     child: Text('Button')
+                    // ),
+                    NormalButton(
+                        buttonText: "アカウント登録",
+                        onPressed: () async => registerUser),
+                    SizedBox(height: 30),
                     Container(
                         width: 300,
                         child: Text('・確認メールを送りますので有効なメールアドレスを使用してください')),
-
                   ],
                 ),
               ),

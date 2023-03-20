@@ -25,6 +25,7 @@ class Authentication {
   }
 
   static Future<dynamic> emailSignIn({required String email, required String password})async {
+    //TODO:ここで「currentFirebaseUser」がしっかり埋まっているか確認する。サインアウトはできるが、アカウント削除の際にAuth.delete()だけができていない。
     //引数にはログインの際に打ち込んだemail&passwordが入ってくる
     try {
       final UserCredential _result = await _firebaseAuth.signInWithEmailAndPassword(
@@ -57,19 +58,22 @@ class Authentication {
     }
   }
 
-  static Future<bool> signOut() async{
+  static Future<void> signOut() async{
     try {
       await _firebaseAuth.signOut();
       print('${_firebaseAuth}のサインアウト成功しました');
-      return true;
+      //return true;
     } on FirebaseAuthException catch(e){
       print('サインアウトerror: $e');
-      return false;
+      //サインアウトerror: [firebase_auth/no-current-user] No user currently signed in. こんなエラーが出る
+      //return false;
     }
   }
 
   static Future<void> deleteAuth() async{
     try {
+      // var user = FirebaseAuth.instance.currentUser;
+      // await user!.delete();
       await currentFirebaseUser?.delete();//ログアウトするだけでアカウント事態を消したわけではない
       print('deleteAuth()成功');
     } on FirebaseAuthException catch(e){

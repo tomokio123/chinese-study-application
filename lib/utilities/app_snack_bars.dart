@@ -19,24 +19,23 @@ class AppSnackBar {
   );
 
   static final registeringSignUpIsSuccessful = SnackBar(
-      content: const Text('FirebaseAuth登録成功しました。'),
-      //TODO:FireBaseAuthの文言をよしなに変えておく。以下同じように。
+      content: const Text('アカウント新規登録に成功しました。'),
       shape: snackBarShape,
       backgroundColor: AppColors.subGreen);
 
   static final registeringSignUpIsFailed = SnackBar(
-      content: const Text('FirebaseAuth登録に失敗しました'),
+      content: const Text('アカウント新規登録に失敗しました'),
       shape: snackBarShape,
       backgroundColor: AppColors.mainPink);
 
   static final logInIsSuccessful = SnackBar(
-    content: const Text('FirebaseAuthログインに成功しました'),
+    content: const Text('ログインに成功しました'),
     backgroundColor: AppColors.subGreen,
     shape: snackBarShape,
   );
 
   static final logInIsFailed = SnackBar(
-      content: const Text('FirebaseAuthログインに失敗しました'),
+      content: const Text('ログインに失敗しました'),
       shape: snackBarShape,
       backgroundColor: AppColors.mainPink);
 
@@ -119,6 +118,28 @@ class AppSnackBar {
   //お気に入り問題削除失敗時のSnackBar
   static final deletingFavoriteQuestionIsFailed = SnackBar(
       content: const Text('お気に入り問題の削除に失敗しました'),
+      shape: snackBarShape,
+      backgroundColor: AppColors.mainPink);
+
+  //サインアウト成功時のSnackBar
+  static final signOutAccountIsSuccessful = SnackBar(
+      content: const Text('アカウントの削除に成功しました'),
+      shape: snackBarShape,
+      backgroundColor: AppColors.subGreen);
+  //サインアウト削除失敗時のSnackBar
+  static final signOutAccountIsFailed = SnackBar(
+      content: const Text('アカウントの削除に失敗しました'),
+      shape: snackBarShape,
+      backgroundColor: AppColors.mainPink);
+
+  //アカウントの削除成功時のSnackBar
+  static final deletingAccountIsSuccessful = SnackBar(
+      content: const Text('アカウントの削除に成功しました'),
+      shape: snackBarShape,
+      backgroundColor: AppColors.subGreen);
+  //アカウントの削除失敗時のSnackBar
+  static final deletingAccountIsFailed = SnackBar(
+      content: const Text('アカウントの削除に失敗しました'),
       shape: snackBarShape,
       backgroundColor: AppColors.mainPink);
 

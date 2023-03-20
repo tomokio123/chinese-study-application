@@ -31,16 +31,20 @@ class UserFireStore {
   static Future<dynamic> getUser(String uid) async{
     try{
       DocumentSnapshot documentSnapshot = await users.doc(uid).get();
-      Map<String, dynamic> data = documentSnapshot.data() as Map<String, dynamic>;
-      Account myAccount = Account(
-          id: uid,
-          name: data['name'],
-          email: data['email'],
-          password: data['password']
-      );
-      Authentication.myAccount = myAccount;
-      print('ユーザー取得完了');
-      return true;
+      if(documentSnapshot.data() != null){
+        Map<String, dynamic> data = documentSnapshot.data() as Map<String, dynamic>;
+        Account myAccount = Account(
+            id: uid,
+            name: data['name'],
+            email: data['email'],
+            password: data['password']
+        );
+        Authentication.myAccount = myAccount;
+        print('ユーザー取得完了');
+        return true;
+      } else {
+        print(documentSnapshot.data());
+      }
     } on FirebaseException catch(e){
       print('ユーザー取得完了エラー: $e');
       return false;

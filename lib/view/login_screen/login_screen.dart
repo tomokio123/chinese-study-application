@@ -1,4 +1,5 @@
 import 'package:chinese_study_applicaion/utilities/firestore/user_firestore.dart';
+import 'package:chinese_study_applicaion/view/common_widget/buttons/normal_button.dart';
 import 'package:chinese_study_applicaion/view/main_screen/main_screen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/gestures.dart';
@@ -18,6 +19,38 @@ class LoginScreen extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+
+    Future<void> loginFunction() async{
+      if(emailController.text.isNotEmpty && passwordController.text.isNotEmpty) {
+        var result = await Authentication.emailSignIn(email: emailController.text, password: passwordController.text);
+        if(result is UserCredential){
+          //返ってきた値がUserCredential型なら(ちゃんとFirebaseAuthに則ったものなら)
+          if(result.user!.emailVerified == true){
+            var _result = await UserFireStore.getUser(result.user!.uid);
+            if(_result == true){//_resultがtrue返ってきてユーザ情報が格納されていたら
+              //pushReplacementは「遷移後に前のページに戻れなくなる」ナビゲーション
+              ScaffoldMessenger.of(context).showSnackBar(AppSnackBar.logInIsSuccessful);
+              print('FirebaseAuthログインに成功しました');
+              Navigator.push(context, MaterialPageRoute(builder: (context) => const MainScreen()));
+            } else {//_resultがfalseの時の対応。だがそんなことあるのか？要調査
+              ScaffoldMessenger.of(context).showSnackBar(AppSnackBar.logInIsFailed);
+              print('FirebaseAuthログインに失敗しました');
+              print('${_result}');
+            }
+          } else {
+            ScaffoldMessenger.of(context).showSnackBar(AppSnackBar.yourEmailAddressIsNotApproved);
+            print('メール認証できてません');
+          }
+        } else {
+          ScaffoldMessenger.of(context).showSnackBar(AppSnackBar.incorrectPasswordOrEmailAddress);
+          print('パスワード或いはメールアドレスが間違っています');
+        }
+      } else {
+        ScaffoldMessenger.of(context).showSnackBar(AppSnackBar.blankIsNotFilled);
+        print('全部の空欄を埋めてください');
+      }
+    }
+
     return GestureDetector(
       onTap: () => primaryFocus?.unfocus(),
       child: Scaffold(
@@ -29,8 +62,6 @@ class LoginScreen extends ConsumerWidget {
                 children: [
                   SizedBox(height: 50),
                   Text('ログイン',style: TextStyle(fontSize: 35)),
-                  Text('a@gmail.com',style: TextStyle(fontSize: 10)),
-                  Text('aaaaaa',style: TextStyle(fontSize: 10)),
                   Container(
                     padding: const EdgeInsets.symmetric(vertical: 20),
                     width: 300,
@@ -81,38 +112,16 @@ class LoginScreen extends ConsumerWidget {
                       )
                   ),
                   SizedBox(height: 30),
-                  ElevatedButton(
-                      onPressed: () async{
-                        if(emailController.text.isNotEmpty && passwordController.text.isNotEmpty) {
-                          var result = await Authentication.emailSignIn(email: emailController.text, password: passwordController.text);
-                          if(result is UserCredential){
-                            //返ってきた値がUserCredential型なら(ちゃんとFirebaseAuthに則ったものなら)
-                            if(result.user!.emailVerified == true){
-                              var _result = await UserFireStore.getUser(result.user!.uid);
-                              if(_result == true){//_resultがtrue返ってきてユーザ情報が格納されていたら
-                                //pushReplacementは「遷移後に前のページに戻れなくなる」ナビゲーション
-                                ScaffoldMessenger.of(context).showSnackBar(AppSnackBar.logInIsSuccessful);
-                                print('FirebaseAuthログインに成功しました');
-                                Navigator.push(context, MaterialPageRoute(builder: (context) => const MainScreen()));
-                              } else {//_resultがfalseの時の対応。だがそんなことあるのか？要調査
-                                ScaffoldMessenger.of(context).showSnackBar(AppSnackBar.logInIsFailed);
-                                print('FirebaseAuthログインに失敗しました');
-                                print('${_result}');
-                              }
-                            } else {
-                              ScaffoldMessenger.of(context).showSnackBar(AppSnackBar.yourEmailAddressIsNotApproved);
-                              print('メール認証できてません');
-                            }
-                          } else {
-                            ScaffoldMessenger.of(context).showSnackBar(AppSnackBar.incorrectPasswordOrEmailAddress);
-                            print('パスワード或いはメールアドレスが間違っています');
-                          }
-                        } else {
-                          ScaffoldMessenger.of(context).showSnackBar(AppSnackBar.blankIsNotFilled);
-                          print('全部の空欄を埋めてください');
-                        }
-                        },
-                      child: Text('Button')
+                  // ElevatedButton(
+                  //     onPressed: () async{
+                  //
+                  //       },
+                  //     child: Text('Button')
+                  // ),
+                  NormalButton(
+                    onPressed: () async => loginFunction(),
+                    buttonText: "ログイン",
+
                   ),
                   SizedBox(height: 50),
                   Container(
