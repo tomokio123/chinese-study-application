@@ -1,13 +1,17 @@
 import 'package:chinese_study_applicaion/model/account.dart';
 import 'package:chinese_study_applicaion/model/question.dart';
+import 'package:chinese_study_applicaion/utilities/firestore/user_firestore.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 import '../../model/favorite_questions.dart';
 class FavoriteQuestionFireStore {
   static final _fireStoreInstance = FirebaseFirestore.instance;
   //static final CollectionReference questions = _fireStoreInstance.collection('questions');
   static final CollectionReference favoriteQuestions = _fireStoreInstance.collection('favorite_questions');
+  static final String currentUserId = FirebaseAuth.instance.currentUser!.uid;
   //FireStoreをUsersっていうコレクション名にしたのはやらかした。。。。。以後リファクタリングする
+
   static Future<dynamic> setFavoriteQuestion({required String accountId, required String questionId}) async{
     //FavoriteQuestionをfireStoreに登録する処理
     try{
@@ -30,30 +34,30 @@ class FavoriteQuestionFireStore {
       print('お気に入り問題保存エラー：$e');
     }
   }
-  static Future<dynamic> getFavoriteQuestionId(String favoriteQuestionId) async{
-    //TODO:user_idに一致するものを取ってくる
-    //今のところ使ってない
-    try{
-      DocumentSnapshot documentSnapshot = await favoriteQuestions.doc(favoriteQuestionId).get();//doc()に何か具体的な値を持たせないと'Null' is not a subtype 、、てなる
-      Map<String, dynamic> data = documentSnapshot.data() as Map<String, dynamic>;
-      FavoriteQuestion favoriteQuestion = FavoriteQuestion(
-        //favoriteQuestionIdはFireStoreの自動ID,
-        favoriteQuestionId: data['favorite_question_id'],
-        questionId: data['question_id'],
-        accountId: data['user_id']
-      );
-      if(favoriteQuestions != null){
-        //fireStoreから取ってきたquestionId,accountIdが引数で渡したものと完全一致したら
-        print('お気に入り問題取得完了');
-        return favoriteQuestion;
-      } else {
-        return false;//すでにお気に入り登録されている
-      }
-    } on FirebaseException catch(e){
-      print('お気に入り問題取得エラー: $e');
-      return false;
-    }
-  }
+  // static Future<dynamic> getFavoriteQuestionId(String favoriteQuestionId) async{
+  //   //TODO:user_idに一致するものを取ってくる
+  //   //今のところ使ってない
+  //   try{
+  //     DocumentSnapshot documentSnapshot = await favoriteQuestions.doc(favoriteQuestionId).get();//doc()に何か具体的な値を持たせないと'Null' is not a subtype 、、てなる
+  //     Map<String, dynamic> data = documentSnapshot.data() as Map<String, dynamic>;
+  //     FavoriteQuestion favoriteQuestion = FavoriteQuestion(
+  //       //favoriteQuestionIdはFireStoreの自動ID,
+  //       favoriteQuestionId: data['favorite_question_id'],
+  //       questionId: data['question_id'],
+  //       accountId: data['user_id']
+  //     );
+  //     if(favoriteQuestions != null){
+  //       //fireStoreから取ってきたquestionId,accountIdが引数で渡したものと完全一致したら
+  //       print('お気に入り問題取得完了');
+  //       return favoriteQuestion;
+  //     } else {
+  //       return false;//すでにお気に入り登録されている
+  //     }
+  //   } on FirebaseException catch(e){
+  //     print('お気に入り問題取得エラー: $e');
+  //     return false;
+  //   }
+  // }
   static Future<dynamic> getFavoriteQuestion(String userId, String questionId) async{
     try{
       var result = await FavoriteQuestionFireStore.favoriteQuestions.
@@ -74,6 +78,20 @@ class FavoriteQuestionFireStore {
   static Future<void> deleteFavoriteQuestion(String favoriteQuestionId) async{//TODO:次はお気に入り解除してデータを消すところまでやる
     try{
       await FavoriteQuestionFireStore.favoriteQuestions.doc(favoriteQuestionId).delete();//favoriteQuestionデーブルの中からfavoriteQuestionIdを消す
+    } on FirebaseException catch(e){
+      print('お気に入り問題取得エラー: $e');
+    }
+  }
+
+  //TODO:currentUserId と同じフィールド値をもつfavoriteQuestionsを取得
+  //TODO:からの(.then)、取ってきた複数の要素をforeachで展開してその要素のdocId(element.reference.id)を消していく。
+  static Future<void> deleteAllFavoriteQuestion() async{//TODO:次はお気に入り解除してデータを消すところまでやる
+    try{
+      FavoriteQuestionFireStore.favoriteQuestions.where("user_id", isEqualTo: currentUserId).get().
+      // TODO:以下で取得したdocIDを使ってドキュメント削除
+      then((QuerySnapshot snapshot) => snapshot.docs.forEach((element) {
+        FavoriteQuestionFireStore.favoriteQuestions.doc(element.reference.id).delete();
+      }));//favoriteQuestionデーブルの中からfavoriteQuestionIdを消す
     } on FirebaseException catch(e){
       print('お気に入り問題取得エラー: $e');
     }

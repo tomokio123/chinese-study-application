@@ -69,6 +69,11 @@ class Authentication {
   }
 
   static Future<void> deleteAuth() async{
-    await currentFirebaseUser!.delete();//ログアウトするだけでアカウント事態を消したわけではない
+    try {
+      await currentFirebaseUser?.delete();//ログアウトするだけでアカウント事態を消したわけではない
+      print('deleteAuth()成功');
+    } on FirebaseAuthException catch(e){
+      print('サインアウトerror: $e');
+    }
   }
 }

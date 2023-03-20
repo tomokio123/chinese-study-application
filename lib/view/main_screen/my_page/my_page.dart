@@ -1,4 +1,5 @@
 import 'package:chinese_study_applicaion/utilities/app_colors.dart';
+import 'package:chinese_study_applicaion/utilities/firestore/favorite_question_firestore.dart';
 import 'package:chinese_study_applicaion/view/login_screen/login_screen.dart';
 import 'package:chinese_study_applicaion/view/main_screen/my_page/account_page/edit_account_page/edit_account_page.dart';
 import 'package:chinese_study_applicaion/view/main_screen/my_page/other_setting_page/announcement_list_page.dart';
@@ -10,6 +11,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:settings_ui/settings_ui.dart';
 import '../../../utilities/authentication/authentication.dart';
+import '../../../utilities/firestore/user_firestore.dart';
 import '../../../utilities/provider/providers.dart';
 import 'my_page_view_model.dart';
 
@@ -187,8 +189,22 @@ class MyPage extends ConsumerWidget {
                 textStyle: Theme.of(context).textTheme.labelLarge,
               ),
               child: const Text('アカウント削除'),
-              onPressed: (){
-                //まだ未記入
+              onPressed: () async{
+                final String userId = UserFireStore.currentUserId;
+                //TODO:ここ実装する。アカウントを削除する際に
+                // User/FavoriteQuestionなどのユーザIdが絡むものも削除しないとデータベースに残ってしまう
+                // Authentication.deleteAuth()以外にもsignOut()も同時に処理しないといけない
+                await UserFireStore.deleteUser(userId);//成功
+                await FavoriteQuestionFireStore.deleteAllFavoriteQuestion();// 成功
+                await Authentication.deleteAuth();
+                await Authentication.signOut();
+                // while(Navigator.canPop(context)){//Navigator.canPop(context)＝「popできる状態だったら」
+                //   Navigator.pop(context);
+                // }
+                //popできないような状態になったらpushreplacement　＝　その画面を破棄して新しいルートに遷移する
+                Navigator.pushReplacement(context, MaterialPageRoute(
+                    builder: (context) => LoginScreen()
+                ));
               },
             ),
           ],
