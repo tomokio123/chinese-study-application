@@ -20,7 +20,8 @@ import '../../common_widget/Indicators/normal_circular_indicator.dart';
 
 class VocabularyPage extends ConsumerWidget {
   final String categoryId;
-  const VocabularyPage({Key? key, required this.categoryId}) : super(key: key);
+  final String categoryTitle;
+  const VocabularyPage({Key? key, required this.categoryId, required this.categoryTitle}) : super(key: key);
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -82,7 +83,7 @@ class VocabularyPage extends ConsumerWidget {
     }
 
     return Scaffold(
-      appBar: AppBar(title: Text("vocabularyPage"), iconTheme: IconThemeData(color: AppColors.mainBlue),),
+      appBar: AppBar(title: Text(categoryTitle), iconTheme: IconThemeData(color: AppColors.mainBlue),),
       body: SafeArea(
           child: FutureBuilder<QuerySnapshot>(
               future: questionFuture,

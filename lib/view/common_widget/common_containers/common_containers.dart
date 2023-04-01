@@ -71,7 +71,7 @@ class TitleAndAnswerResultContainer extends Container{
   @override
   // TODO: implement child
   Widget get child => Container(
-      margin: const EdgeInsets.all(20),
+      margin: const EdgeInsets.all(10),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(20),
       ),
@@ -83,7 +83,7 @@ class TitleAndAnswerResultContainer extends Container{
             ? Column(
           children: [
             Container(
-              height: 300,
+              height: 280,
               child: Image.asset(
                 //TODO:正解と不正解のImageを作って貼り付ける。一旦はpngで作る
                   isCorrect ?
@@ -92,13 +92,13 @@ class TitleAndAnswerResultContainer extends Container{
               ),
             ),
             Container(
-              height: 50,
+              height: 45,//TODO:ここがこれ以上小さくなるとAndroidで見えんくなることがあるので注意
               child: Center(
                   child: Text(
                       isCorrect ? "正解!" : "不正解",
                       style: TextStyle(
                           color:isCorrect ? AppColors.mainRed : AppColors.mainBlue,
-                          fontSize: 40
+                          fontSize: 30
                       ))
               ),
             )
@@ -167,12 +167,14 @@ class ListViewBuilderContainer extends Container{
           child: GestureDetector(
             onTap: () async{
               final String _categoryId = snapshot.data!.docs[index].id;
+              final String _categoryTitle = snapshot.data!.docs[index].get("category_title");
               if(destinationPageName == "QuestionPage")
               Navigator.push(context, MaterialPageRoute(builder: (context) => QuestionPage(
                   categoryId: _categoryId
               )));
               if(destinationPageName == "VocabularyPage")
                 Navigator.push(context, MaterialPageRoute(builder: (context) => VocabularyPage(
+                  categoryTitle: _categoryTitle,
                     categoryId: _categoryId
                 )));
             },

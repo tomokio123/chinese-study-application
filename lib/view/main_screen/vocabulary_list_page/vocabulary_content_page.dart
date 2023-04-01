@@ -19,7 +19,7 @@ class VocabularyContentPage extends ConsumerWidget {
     return Scaffold(
       appBar: AppBar(
           iconTheme: const IconThemeData(color: AppColors.mainBlue),
-          title: Text("VocabularyContentPage")),
+          title: Text("単語の詳細")),
       body: Center(
         child: SafeArea(
           child: Container(

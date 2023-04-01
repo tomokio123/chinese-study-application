@@ -50,7 +50,7 @@ class QuestionPage extends ConsumerWidget {
                     ),
                     Expanded(
                       child: Container(
-                        padding: EdgeInsets.fromLTRB(12,12,12,0),
+                        padding: EdgeInsets.fromLTRB(12,5,12,5),
                         child: FutureBuilder<QuerySnapshot>(
                           future: answerFuture,
                           builder: (context, snapshot) {
