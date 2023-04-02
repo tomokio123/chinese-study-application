@@ -198,3 +198,17 @@ class ListViewBuilderContainer extends Container{
       }
   );
 }
+
+class LinerContainer extends Container{
+  //ただの横棒線Container
+  @override
+  // TODO: implement child
+  Widget get child => Container(
+    margin: const EdgeInsets.only(top: 10, bottom: 10),
+    decoration: const BoxDecoration(border: Border(
+      bottom: BorderSide(
+        color: AppColors.mainBlue,
+        width: 1.5,),),),
+    height: 10,
+  );
+}

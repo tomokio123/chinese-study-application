@@ -2,6 +2,7 @@ import 'package:chinese_study_applicaion/utilities/firestore/favorite_question_f
 import 'package:chinese_study_applicaion/utilities/firestore/user_firestore.dart';
 import 'package:chinese_study_applicaion/utilities/provider/providers.dart';
 import 'package:chinese_study_applicaion/view/common_widget/Indicators/normal_circular_indicator.dart';
+import 'package:chinese_study_applicaion/view/main_screen/vocabulary_list_page/vocabulary_content_page.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -52,6 +53,8 @@ class BookMarkPage extends ConsumerWidget with ChangeNotifier {
                                   child: GestureDetector(
                                     onTap: (){
                                       //TODO:押したらどうするか
+                                      Navigator.push(context, MaterialPageRoute(builder: (context) => VocabularyContentPage(
+                                          questionId: questionId)));
                                     },
                                     child: Card(
                                       shape: RoundedRectangleBorder(
