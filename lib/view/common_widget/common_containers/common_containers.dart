@@ -64,9 +64,13 @@ class TitleAndAnswerResultContainer extends Container{
   final Size size;
   final int currentQuestionIndex;
   final AsyncSnapshot<QuerySnapshot<Object?>> snapshot;
+  final BuildContext context;
+  final WidgetRef ref;
+  final int questionLength;
 
   TitleAndAnswerResultContainer({super.key, required this.isAnswered,
-    required this.size, required this.currentQuestionIndex, required this.isCorrect, required this.snapshot});
+    required this.size, required this.currentQuestionIndex, required this.isCorrect,
+    required this.snapshot, required this.context, required this.ref, required this.questionLength});
 
   @override
   // TODO: implement child
@@ -77,35 +81,40 @@ class TitleAndAnswerResultContainer extends Container{
       ),
       width: double.infinity,
       height: isAnswered ? size.height * 0.45 : size.height * 0.32,
-      child: Center(
-        //questionのタイトル
-        child: isAnswered
-            ? Column(
-          children: [
-            Container(
-              height: 280,
-              child: Image.asset(
-                //TODO:正解と不正解のImageを作って貼り付ける。一旦はpngで作る
-                  isCorrect ?
-                  'images/maru2.png':
-                  'images/batu2.png'
+      child: GestureDetector(
+        onTap: () => QuestionPageViewModel.onTapFunctionInCommentaryState(
+            context: context, ref: ref, currentQuestionIndex: currentQuestionIndex, questionLength: questionLength,
+        ),
+        child: Center(
+          //questionのタイトル
+          child: isAnswered
+              ? Column(
+            children: [
+              Container(
+                height: 280,
+                child: Image.asset(
+                  //TODO:正解と不正解のImageを作って貼り付ける。一旦はpngで作る
+                    isCorrect ?
+                    'images/maru2.png':
+                    'images/batu2.png'
+                ),
               ),
-            ),
-            Container(
-              height: 45,//TODO:ここがこれ以上小さくなるとAndroidで見えんくなることがあるので注意
-              child: Center(
-                  child: Text(
-                      isCorrect ? "正解!" : "不正解",
-                      style: TextStyle(
-                          color:isCorrect ? AppColors.mainRed : AppColors.mainBlue,
-                          fontSize: 30
-                      ))
-              ),
-            )
-          ],
-        )
-            : Text(snapshot.data!.docs[currentQuestionIndex].get("title"),
-            style: TextStyle(fontSize: 26)),
+              Container(
+                height: 45,//TODO:ここがこれ以上小さくなるとAndroidで見えんくなることがあるので注意
+                child: Center(
+                    child: Text(
+                        isCorrect ? "正解!" : "不正解",
+                        style: TextStyle(
+                            color:isCorrect ? AppColors.mainRed : AppColors.mainBlue,
+                            fontSize: 30
+                        ))
+                ),
+              )
+            ],
+          )
+              : Text(snapshot.data!.docs[currentQuestionIndex].get("title"),
+              style: TextStyle(fontSize: 26)),
+        ),
       )
   );
 }

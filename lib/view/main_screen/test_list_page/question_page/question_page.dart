@@ -39,6 +39,7 @@ class QuestionPage extends ConsumerWidget {
                   questionNumberList.add(snapshot.data!.docs[i].get("question_id"));
                   //用意していた配列にaddしていく処理
                 }
+                final int questionLength = snapshot.data!.size;//問題のListの長さを先に取得する
                 final answerFuture = AnswerFireStore.answers.where('answer_id', whereIn: questionNumberList).get();
                 return Column(
                   children: [
@@ -46,7 +47,7 @@ class QuestionPage extends ConsumerWidget {
                     TitleAndAnswerResultContainer(
                         isAnswered: isAnswered, size: size,
                         currentQuestionIndex: currentQuestionIndex,
-                        isCorrect: isCorrect, snapshot: snapshot
+                        isCorrect: isCorrect, snapshot: snapshot, context: context, ref: ref, questionLength: questionLength,
                     ),
                     Expanded(
                       child: Container(

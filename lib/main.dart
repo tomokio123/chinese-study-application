@@ -25,10 +25,10 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       key: GlobalKey(),
-      darkTheme: ThemeData.dark(),
+      //darkTheme: ThemeData.dark(),//TODO:darkモードについて要調査
       theme: ThemeData(
+        scaffoldBackgroundColor: AppColors.mainWhite, /*Scaffoldの背景色*/
         primaryColor: AppColors.mainBlue,
-        backgroundColor: AppColors.subBlue,
         fontFamily: "KleeOne",//Textの字体や大きさ
         appBarTheme: const AppBarTheme(
             titleTextStyle: AppTextStyles.appBarTitle,

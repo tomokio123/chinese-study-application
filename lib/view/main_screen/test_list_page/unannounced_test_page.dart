@@ -43,7 +43,7 @@ class UnannouncedTestPage extends StatelessWidget {
                   final bool isAnswered = ref.watch(buttonProvider);//回答したか
                   final bool isCorrect = ref.watch(isCorrectProvider);//正解or不正解
                   if(snapshot.hasData){//これ忘れると「null check Operator」の例外吐かれるので対策しておく
-                    int questionLength = snapshot.data!.size;//問題のListの長さを先に取得する
+                    final int questionLength = snapshot.data!.size;//問題のListの長さを先に取得する
                     print("questionLength:$questionLength");
                     print("question_id:${snapshot.data!.docs[currentQuestionIndex].get("question_id")}");
                     print("currentQuestionIndex:$currentQuestionIndex");
@@ -51,9 +51,11 @@ class UnannouncedTestPage extends StatelessWidget {
                       children: [
                         isAnswered ? Container() : CurrentQuestionIndexContainer(currentQuestionIndex: currentQuestionIndex),
                         TitleAndAnswerResultContainer(
-                            isAnswered: isAnswered, size: size,
-                            currentQuestionIndex: currentQuestionIndex,
-                            isCorrect: isCorrect, snapshot: snapshot
+                          isAnswered: isAnswered, size: size,
+                          currentQuestionIndex: currentQuestionIndex,
+                          isCorrect: isCorrect, snapshot: snapshot,
+                          context: context, ref: ref, questionLength: questionLength,
+
                         ),
                         Expanded(
                           child: Container(

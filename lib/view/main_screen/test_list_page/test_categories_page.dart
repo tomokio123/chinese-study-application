@@ -16,12 +16,13 @@ class TestCategoriesPage extends StatelessWidget {
   Widget build(BuildContext context) {
     final Size size = MediaQuery.of(context).size;
     return Scaffold(
+      // backgroundColor: AppColors.mainWhite,
       floatingActionButtonLocation: FloatingActionButtonLocation.startFloat,
       body: SafeArea(
         child: FutureBuilder<QuerySnapshot>(
           future: CategoryFireStore.categories.get(),
             //Categoryをget。これメソッドをCategoryFireStoreにstaticで分けるよりCategoryFireStore.categories.get()
-            //で直接書いた方なんか動きがいい。調べる。
+            //で直接書いた方なんか動きがいい。調べる
           builder: (context, snapshot) {
             if(snapshot.hasData){
               return ListViewBuilderContainer(context: context, snapshot: snapshot, destinationPageName: "QuestionPage");
