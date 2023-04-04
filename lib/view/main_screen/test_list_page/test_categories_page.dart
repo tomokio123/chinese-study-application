@@ -14,7 +14,7 @@ class TestCategoriesPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final Size size = MediaQuery.of(context).size;
+    // final Size size = MediaQuery.of(context).size;
     return Scaffold(
       // backgroundColor: AppColors.mainWhite,
       floatingActionButtonLocation: FloatingActionButtonLocation.startFloat,

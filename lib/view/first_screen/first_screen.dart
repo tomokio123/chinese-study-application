@@ -13,6 +13,7 @@ class FirstScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final Size size = MediaQuery.of(context).size;
     return GestureDetector(
       onTap:  (){
         Navigator.push(context, MaterialPageRoute(builder: (context) => const MainScreen()));
@@ -30,7 +31,7 @@ class FirstScreen extends StatelessWidget {
                     //度数法→弧度法に直してる。「-90°= -1/4π」による。
                     child: Container(
                         height: 250,
-                        child: Image.asset('images/IMG_0993.png', width: 300)
+                        child: Image.asset('images/IMG_0993.png', width: size.width * 0.9)
                             .animate(onPlay: (controller) => controller.repeat())
                             .shimmer(delay: 4000.ms, duration: 1800.ms)
                             .shake(hz: 4, curve: Curves.easeInOutCubic)
@@ -45,20 +46,25 @@ class FirstScreen extends StatelessWidget {
                           end: const Offset(1 / 1.1, 1 / 1.1),
                         )),
                   ),
-                  SizedBox(height: 100),
-                  Container(
-                    padding: EdgeInsets.all(10),
-                    child: AnimatedTextKit(
-                      pause: const Duration(seconds: 3),
-                      repeatForever: true,
-                      animatedTexts: [
-                        ColorizeAnimatedText('Go 美麗島',
-                            colors: [AppColors.subBlue, AppColors.mainBlue, AppColors.subBlue],
-                            textStyle: AppTextStyles.textBoldBig
-                        ),
-                      ],
-                    ),
-                  ),
+                  // SizedBox(height: 20),
+                  Transform.rotate(
+                      angle: -90 * pi / 180,
+                      child: Image.asset("images/main_image.png", width: 200,)
+
+                  )
+                  // Container(
+                  //   padding: EdgeInsets.all(10),
+                  //   child: AnimatedTextKit(
+                  //     pause: const Duration(seconds: 3),
+                  //     repeatForever: true,
+                  //     animatedTexts: [
+                  //       ColorizeAnimatedText('Go 美麗島',
+                  //           colors: [AppColors.subBlue, AppColors.mainBlue, AppColors.subBlue],
+                  //           textStyle: AppTextStyles.textBoldBig
+                  //       ),
+                  //     ],
+                  //   ),
+                  // ),
                 ],
               ),
             ),
