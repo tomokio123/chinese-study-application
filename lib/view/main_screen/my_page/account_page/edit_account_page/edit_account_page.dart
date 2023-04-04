@@ -9,9 +9,9 @@ import '../../../../../utilities/firestore/user_firestore.dart';
 import '../../../../../utilities/provider/providers.dart';
 
 class EditAccountPage extends ConsumerWidget {
-  String name;
+  final String name;
 
-  EditAccountPage({Key? key, required this.name}) : super(key: key);
+  const EditAccountPage({Key? key,this.name = ""}) : super(key: key);
 
   @override
   Widget build(BuildContext context, WidgetRef ref){
