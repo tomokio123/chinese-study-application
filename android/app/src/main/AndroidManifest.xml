@@ -1,7 +1,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.chinese_study_applicaion">
    <application
-        android:label="chinese_study_applicaion"
+        android:label="めいり〜島"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
         <activity
