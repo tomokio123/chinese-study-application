@@ -49,6 +49,7 @@ dependencies:
   flutter_sliding_tutorial: ^2.0.0+1
   flutter_overboard: ^3.1.1
   flutter_animate: ^4.1.1+1
+  flutter_hooks: ^0.18.6
 
 dev_dependencies:
   integration_test:
