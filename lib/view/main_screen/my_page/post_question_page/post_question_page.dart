@@ -50,14 +50,14 @@ class PostQuestionPage extends ConsumerWidget {
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           DropdownButton(
-                            items: const[
+                            items: const[//TODO：ここの構成も見直す必要がありそう
                               DropdownMenuItem(
                                 value: 'fruits',
                                 child: Text('フルーツ'),
                               ),
                               DropdownMenuItem(
                                 value: 'home_appliances',
-                                child: Text('家電'),
+                                child: Text('家具・家電'),
                               ),
                               DropdownMenuItem(
                                 value: 'vegetables',

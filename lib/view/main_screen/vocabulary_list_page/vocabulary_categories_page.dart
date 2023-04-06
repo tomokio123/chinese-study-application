@@ -13,7 +13,7 @@ class VocabularyCategoriesPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text("単語帳ページ"),automaticallyImplyLeading: false,),
+      appBar: AppBar(title: const Text("単語帳ページ"),automaticallyImplyLeading: false,),
       body: SafeArea(
           child: FutureBuilder<QuerySnapshot>(
               future: CategoryFireStore.categories.get(),

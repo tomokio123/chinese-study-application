@@ -65,8 +65,8 @@ class VocabularyContentPage extends ConsumerWidget {
                                   LinerContainer(),
                                   Text("解説",style: AppTextStyles.textNormal),
                                   SizedBox(height: 10),
-                                  Container(
-                                      height: 130,
+                                  SizedBox(//TODO：この高さを解説文がオーバーすると文字が切れる。小さくなったり、綺麗にまとめる方法を後々考えないといけない
+                                      height: 260,
                                       child: Text(
                                         "${snapshot.data!.docs[currentVocabularyIndex].get("commentary")}",
                                         style: AppTextStyles.textNormal
