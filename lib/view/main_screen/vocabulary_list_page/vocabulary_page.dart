@@ -117,7 +117,7 @@ class VocabularyPage extends ConsumerWidget {
                                     child: Stack(
                                       alignment: Alignment.centerLeft,
                                       children: [
-                                        Center(child: Text("title:$questionTitle",
+                                        Center(child: Text("$questionTitle",//title:の記述削除
                                             style: AppTextStyles.textBoldNormal,
                                             overflow: TextOverflow.ellipsis
                                         )),
