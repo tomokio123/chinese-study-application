@@ -87,12 +87,28 @@ class PostQuestionPage extends ConsumerWidget {
                                 value: 'verb',
                                 child: Text('動詞'),
                               ),
+                              DropdownMenuItem(
+                                value: 'fruits2',
+                                child: Text('フルーツ2'),
+                              ),
+                              DropdownMenuItem(
+                                value: 'school',
+                                child: Text('学校'),
+                              ),
+                              DropdownMenuItem(
+                                value: 'premium',
+                                child: Text('特別問題'),
+                              ),
+                              DropdownMenuItem(
+                                value: 'taiwanFood',
+                                child: Text('台灣美食'),
+                              ),
                             ],
                             value: isSelectedValue,
                             onChanged: (String? value) {
                               try{
                                 ref.read(dramProvider.notifier).state = value!;
-                              } on NullThrownError catch(e) {
+                              } on TypeError catch(e) {//NullThrownErrorからTypeErrorに変更しろと言われていたので変更
                                 print(e.toString());
                               }
                             },

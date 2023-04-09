@@ -26,8 +26,8 @@ class VocabularyPage extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final Size size = MediaQuery.of(context).size;
-    final questionFuture = QuestionFireStore.questions.where('category_id', isEqualTo: categoryId).get();
-    final bool isFavorite = ref.watch(isFavoriteProvider);//isFavoriteProviderのデフォはFalse。
+    final questionFuture = QuestionFireStore.questions.where('category_id', isEqualTo: categoryId).orderBy("question_id", descending: true).get();
+    final bool isFavorite = ref.watch(isFavoriteProvider);//isFavoriteProviderのデフォはFalse
     //お気に入りに登録されているかの判定状況を持たせる
     final String currentUserId = UserFireStore.currentUserId;
 
