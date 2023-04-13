@@ -111,16 +111,22 @@ class VocabularyPage extends ConsumerWidget {
                               color: AppColors.mainWhite,
                               elevation: 3,
                               child: Container(
-                                height: 90,
+                                height: 80,
                                 child: Center(
                                   child: Container(
                                     child: Stack(
-                                      alignment: Alignment.centerLeft,
+                                      alignment: Alignment.center,
                                       children: [
-                                        Center(child: Text("$questionTitle",//title:の記述削除
-                                            style: AppTextStyles.textBoldNormal,
-                                            overflow: TextOverflow.ellipsis
-                                        )),
+                                        Container(
+                                          width: size.width * 0.76,
+                                          child: Center(
+                                              child: Container(
+                                                child: Text(questionTitle,//title:の記述削除
+                                                style: AppTextStyles.textSemiNormal,
+                                                overflow: TextOverflow.ellipsis
+                                          ),
+                                              )),
+                                        ),
                                         Align(
                                           alignment: Alignment.centerRight,
                                           child: GestureDetector(
@@ -149,7 +155,7 @@ class VocabularyPage extends ConsumerWidget {
                                               },
                                             child: Container(
                                               height: 90,
-                                              width: 70,
+                                              width: 65,
                                               child: Center(
                                                   child: isFavorite
                                                   ? Icon(Icons.add, size: 26, color: AppColors.mainGray)

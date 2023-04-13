@@ -42,11 +42,12 @@ class VocabularyContentPage extends ConsumerWidget {
                       //         style: AppTextStyles.textBold)),
                       // SizedBox(height: 10),
                       Container(
-                          height: 30,
-                          child: Text(
-                            '''問題 ${snapshot.data!.docs[currentVocabularyIndex].get("title")}
-                            ''',
-                            style: AppTextStyles.textBold,)),
+                        height: 28,
+                        child: Text(
+                          '''${snapshot.data!.docs[currentVocabularyIndex].get("title")}
+                          ''',
+                          style: AppTextStyles.textNormal,),
+                      ),
                       LinerContainer(),
                       Container(
                         child: FutureBuilder<QuerySnapshot>(
@@ -95,7 +96,7 @@ Widget choiceNameContainer(BuildContext context, WidgetRef ref, AsyncSnapshot<Qu
     int currentVocabularyIndex, String fieldName, String answerName) {
   return Container(
       margin: EdgeInsets.symmetric(vertical: 4),
-      height: 25,
+      height: 28,
       child: Text('$answerName:${snapshot.data!.docs[currentVocabularyIndex].get(fieldName)}',
           style: AppTextStyles.textNormal)
   );

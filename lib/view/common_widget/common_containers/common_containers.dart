@@ -194,7 +194,7 @@ class ListViewBuilderContainer extends Container{
               color: AppColors.mainWhite,
               elevation: 3,
               child: Container(
-                height: 90,
+                height: 80, //4/13に90から80へ小さくした。
                 child: Center(child: Text(title,
                     style: AppTextStyles.textBoldNormal,
                     //maxLines: 1,

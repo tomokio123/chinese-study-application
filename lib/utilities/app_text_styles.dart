@@ -37,6 +37,11 @@ class AppTextStyles{
     fontSize: 20,
     color: AppColors.mainBlue,
   );
+  static const textSemiNormal = TextStyle(
+    fontWeight: FontWeight.w600,
+    fontSize: 18,
+    color: AppColors.mainBlue,
+  );
   static const textNormalSmaller = TextStyle(
     fontWeight: FontWeight.normal,
     fontSize: 16,
