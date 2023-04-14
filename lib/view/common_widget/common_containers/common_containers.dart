@@ -120,7 +120,7 @@ class TitleAndAnswerResultContainer extends Container{
 }
 
 class ContainerInFourGridView extends Container{
-  //何問目？とかを表示するための共通Container。
+  //
   final BuildContext context;
   final WidgetRef ref;
   final int currentQuestionIndex;
@@ -156,7 +156,7 @@ class ContainerInFourGridView extends Container{
 }
 
 class ListViewBuilderContainer extends Container{
-  //何問目？とかを表示するための共通Container。
+  //
   final BuildContext context;
   final AsyncSnapshot<QuerySnapshot<Object?>> snapshot;
   final String destinationPageName;//navigatingのメソッドを渡してもらう
@@ -194,9 +194,9 @@ class ListViewBuilderContainer extends Container{
               color: AppColors.mainWhite,
               elevation: 3,
               child: Container(
-                height: 80, //4/13に90から80へ小さくした。
+                height: 75, //4/14に90から75へ小さくした。
                 child: Center(child: Text(title,
-                    style: AppTextStyles.textBoldNormal,
+                    style: AppTextStyles.textSemiNormal,
                     //maxLines: 1,
                     overflow: TextOverflow.ellipsis
                 )),

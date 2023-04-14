@@ -63,11 +63,11 @@ class BookMarkPage extends ConsumerWidget with ChangeNotifier {
                                       color: AppColors.mainWhite,
                                       elevation: 3,
                                       child: SizedBox(
-                                        height: 80, //90から80へ
+                                        height: 75, //90から75へ
                                         child: Stack(
                                           children: [
                                             Center(child: Text(questionTitle,
-                                                style: AppTextStyles.textBoldNormal,
+                                                style: AppTextStyles.textSemiNormal,
                                                 overflow: TextOverflow.ellipsis
                                             )),
                                             Align(

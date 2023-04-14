@@ -111,7 +111,7 @@ class VocabularyPage extends ConsumerWidget {
                               color: AppColors.mainWhite,
                               elevation: 3,
                               child: Container(
-                                height: 80,
+                                height: 75, //90→75へ
                                 child: Center(
                                   child: Container(
                                     child: Stack(
